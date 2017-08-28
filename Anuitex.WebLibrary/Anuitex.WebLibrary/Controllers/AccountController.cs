@@ -46,6 +46,7 @@ namespace Anuitex.WebLibrary.Controllers
                     }
 
                     DataContext.Context.CurrentUser = acc;
+                    ViewBag.SuccessSignIn = true;
                 }
                 return PartialView("SignIn", model);
             }
@@ -63,7 +64,6 @@ namespace Anuitex.WebLibrary.Controllers
         [HttpPost]
         public ActionResult ComputeSignUp(SignUpModel model)
         {
-
             try
             {
                 if (ModelState.IsValid)
@@ -87,7 +87,7 @@ namespace Anuitex.WebLibrary.Controllers
 
                     DataContext.Context.CurrentUser =
                         DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(ac => ac.Login == model.Login);
-
+                    ViewBag.SuccessSignUp = true;
                     DataContext.Context.LibraryDataContext.Connection.Close();
                 }
                 return PartialView("SignUp", model);
@@ -123,6 +123,12 @@ namespace Anuitex.WebLibrary.Controllers
             {
                 DataContext.Context.LibraryDataContext.Connection.Close();
             }       
+        }
+
+        public ActionResult SignOut()
+        {
+            DataContext.Context.CurrentUser = null;
+            return RedirectToAction("Index", "Home");
         }
     }
 }

@@ -427,15 +427,14 @@ a:hover {
 #sing-container .windows-container {
   margin: 0 auto;
   width: 90%;
-  max-width: 500px;
-  max-height: 0px;
+  max-width: 400px;
 }
 #sing-container .windows-container .ic-signin {
   width: 16px;
   height: 16px;
 }
-#sing-container .windows-container .page-window-container {
-  height: 55%;
+#sing-container .windows-container .page-window {
+  height: 100px;
 }
 #sing-container .windows-container .page-window-container form {
   /*
@@ -461,15 +460,16 @@ a:hover {
 }
 #sing-container .windows-container .page-window-container form input[type=submit] {
   color: white;
-  width: 20%;
-  margin-left: 55%;
+  width: 30%;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 0 !important;
 }
 #sing-container .windows-container .page-window-container form .field-validation-error {
   font-size: 0.85em;
   color: red;
-  text-align: right;
+  text-align: center;
   display: block;
-  margin-right: 1em;
 }
 #sing-container .windows-container .page-window-container form .validation-summary-errors {
   color: red;
@@ -479,4 +479,194 @@ a:hover {
 }
 #sing-container .windows-container .page-window-container[class~="signup-container"] {
   height: 65%;
+}
+.cssload-container {
+  display: none;
+  margin: 0;
+  float: right;
+  margin-right: 0.8em;
+}
+.cssload-container ul {
+  margin: 0;
+  margin-right: 0.8em;
+}
+.cssload-container ul li {
+  margin: 0;
+}
+.cssload-container * {
+  box-sizing: border-box;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+.cssload-container {
+  margin: 4px auto 0 auto;
+  max-width: 126px;
+}
+.cssload-container ul li {
+  list-style: none;
+}
+.cssload-flex-container {
+  display: flex;
+  display: -o-flex;
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  flex-direction: row;
+  -o-flex-direction: row;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  flex-wrap: wrap;
+  -o-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  justify-content: space-around;
+}
+.cssload-flex-container li {
+  padding: 2px;
+  height: 22px;
+  width: 22px;
+  margin: 7px 4px;
+  position: relative;
+  text-align: center;
+}
+.cssload-loading {
+  display: inline-block;
+  position: relative;
+  width: 19px;
+  height: 19px;
+  border-radius: 100%;
+  -o-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  border: 1px solid transparent;
+  border-bottom: 1px solid #0091ea;
+  border-left: 1px solid #0091ea;
+  animation: cssload-spinR 2.3s linear infinite;
+  -o-animation: cssload-spinR 2.3s linear infinite;
+  -ms-animation: cssload-spinR 2.3s linear infinite;
+  -webkit-animation: cssload-spinR 2.3s linear infinite;
+  -moz-animation: cssload-spinR 2.3s linear infinite;
+}
+.cssload-loading:before,
+.cssload-loading:after {
+  content: '';
+  display: block;
+  border-radius: 100%;
+  -o-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  position: absolute;
+}
+.cssload-loading:before {
+  height: 11px;
+  width: 11px;
+  border: 1px solid transparent;
+  border-top: 1px solid rgba(255, 0, 0, 0.66);
+  border-right: 1px solid rgba(50, 194, 27, 0.65);
+  animation: cssload-spinL 0.86s linear infinite;
+  -o-animation: cssload-spinL 0.86s linear infinite;
+  -ms-animation: cssload-spinL 0.86s linear infinite;
+  -webkit-animation: cssload-spinL 0.86s linear infinite;
+  -moz-animation: cssload-spinL 0.86s linear infinite;
+  transform-origin: center center;
+  -o-transform-origin: center center;
+  -ms-transform-origin: center center;
+  -webkit-transform-origin: center center;
+  -moz-transform-origin: center center;
+  top: 11%;
+  left: 11%;
+}
+.cssload-loading:after {
+  height: 2px;
+  width: 2px;
+  background: transparent;
+  border: 0px solid #fff538;
+  top: 35.5%;
+  left: 35.5%;
+}
+@keyframes cssload-spinR {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes cssload-spinR {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(360deg);
+  }
+}
+@-ms-keyframes cssload-spinR {
+  from {
+    -ms-transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes cssload-spinR {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-moz-keyframes cssload-spinR {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(360deg);
+  }
+}
+@keyframes cssload-spinL {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@-o-keyframes cssload-spinL {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to {
+    -o-transform: rotate(-360deg);
+  }
+}
+@-ms-keyframes cssload-spinL {
+  from {
+    -ms-transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(-360deg);
+  }
+}
+@-webkit-keyframes cssload-spinL {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(-360deg);
+  }
+}
+@-moz-keyframes cssload-spinL {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(-360deg);
+  }
 }

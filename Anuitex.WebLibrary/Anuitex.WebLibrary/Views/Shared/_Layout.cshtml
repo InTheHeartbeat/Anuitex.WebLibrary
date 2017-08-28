@@ -50,7 +50,7 @@
         <ul>
             @if (Model.CurrentUser != null)
             {
-                <li>Sign out</li>
+                <li>@Html.ActionLink("Sign out", "SignOut", "Account")</li>
             }
             else
             {

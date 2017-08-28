@@ -1,13 +1,33 @@
 ﻿@model Anuitex.WebLibrary.Models.SignUpModel
 
+
+<script type="text/javascript">
+    function OnSignUpSuccess() {
+        @if (ViewBag != null && ViewBag.SuccessSignUp != null)
+        {
+            if (ViewBag.SuccessSignUp )
+            {
+                @:window.location.reload(false);
+                    }
+        }
+    }
+</script>
+
 <div class="windows-container">
     <div class="page-window">
         <div class="page-window-header">
             <span class="icon ic-signup"></span>
             <h4>Sign up</h4>
+            <div class="cssload-container" id="load-anim" style="float: right">
+                <ul class="cssload-flex-container">
+                    <li>
+                        <span class="cssload-loading"></span>
+                    </li>
+                </ul>
+            </div>
         </div>
         <div class="page-window-container signup-container">
-            @using (Ajax.BeginForm("ComputeSignUp", "Account", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace }))
+            @using (Ajax.BeginForm("ComputeSignUp", "Account", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnComplete = "OnSignUpSuccess", LoadingElementId = "load-anim"}))
             {
                 @Html.ValidationMessageFor(msg => msg.Login)
                 @Html.TextBoxFor(l => l.Login, new { @placeholder = "Login", @type = "text" })
@@ -15,6 +35,7 @@
                 @Html.TextBoxFor(l => l.Password, new { @placeholder = "Password", @type = "password" })
                 @Html.ValidationMessageFor(msg => msg.RepeatPassword)
                 @Html.TextBoxFor(l => l.RepeatPassword, new { @placeholder = "Repeat password", @type = "password" })
+                                
                 <input type="submit" class="btn">
                 @Html.ValidationSummary(true)
             }
@@ -22,7 +43,4 @@
     </div>
 </div>
 
-@section scripts
-{
-    
-}
+

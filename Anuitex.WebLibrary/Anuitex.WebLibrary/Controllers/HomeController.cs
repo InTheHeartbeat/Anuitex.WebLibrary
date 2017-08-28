@@ -12,7 +12,7 @@ namespace Anuitex.WebLibrary.Controllers
     {
         public ActionResult Index()
         {
-            return View( new BaseModel() {CurrentEntityType = typeof(Book), IsCurrentUserAdmin = CurrentUser?.Role==0});
+            return View( new BaseModel() {CurrentEntityType = typeof(Book)});
         }
         
     }

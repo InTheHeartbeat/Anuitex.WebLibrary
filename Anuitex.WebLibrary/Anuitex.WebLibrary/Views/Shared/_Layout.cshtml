@@ -21,7 +21,7 @@
             <li>
             @if (Model.CurrentUser == null)
             {
-                <h3>@Ajax.ActionLink("Sign in", "SignIn", "Account", new AjaxOptions() {HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnComplete = "ShowSignForm"})</h3>
+                <h3>@Ajax.ActionLink("Sign in", "SignIn", "Account", new AjaxOptions() {HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnBegin = "ShowSignForm"})</h3>
             }
             else
             {
@@ -41,21 +41,21 @@
     </div>
     <div class="sidebar-items-container">
         <h4 class="label">Main</h4>
-        <ul id="section-selector">
-            <li class="active">Books</li>           
-            <li>Journals</li>
-            <li>Newspapers</li>
+        <ul class="section-selector">
+            <li class="active"><span>Books</span></li>           
+            <li><span>Journals</span></li>
+            <li><span>Newspapers</span></li>
         </ul>
         <h4 class="label">Account</h4>
-        <ul>
+        <ul class="section-selector">
             @if (Model.CurrentUser != null)
             {
                 <li>@Html.ActionLink("Sign out", "SignOut", "Account")</li>
             }
             else
             {
-                <li>Sign in</li>
-                <li id="btn-signup-li">@Ajax.ActionLink("Sign up", "SignUp", "Account", new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnComplete = "ShowSignForm" })</li>
+                <li>@Ajax.ActionLink("Sign in", "SignIn", "Account", new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnBegin = "ShowSignForm" })</li>
+                <li id="btn-signup-li">@Ajax.ActionLink("Sign up", "SignUp", "Account", new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnBegin = "ShowSignForm" })</li>
             }
         </ul>
         <h5>All rights reserved. <br>Tyner©@DateTime.Now.Year</h5>

@@ -66,6 +66,20 @@ input:-ms-input-placeholder {
   color: white;
   font-weight: 100;
 }
+button[disabled]:active,
+button[disabled],
+input[type="button"][disabled]:active,
+input[type="button"][disabled],
+input[type="submit"][disabled]:active,
+input[type="submit"][disabled],
+button[disabled]:hover,
+input[type="button"][disabled]:hover,
+input[type="submit"][disabled]:hover {
+  background-color: rgba(110, 110, 110, 0.58);
+  color: lightgray !important;
+  border: 1px solid rgba(158, 158, 158, 0.16);
+  background-image: repeating-linear-gradient(135deg, transparent, transparent 5px, rgba(158, 158, 158, 0.16) 5px, rgba(158, 158, 158, 0.16) 10px);
+}
 /* *** Scroll bar *** */
 ::-webkit-scrollbar-button {
   background-image: url('');
@@ -133,6 +147,7 @@ a:hover {
   padding: 1em;
   padding-top: 0.3em;
   background-color: rgba(139, 163, 182, 0.25);
+  overflow: hidden;
 }
 .header-bar {
   position: absolute;
@@ -227,6 +242,7 @@ a:hover {
   margin-top: 0.5em;
 }
 .sidebar .sidebar-items-container ul li {
+  cursor: pointer;
   padding: 0;
   margin: 0;
   width: 100%;
@@ -235,14 +251,21 @@ a:hover {
   text-transform: uppercase;
   display: inline-block;
 }
+.sidebar .sidebar-items-container ul li > * {
+  color: #a6a6a6;
+}
 .sidebar .sidebar-items-container ul li:hover:not(.active) {
   background-color: rgba(30, 33, 38, 0.3);
-  color: #f2f2f2;
+}
+.sidebar .sidebar-items-container ul li:hover:not(.active) > * {
+  color: #f2f2f2 !important;
 }
 .sidebar .sidebar-items-container ul .active {
   background-color: rgba(123, 131, 149, 0.3);
-  color: white;
   position: relative;
+}
+.sidebar .sidebar-items-container ul .active > * {
+  color: white !important;
 }
 .sidebar .sidebar-items-container ul .active:after {
   content: "";
@@ -415,7 +438,7 @@ a:hover {
 }
 #sing-container {
   width: 100%;
-  height: 55%;
+  height: 100%;
   position: absolute;
   display: none;
   left: 100vw;
@@ -429,15 +452,41 @@ a:hover {
   width: 90%;
   max-width: 400px;
 }
-#sing-container .windows-container .ic-signin {
+#sing-container .windows-container .icon {
   width: 16px;
   height: 16px;
 }
-#sing-container .windows-container .page-window {
-  height: 100px;
+#sing-container .windows-container .page-window[class~="singin-window"] {
+  height: auto;
 }
-#sing-container .windows-container .page-window-container form {
-  /*
+#sing-container .windows-container .page-window[class~="signup-window"] {
+  height: auto;
+}
+#sing-container .windows-container .page-window-container form input {
+  width: 65%;
+  margin-top: 0 !important;
+  margin-bottom: 1em !important;
+}
+#sing-container .windows-container .page-window-container form input[type=submit] {
+  color: white;
+  width: 30%;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 0 !important;
+}
+.field-validation-error {
+  font-size: 0.85em;
+  color: red;
+  text-align: center;
+  display: block;
+}
+.validation-summary-errors {
+  color: red;
+}
+.validation-summary-errors ul {
+  list-style: none;
+}
+/*
                 .field-validation-error:after 
                 {
                     margin-top: 1.3em;
@@ -450,36 +499,6 @@ a:hover {
                     border-right: 6px solid transparent;
                     transform: rotate(25deg);
                 }*/
-}
-#sing-container .windows-container .page-window-container form input {
-  width: 50%;
-  margin-top: 0 !important;
-}
-#sing-container .windows-container .page-window-container form input:not(:nth-last-child(2)) {
-  margin-bottom: 1.5em !important;
-}
-#sing-container .windows-container .page-window-container form input[type=submit] {
-  color: white;
-  width: 30%;
-  margin: 0 auto;
-  display: block;
-  margin-bottom: 0 !important;
-}
-#sing-container .windows-container .page-window-container form .field-validation-error {
-  font-size: 0.85em;
-  color: red;
-  text-align: center;
-  display: block;
-}
-#sing-container .windows-container .page-window-container form .validation-summary-errors {
-  color: red;
-}
-#sing-container .windows-container .page-window-container form .validation-summary-errors ul {
-  list-style: none;
-}
-#sing-container .windows-container .page-window-container[class~="signup-container"] {
-  height: 65%;
-}
 .cssload-container {
   display: none;
   margin: 0;

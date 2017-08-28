@@ -1,21 +1,33 @@
-﻿function ShowAddSchemeWindow() {
-    $("#main-wc").animate({
+﻿
+function ShowSignForm() {
+    $("#index-container").animate({
             top: "100vh"
         },
         200,
         function () {
-            $("#main-wc").hide();
-            $("#add-scheme-wc").show();
-            $("#add-scheme-wc").animate({
-                    left: "0"
+            $("#sing-container").css("display", "block").animate({ left: "0vw" }, 200);
+        });
+}
+
+function HideSignForm() {
+    $("#sing-container").animate({
+            left: "100vw"
+        },
+        200,
+        function () {
+            $("#sing-container").css("display", "none");
+            $("#index-container").animate({
+                    top: "100vh"
                 },
                 200);
         });
 }
 
 $(document).ready(function () {
-
-    $("#btn-add-scheme").click(function() {
-        ShowAddSchemeWindow();
+    $("#btn-signup-li").click(function () {
+        $("#btn-signup").click();
     });
+
+    
+
 });

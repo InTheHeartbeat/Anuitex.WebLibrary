@@ -1,0 +1,22 @@
+﻿[
+  {
+    "outputFile": "Content/Styles/Site.css",
+    "inputFile": "Content/Styles/Site.less"
+  },
+  {
+    "outputFile": "Content/Styles/Variables.css",
+    "inputFile": "Content/Styles/Variables.less"
+  },
+  {
+    "outputFile": "Content/Styles/Icons.css",
+    "inputFile": "Content/Styles/Icons.less"
+  },
+  {
+    "outputFile": "Content/Styles/Controls.css",
+    "inputFile": "Content/Styles/Controls.less"
+  },
+  {
+    "outputFile": "Content/Styles/Colors.css",
+    "inputFile": "Content/Styles/Colors.less"
+  }
+]

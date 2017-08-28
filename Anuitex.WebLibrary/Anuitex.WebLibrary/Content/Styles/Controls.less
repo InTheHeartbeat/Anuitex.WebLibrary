@@ -1,4 +1,6 @@
-﻿/* *** Buttons *** */
+﻿@import "Colors.less";
+
+/* *** Buttons *** */
 .btn
 {
     display: inline-block;
@@ -25,6 +27,19 @@ border:1px solid @main-color;
 }
 
 /* *** Inputs *** */
+input[type=text],input[type=password]
+{
+    display: block;
+    width:90%;
+    margin: 0 auto 0.3em auto;        
+    font-size:1.11em;
+    margin-top:1.4em;    
+    border-bottom: 1px solid #0091ea !important;       
+    background:transparent;
+    border:none;
+    color:white;
+    text-align:center;
+}
 input:focus{
     outline: 0 !important;
     outline-offset: 0 !important;

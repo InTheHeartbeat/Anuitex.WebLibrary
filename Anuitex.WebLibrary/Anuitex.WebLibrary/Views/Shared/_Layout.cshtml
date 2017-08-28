@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Anuitex.WebLibrary.Models.BaseModel
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -6,32 +7,56 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    
+    <link href="https://fonts.googleapis.com/css?family=Anton|Raleway" rel="stylesheet"> 
 </head>
 <body>
     
 <header class="header-bar">
     <div class="header-title">
-        <h3>Library</h3>
+        <h3></h3>
     </div>
     <div class="header-bar-menu-container">
         <ul id="header-bar-menu">
-            
+            <li>
+            @if (Model.CurrentUser == null)
+            {
+                <h3>@Ajax.ActionLink("Sign in", "SignIn", "Account", new AjaxOptions() {HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnComplete = "ShowSignForm"})</h3>
+            }
+            else
+            {
+                <h3>Hello, @Model.CurrentUser.Login</h3>
+            }
+            </li>
         </ul>
     </div>
 </header>
     
 <div class="sidebar">
     <div class="sidebar-header">
-        <span class="company">Company</span>
+        <span class="company">Anuitex</span>
         <div class="sub-header">
-            <span class="title">Inventario</span>
+            <span class="title">Library</span>
         </div>
     </div>
     <div class="sidebar-items-container">
         <h4 class="label">Main</h4>
+        <ul id="section-selector">
+            <li class="active">Books</li>           
+            <li>Journals</li>
+            <li>Newspapers</li>
+        </ul>
+        <h4 class="label">Account</h4>
         <ul>
-            <li class="active">Dashboard</li>           
-            <li>Settings</li>
+            @if (Model.CurrentUser != null)
+            {
+                <li>Sign out</li>
+            }
+            else
+            {
+                <li>Sign in</li>
+                <li id="btn-signup-li">@Ajax.ActionLink("Sign up", "SignUp", "Account", new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnComplete = "ShowSignForm" })</li>
+            }
         </ul>
         <h5>All rights reserved. <br>Tyner©@DateTime.Now.Year</h5>
     </div>
@@ -39,7 +64,6 @@
 
 <div class="container body-content">
     @RenderBody()
-
 </div>
     
 @Scripts.Render("~/bundles/jquery")

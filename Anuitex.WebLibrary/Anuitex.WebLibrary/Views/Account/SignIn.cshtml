@@ -1,0 +1,22 @@
+﻿@model Anuitex.WebLibrary.Models.SignInModel
+
+    <div class="windows-container">
+        <div class="page-window">
+            <div class="page-window-header">
+                <span class="icon ic-signin"></span>
+                <h4>Sign in</h4>
+            </div>
+            <div class="page-window-container">
+            @using (Ajax.BeginForm("ComputeSignIn", "Account", new AjaxOptions() { HttpMethod = "POST", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace }))
+            {
+                @Html.ValidationMessageFor(msg => msg.Login)
+                @Html.TextBoxFor(l => l.Login, new {@placeholder = "Login", @type = "text"})
+                @Html.ValidationMessageFor(msg => msg.Password)
+                @Html.TextBoxFor(l => l.Password, new {@placeholder = "Password", @type = "password"})
+                <input type="submit" class="btn">
+                @Html.ValidationSummary(true)
+            }
+            </div>
+        </div>
+    </div>
+

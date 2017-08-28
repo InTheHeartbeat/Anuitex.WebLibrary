@@ -91,6 +91,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>True</Private>
@@ -167,11 +168,21 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Data\DataContext.cs" />
+    <Compile Include="Data\LibraryData.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LibraryData.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BaseModel.cs" />
+    <Compile Include="Models\SignInModel.cs" />
+    <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -180,11 +191,31 @@
       <DependentUpon>LibraryDatabase.mdf</DependentUpon>
     </Content>
     <Content Include="Content\Images\Backgrounds\MainBackground.jpg" />
-    <Content Include="Content\Styles\Icons.css" />
-    <Content Include="Content\Styles\Icons.min.css" />
+    <Content Include="Content\Styles\Colors.css">
+      <DependentUpon>Colors.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\Colors.min.css">
+      <DependentUpon>Colors.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\Controls.css">
+      <DependentUpon>Controls.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\Controls.min.css">
+      <DependentUpon>Controls.css</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\Icons.css">
+      <DependentUpon>Icons.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\Icons.min.css">
+      <DependentUpon>Icons.css</DependentUpon>
+    </Content>
     <Content Include="Content\Styles\select2.css" />
-    <Content Include="Content\Styles\Site.css" />
-    <Content Include="Content\Styles\Site.min.css" />
+    <Content Include="Content\Styles\Site.css">
+      <DependentUpon>Site.less</DependentUpon>
+    </Content>
+    <Content Include="Content\Styles\Site.min.css">
+      <DependentUpon>Site.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
@@ -197,12 +228,23 @@
     <Content Include="Content\Styles\Icons.less" />
     <Content Include="Content\Styles\Site.less" />
     <Content Include="Content\Styles\Variables.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
+    <Content Include="Data\LibraryData.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>LibraryData.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -230,15 +272,25 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\SignIn.cshtml" />
+    <Content Include="Views\Account\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\LibraryData.dbml.layout">
+      <DependentUpon>LibraryData.dbml</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

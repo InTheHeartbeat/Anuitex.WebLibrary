@@ -13,6 +13,8 @@ html,body {
     *{font-weight:100;}    
 }
 body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
+a{text-decoration:none;color:white;}
+a:hover{color:darken(white,20%);}
 
 .body-content{
     position:absolute;
@@ -29,28 +31,45 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
     position:absolute;
     left:12em;
     right:0;
-    height:4em;    
-}
-.header-title
-{
-    width:auto; 
-    height:100%; 
+    height:4em;   
     background-color:@header-background-color; 
-    h3
+    padding-right:4em;
+    .header-title
     {
-        color:white;
-        font-weight: 100;
-        font-style: normal;
-        font-size:1.9em; 
-        line-height: 3.625rem; 
-        text-shadow: 1px 1px 1px @text-shadow-color;
-        margin: 0;            
-        padding-left: 1em;
-        padding-right: 1em;
-        height: 100%;    
-        display: inline-block;            
-     }
-}   
+        width:auto; 
+        height:100%; 
+        float:left;    
+        h3
+        {
+            color:white;
+            font-weight: 100;
+            font-style: normal;
+            font-size:1.9em; 
+            line-height: 3.625rem; 
+            text-shadow: 1px 1px 1px @text-shadow-color;
+            margin: 0;            
+            padding-left: 1em;
+            padding-right: 1em;
+            height: 100%;    
+            display: inline-block;            
+         }
+    } 
+    .header-bar-menu-container
+    {
+        float:right;
+        ul
+        {
+            list-style:none;
+            margin:0;
+            li
+            {
+                display:inline-block;
+                float:left;
+            }
+        }
+    }  
+}
+
 
 .sidebar
 {
@@ -185,6 +204,7 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
 .nav-buttons
 {
     float:right;
+    margin-right:2em;
 }
 
 
@@ -250,7 +270,7 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
         line-height: 1.99em;
         span.icon
         {
-            margin-top: 0.4em;
+            margin-top: 0.5em;
             margin-left: 1em;
             margin-right: 0.3em;
         }
@@ -314,115 +334,98 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
         h5{color:white;}
     }    
 
-.create-project-main-info-window
-{    
-    width: 15em;
-    max-width: 15em;
-    min-width:15em;
-    height: 29em;               
-    // Project photo   
-    > .page-window-container > :first-child 
-    {    
-        background-image:url(../Images/Backgrounds/DefaultProjectPhoto.png);            
-        width: 78%;
-        height: 12em;
-        margin: 0 auto;
-        background-size: 90% 90%;        
-        margin-bottom:1em;                          
-    }       
-}
-
-.create-project-main-inputs 
-{
-    margin-top:2em;
-    > :nth-child(1)
-    {
-        display: block;
-        width:90%;
-        margin: 0 auto 0.3em auto;        
-        font-size:1.11em;
-        margin-top:1.4em;    
-        border-bottom: 1px solid #0091ea !important;       
-        background:transparent;
-        border:none;
-        color:white;
-        text-align:center;
-    }
-}
-
-.create-project-schemes-window
-{
-    display: table-cell;
-    width:100%;     
-    height:29em;  
-}
-
-/*
-.create-project-detailed-window
-{
-    display: table-cell;
-    width:100%;     
-    height:29em;  
-    .create-project-desc-editor-container
-        {
-        width:90%;
-        margin: 0 auto;
-        height:100%;        
-  min-height:100%;
-  max-height:26em;
-  overflow-y: auto;
-  #editor{height:70%;}
-    } 
-}*/
 
 
-.create-project-create-scheme-window
-{
-    width:100%;
-    height:100%;
-    display:block;
-    > :nth-child(2)
-    {
-         float:left;width:13em;margin-right:2px;
-         > :first-child, > :nth-last-child(1)
-         {
-            background-image:url(../Images/Backgrounds/DefaultSchemePhoto.png);            
-            width: 10em;
-            height: 10em;
-            margin: 0 auto;
-            background-size: 83%;        
-            margin-bottom:1em;       
-         }
-
-    }
-    > :nth-child(3)
-     {
-        overflow:hidden;
-        width:auto;
-        .scheme-desc-editor-container
-        {
-            width:90%;
-            margin: 0 auto;            
-            height:100%;
-            max-height:100%;
-            min-height:90%;
-            >:last-child
-                {
-                height:75%;
-            }
-        }        
-     }
-}
 .clearfix:after {
   content: "";
   display: table;
   clear: both;
 }
-#add-scheme-wc
+
+
+#index-container
 {
-    width:100%;
-    height:88%;
-    left:100vw;
-    display:none;
+    position:absolute;
 }
 
+#sing-container
+{
+    width:100%;
+    height:55%;
+    position:absolute;
+    display:none;
+    left:100vw;
+    margin:0 auto;
+    top:5em;
+    bottom:0;
+    right:0;    
+
+    .windows-container
+    {
+        margin: 0 auto;
+        width:90%;
+        max-width:500px;
+        max-height:0px;
+        
+        .ic-signin
+        {
+            width:16px;
+            height:16px;
+        }
+        .page-window-container
+        {
+            height:55%;
+            
+            form
+            {
+                input
+                {
+                    width:50%;
+                    margin-top:0 !important;                    
+                }
+                input:not(:nth-last-child(2))
+                {
+                    margin-bottom:1.5em !important;
+                }
+                input[type=submit]
+                {
+                    color:white;
+                    width:20%;
+                    margin-left:55%;
+                }
+
+                .field-validation-error
+                {
+                    font-size:0.85em;
+                    color:red;
+                    text-align:right;
+                    display:block;
+                    margin-right:1em;
+                }
+                .validation-summary-errors
+                {
+                    color:red;
+                    ul{list-style:none;}
+                }
+                /*
+                .field-validation-error:after 
+                {
+                    margin-top: 1.3em;
+                    right: 8.7em;
+                    content: "";
+                    position: absolute;
+                    border-top: 6px solid blue;
+                    border-top-color: inherit;
+                    border-left: 6px solid transparent;
+                    border-right: 6px solid transparent;
+                    transform: rotate(25deg);
+                }*/
+            }
+        }
+        
+        .page-window-container[class~="signup-container"]
+        {
+            height:65%;
+        }  
+    }      
+}

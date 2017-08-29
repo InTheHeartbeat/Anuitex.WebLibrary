@@ -30,23 +30,18 @@ namespace Anuitex.WebLibrary.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Open ||
-                    DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Connecting)
-                {
-                    DataContext.Context.LibraryDataContext.Connection.Open();
-                }
-                Account acc = DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(
+                Account account = DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(
                     ac => ac.Login == model.Login && ac.Hash ==
                           Encoding.UTF8.GetString(MD5.Create()
                               .ComputeHash(Encoding.UTF8.GetBytes(model.Password))));
 
-                if (acc == null)
+                if (account == null)
                 {
-                    ModelState.AddModelError("", "Incorrect login or password");
+                    ModelState.AddModelError("", "Invalid login or password");
                     return PartialView("SignIn", model);
                 }
 
-                DataContext.Context.CurrentUser = acc;
+                DataContext.Context.CurrentUser = account;
                 ViewBag.SuccessSignIn = true;
             }
             return PartialView("SignIn", model);
@@ -55,27 +50,26 @@ namespace Anuitex.WebLibrary.Controllers
         [HttpPost]
         public ActionResult ComputeSignUp(SignUpModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return PartialView("SignUp", model);
+
+            if (DataContext.Context.LibraryDataContext.Accounts.Any(ac => ac.Login == model.Login))
             {
-                if (DataContext.Context.LibraryDataContext.Accounts.Any(ac => ac.Login == model.Login))
-                {
-                    ModelState.AddModelError("Login", "Login already exist");
-                    return PartialView("SignUp", model);
-                }
-
-                DataContext.Context.LibraryDataContext.Accounts.InsertOnSubmit(new Account()
-                {
-                    Login = model.Login,
-                    Hash = Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(model.Password)))
-                });
-
-                DataContext.Context.LibraryDataContext.SubmitChanges();
-
-                DataContext.Context.CurrentUser =
-                    DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(ac => ac.Login == model.Login);
-                ViewBag.SuccessSignUp = true;
-                DataContext.Context.LibraryDataContext.Connection.Close();
+                ModelState.AddModelError("Login", "Login already exist");
+                return PartialView("SignUp", model);
             }
+
+            DataContext.Context.LibraryDataContext.Accounts.InsertOnSubmit(new Account()
+            {
+                Login = model.Login,
+                Hash = Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(model.Password)))
+            });
+
+            DataContext.Context.LibraryDataContext.SubmitChanges();
+
+            DataContext.Context.CurrentUser =
+                DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(ac => ac.Login == model.Login);
+            ViewBag.SuccessSignUp = true;
+
             return PartialView("SignUp", model);
         }
 

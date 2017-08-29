@@ -28,101 +28,63 @@ namespace Anuitex.WebLibrary.Controllers
         [HttpPost]
         public ActionResult ComputeSignIn(SignInModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Open ||
+                    DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Connecting)
                 {
-                    if (DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Open || DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Connecting)
-                    { DataContext.Context.LibraryDataContext.Connection.Open();}
-                    Account acc = DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(
-                        ac => ac.Login == model.Login && ac.Hash ==
-                              Encoding.UTF8.GetString(MD5.Create()
-                                  .ComputeHash(Encoding.UTF8.GetBytes(model.Password))));
-
-                    if (acc == null)
-                    {                        
-                        ModelState.AddModelError("", "Incorrect login or password");
-                        return PartialView("SignIn", model);
-                    }
-
-                    DataContext.Context.CurrentUser = acc;
-                    ViewBag.SuccessSignIn = true;
+                    DataContext.Context.LibraryDataContext.Connection.Open();
                 }
-                return PartialView("SignIn", model);
+                Account acc = DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(
+                    ac => ac.Login == model.Login && ac.Hash ==
+                          Encoding.UTF8.GetString(MD5.Create()
+                              .ComputeHash(Encoding.UTF8.GetBytes(model.Password))));
+
+                if (acc == null)
+                {
+                    ModelState.AddModelError("", "Incorrect login or password");
+                    return PartialView("SignIn", model);
+                }
+
+                DataContext.Context.CurrentUser = acc;
+                ViewBag.SuccessSignIn = true;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
-                DataContext.Context.LibraryDataContext.Connection.Close();
-            }            
+            return PartialView("SignIn", model);
         }
 
         [HttpPost]
         public ActionResult ComputeSignUp(SignUpModel model)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
+                if (DataContext.Context.LibraryDataContext.Accounts.Any(ac => ac.Login == model.Login))
                 {
-                    if(DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Open || DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Connecting)
-                    { DataContext.Context.LibraryDataContext.Connection.Open();}
-
-                    if (DataContext.Context.LibraryDataContext.Accounts.Any(ac => ac.Login == model.Login))
-                    {
-                        ModelState.AddModelError("Login","Login already exist");
-                        return PartialView("SignUp", model);
-                    }
-
-                    DataContext.Context.LibraryDataContext.Accounts.InsertOnSubmit(new Account()
-                    {
-                        Login = model.Login,
-                        Hash = Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(model.Password)))
-                    });
-
-                    DataContext.Context.LibraryDataContext.SubmitChanges();
-
-                    DataContext.Context.CurrentUser =
-                        DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(ac => ac.Login == model.Login);
-                    ViewBag.SuccessSignUp = true;
-                    DataContext.Context.LibraryDataContext.Connection.Close();
+                    ModelState.AddModelError("Login", "Login already exist");
+                    return PartialView("SignUp", model);
                 }
-                return PartialView("SignUp", model);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
+
+                DataContext.Context.LibraryDataContext.Accounts.InsertOnSubmit(new Account()
+                {
+                    Login = model.Login,
+                    Hash = Encoding.UTF8.GetString(MD5.Create().ComputeHash(Encoding.UTF8.GetBytes(model.Password)))
+                });
+
+                DataContext.Context.LibraryDataContext.SubmitChanges();
+
+                DataContext.Context.CurrentUser =
+                    DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(ac => ac.Login == model.Login);
+                ViewBag.SuccessSignUp = true;
                 DataContext.Context.LibraryDataContext.Connection.Close();
             }
+            return PartialView("SignUp", model);
         }
 
         [AllowAnonymous] 
         [HttpGet]       
         public JsonResult CheckLoginAvailable(string Login)
         {
-            try
-            {
-                if (DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Open || DataContext.Context.LibraryDataContext.Connection.State != ConnectionState.Connecting)
-                { DataContext.Context.LibraryDataContext.Connection.Open();}
-                return Json(DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(u => u.Login == Login) != null,
-                    JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
-                DataContext.Context.LibraryDataContext.Connection.Close();
-            }       
+            return Json(DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(u => u.Login == Login) != null,
+                    JsonRequestBehavior.AllowGet);            
         }
 
         public ActionResult SignOut()

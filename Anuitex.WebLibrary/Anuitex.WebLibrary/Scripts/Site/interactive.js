@@ -45,10 +45,10 @@ $(document).ready(function () {
     $(".section-selector").click(function (event) {
         $(".section-selector").find(".active").removeClass("active");
         if ($(event.target).is("a") || $(event.target).is("span")) {
-            $(event.target).parent().addClass("active");
+            $(event.target).parent().addClass("active");            
         } else {
             $(event.target).addClass("active");
-            $(event.target).children().click();
+            $(event.target).children()[0].click();            
         }
 
 

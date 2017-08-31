@@ -21,7 +21,7 @@
             <li>
             @if (Model.CurrentUser == null)
             {
-                <h3>@Ajax.ActionLink("Sign in", "SignIn", "Account", new AjaxOptions() {HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnBegin = "ShowSignForm"})</h3>
+                <h3>@Html.ActionLink("Sign in", "SignIn", "Account")</h3>
             }
             else
             {
@@ -54,8 +54,8 @@
             }
             else
             {
-                <li>@Ajax.ActionLink("Sign in", "SignIn", "Account", new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnBegin = "ShowSignForm" })</li>
-                <li id="btn-signup-li">@Ajax.ActionLink("Sign up", "SignUp", "Account", new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "sing-container", InsertionMode = InsertionMode.Replace, OnBegin = "ShowSignForm" })</li>
+                <li>@Html.ActionLink("Sign in", "SignIn", "Account")</li>
+                <li id="btn-signup-li">@Html.ActionLink("Sign up", "SignUp", "Account")</li>
             }
         </ul>
         <h5>All rights reserved. <br>Tyner©@DateTime.Now.Year</h5>
@@ -63,6 +63,7 @@
 </div>
 
 <div class="container body-content">
+    @{ Html.RenderPartial("Breadcrumb", Model.BreadcrumbModel, new ViewDataDictionary());}
     @RenderBody()
 </div>
     

@@ -8,21 +8,33 @@ using System.Web;
 using System.Web.Mvc;
 using Anuitex.WebLibrary.Data;
 using Anuitex.WebLibrary.Models;
+using Anuitex.WebLibrary.ViewHelpers;
 
 namespace Anuitex.WebLibrary.Controllers
 {
     public class AccountController : Controller
     {
+        public ActionResult Index()
+        {
+            return RedirectToActionPermanent("Index", "Home");
+        }
+
         [HttpGet]
         public ActionResult SignIn()
         {
-            return PartialView("SignIn", new SignInModel());
+            return View("SignIn", new SignInModel()
+            {
+                BreadcrumbModel = new BreadcrumbModel(Url.Action("SignIn", "Account", null, Request.Url.Scheme))                
+            });
         }
 
         [HttpGet]
         public ActionResult SignUp()
         {
-            return PartialView("SignUp", new SignUpModel());
+            return View("SignUp", new SignUpModel()
+            {
+                BreadcrumbModel = new BreadcrumbModel(Url.Action("SignUp", "Account", null, Request.Url.Scheme))       
+            });
         }
 
         [HttpPost]
@@ -38,24 +50,24 @@ namespace Anuitex.WebLibrary.Controllers
                 if (account == null)
                 {
                     ModelState.AddModelError("", "Invalid login or password");
-                    return PartialView("SignIn", model);
+                    return View("SignIn",model);
                 }
 
                 DataContext.Context.CurrentUser = account;
                 ViewBag.SuccessSignIn = true;
             }
-            return PartialView("SignIn", model);
+            return RedirectToActionPermanent("Index", "Home");
         }
 
         [HttpPost]
         public ActionResult ComputeSignUp(SignUpModel model)
         {
-            if (!ModelState.IsValid) return PartialView("SignUp", model);
+            if (!ModelState.IsValid) return View("SignUp", model);
 
             if (DataContext.Context.LibraryDataContext.Accounts.Any(ac => ac.Login == model.Login))
             {
                 ModelState.AddModelError("Login", "Login already exist");
-                return PartialView("SignUp", model);
+                return View("SignUp", model);
             }
 
             DataContext.Context.LibraryDataContext.Accounts.InsertOnSubmit(new Account()
@@ -70,7 +82,7 @@ namespace Anuitex.WebLibrary.Controllers
                 DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(ac => ac.Login == model.Login);
             ViewBag.SuccessSignUp = true;
 
-            return PartialView("SignUp", model);
+            return RedirectToActionPermanent("Index", "Home");
         }
 
         [AllowAnonymous] 

@@ -36,10 +36,6 @@ input[type=password] {
 input:focus {
   outline: 0 !important;
   outline-offset: 0 !important;
-  border-left: none !important;
-  border-right: none !important;
-  border-top: none !important;
-  font-weight: 100;
 }
 input:focus::-webkit-input-placeholder {
   text-indent: 500px;

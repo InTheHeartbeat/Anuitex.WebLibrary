@@ -36,10 +36,6 @@ input[type=password] {
 input:focus {
   outline: 0 !important;
   outline-offset: 0 !important;
-  border-left: none !important;
-  border-right: none !important;
-  border-top: none !important;
-  font-weight: 100;
 }
 input:focus::-webkit-input-placeholder {
   text-indent: 500px;
@@ -436,43 +432,45 @@ a:hover {
 #index-container {
   position: absolute;
 }
-#sing-container {
+.sing-container {
   width: 100%;
   height: 100%;
   position: absolute;
-  display: none;
-  left: 100vw;
+  left: 0;
   margin: 0 auto;
   top: 5em;
   bottom: 0;
   right: 0;
 }
-#sing-container .windows-container {
+.sing-container .windows-container {
   margin: 0 auto;
   width: 90%;
   max-width: 400px;
 }
-#sing-container .windows-container .icon {
+.sing-container .windows-container .icon {
   width: 16px;
   height: 16px;
 }
-#sing-container .windows-container .page-window[class~="singin-window"] {
+.sing-container .windows-container .page-window[class~="singin-window"] {
   height: auto;
 }
-#sing-container .windows-container .page-window[class~="signup-window"] {
+.sing-container .windows-container .page-window[class~="signup-window"] {
   height: auto;
 }
-#sing-container .windows-container .page-window-container form input {
+.sing-container .windows-container .page-window-container form input {
   width: 65%;
   margin-top: 0 !important;
   margin-bottom: 1em !important;
 }
-#sing-container .windows-container .page-window-container form input[type=submit] {
+.sing-container .windows-container .page-window-container form input[type=submit] {
   color: white;
   width: 30%;
   margin: 0 auto;
   display: block;
   margin-bottom: 0 !important;
+  border-top: none;
+  border-left: none;
+  border-right: none;
 }
 .field-validation-error {
   font-size: 0.85em;
@@ -499,6 +497,12 @@ a:hover {
                     border-right: 6px solid transparent;
                     transform: rotate(25deg);
                 }*/
+.nav-status-icon {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  margin-top: 0.3em;
+}
 .cssload-container {
   display: none;
   margin: 0;

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Anuitex.WebLibrary.Data;
 using Anuitex.WebLibrary.Models;
+using Anuitex.WebLibrary.ViewHelpers;
 
 namespace Anuitex.WebLibrary.Controllers
 {
@@ -12,7 +13,11 @@ namespace Anuitex.WebLibrary.Controllers
     {
         public ActionResult Index()
         {
-            return View( new BaseModel() {CurrentEntityType = typeof(Book)});
+            return View(new BaseModel()
+            {
+                CurrentEntityType = typeof(Book),
+                BreadcrumbModel = new BreadcrumbModel(Url.Action("Index", "Home", null, Request.Url.Scheme))                
+            });
         }
         
     }

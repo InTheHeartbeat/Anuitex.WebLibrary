@@ -13,9 +13,6 @@ namespace Anuitex.WebLibrary.Controllers
 {
     public class BaseController : Controller
     {
-        public Account CurrentUser { get; set; }
-
-
-        
+        public Account CurrentUser { get; set; }        
     }
 }

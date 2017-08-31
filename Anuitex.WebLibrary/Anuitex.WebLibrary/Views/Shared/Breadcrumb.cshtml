@@ -1,0 +1,17 @@
+﻿@using Anuitex.WebLibrary.ViewHelpers
+@model Anuitex.WebLibrary.Models.BreadcrumbModel
+
+<div class="nav-status">
+    <span class="icon nav-status-icon @Model.Breadcrumbs.Last().IconCssClass"></span>
+    <h2 class="nav-status-title">@Model.Breadcrumbs.Last().Text</h2>
+    <div class="breadcrumb">
+        @foreach (Breadcrumb breadcrumb in Model.Breadcrumbs)
+        {
+            <a href="@breadcrumb.Url">@breadcrumb.Text</a>
+            if (Model.Breadcrumbs.Last() != breadcrumb)
+            {
+                <span class="icon ic-arrow-right"></span>
+            }
+        }
+    </div>
+</div>

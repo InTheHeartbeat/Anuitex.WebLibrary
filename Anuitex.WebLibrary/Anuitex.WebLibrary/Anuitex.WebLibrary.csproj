@@ -187,6 +187,7 @@
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewHelpers\Breadcrumb\Breadcrumb.cs" />
+    <Compile Include="ViewHelpers\NavSection.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\LibraryDatabase.mdf" />

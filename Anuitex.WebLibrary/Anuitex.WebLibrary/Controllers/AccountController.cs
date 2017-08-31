@@ -24,7 +24,8 @@ namespace Anuitex.WebLibrary.Controllers
         {
             return View("SignIn", new SignInModel()
             {
-                BreadcrumbModel = new BreadcrumbModel(Url.Action("SignIn", "Account", null, Request.Url.Scheme))                
+                BreadcrumbModel = new BreadcrumbModel(Url.Action("SignIn", "Account", null, Request.Url.Scheme)),
+                CurrentNavSection = NavSection.SignIn
             });
         }
 
@@ -33,7 +34,8 @@ namespace Anuitex.WebLibrary.Controllers
         {
             return View("SignUp", new SignUpModel()
             {
-                BreadcrumbModel = new BreadcrumbModel(Url.Action("SignUp", "Account", null, Request.Url.Scheme))       
+                BreadcrumbModel = new BreadcrumbModel(Url.Action("SignUp", "Account", null, Request.Url.Scheme)),
+                CurrentNavSection = NavSection.SignOut
             });
         }
 

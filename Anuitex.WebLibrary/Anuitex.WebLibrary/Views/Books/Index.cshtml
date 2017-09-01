@@ -1,0 +1,7 @@
+﻿@using Anuitex.WebLibrary.Data
+@model Anuitex.WebLibrary.Models.BooksModel
+    
+@foreach (Book book in Model.Books)
+{
+    <h1>@book.Title</h1>
+}

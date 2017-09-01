@@ -45,16 +45,16 @@
         <ul class="section-selector">
             <li @if (Model.CurrentNavSection == NavSection.Books)
                 {
-                @:class="active"
+                    @:class="active"
                 }><span>Books</span></li>           
             <li @if (Model.CurrentNavSection == NavSection.Journals)
-                   {
-                   @:class="active"
-                   }><span>Journals</span></li>
+                {
+                    @:class="active"
+                }><span>Journals</span></li>
             <li @if (Model.CurrentNavSection == NavSection.Newspapers)
-                   {
-                   @:class="active"
-                   }><span>Newspapers</span></li>
+                {
+                    @:class="active"
+                }><span>Newspapers</span></li>
         </ul>
         <h4 class="label">Account</h4>
         <ul class="section-selector">
@@ -84,6 +84,7 @@
 <div class="container body-content">
     @{ Html.RenderPartial("Breadcrumb", Model.BreadcrumbModel, new ViewDataDictionary());}
     @RenderBody()
+    <div id="sing-container"></div>
 </div>
     
 @Scripts.Render("~/bundles/jquery")

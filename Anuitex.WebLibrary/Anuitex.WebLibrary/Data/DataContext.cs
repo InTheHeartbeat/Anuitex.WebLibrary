@@ -12,7 +12,9 @@ namespace Anuitex.WebLibrary.Data
 
         private static DataContext _instance;
 
-        public LibraryDataContext LibraryDataContext = new LibraryDataContext();
+        public LibraryDataDataContext LibraryDataContext = new LibraryDataDataContext();
+
+        public const int RoleAdmin = 0;
 
         private static DataContext GetInstance()
         {

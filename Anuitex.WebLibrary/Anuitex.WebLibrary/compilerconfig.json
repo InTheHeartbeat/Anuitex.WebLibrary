@@ -18,5 +18,9 @@
   {
     "outputFile": "Content/Styles/Colors.css",
     "inputFile": "Content/Styles/Colors.less"
+  },
+  {
+    "outputFile": "Content/Styles/AddBookViewStyles.css",
+    "inputFile": "Content/Styles/AddBookViewStyles.less"
   }
 ]

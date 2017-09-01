@@ -23,7 +23,7 @@ namespace Anuitex.WebLibrary.Data
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="LibraryDatabase")]
-	public partial class LibraryDataContext : System.Data.Linq.DataContext
+	public partial class LibraryDataDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -36,6 +36,9 @@ namespace Anuitex.WebLibrary.Data
     partial void InsertBook(Book instance);
     partial void UpdateBook(Book instance);
     partial void DeleteBook(Book instance);
+    partial void InsertImage(Image instance);
+    partial void UpdateImage(Image instance);
+    partial void DeleteImage(Image instance);
     partial void InsertJournal(Journal instance);
     partial void UpdateJournal(Journal instance);
     partial void DeleteJournal(Journal instance);
@@ -44,31 +47,31 @@ namespace Anuitex.WebLibrary.Data
     partial void DeleteNewspaper(Newspaper instance);
     #endregion
 		
-		public LibraryDataContext() : 
+		public LibraryDataDataContext() : 
 				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["LibraryDatabaseConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public LibraryDataContext(string connection) : 
+		public LibraryDataDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public LibraryDataContext(System.Data.IDbConnection connection) : 
+		public LibraryDataDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public LibraryDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public LibraryDataDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public LibraryDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public LibraryDataDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
@@ -87,6 +90,14 @@ namespace Anuitex.WebLibrary.Data
 			get
 			{
 				return this.GetTable<Book>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Image> Images
+		{
+			get
+			{
+				return this.GetTable<Image>();
 			}
 		}
 		
@@ -263,6 +274,10 @@ namespace Anuitex.WebLibrary.Data
 		
 		private double _Price;
 		
+		private System.Nullable<int> _PhotoId;
+		
+		private EntityRef<Image> _Image;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -283,10 +298,13 @@ namespace Anuitex.WebLibrary.Data
     partial void OnAmountChanged();
     partial void OnPriceChanging(double value);
     partial void OnPriceChanged();
+    partial void OnPhotoIdChanging(System.Nullable<int> value);
+    partial void OnPhotoIdChanged();
     #endregion
 		
 		public Book()
 		{
+			this._Image = default(EntityRef<Image>);
 			OnCreated();
 		}
 		
@@ -450,6 +468,64 @@ namespace Anuitex.WebLibrary.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhotoId", DbType="Int")]
+		public System.Nullable<int> PhotoId
+		{
+			get
+			{
+				return this._PhotoId;
+			}
+			set
+			{
+				if ((this._PhotoId != value))
+				{
+					if (this._Image.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPhotoIdChanging(value);
+					this.SendPropertyChanging();
+					this._PhotoId = value;
+					this.SendPropertyChanged("PhotoId");
+					this.OnPhotoIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Image_Book", Storage="_Image", ThisKey="PhotoId", OtherKey="Id", IsForeignKey=true)]
+		public Image Image
+		{
+			get
+			{
+				return this._Image.Entity;
+			}
+			set
+			{
+				Image previousValue = this._Image.Entity;
+				if (((previousValue != value) 
+							|| (this._Image.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Image.Entity = null;
+						previousValue.Books.Remove(this);
+					}
+					this._Image.Entity = value;
+					if ((value != null))
+					{
+						value.Books.Add(this);
+						this._PhotoId = value.Id;
+					}
+					else
+					{
+						this._PhotoId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Image");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -468,6 +544,176 @@ namespace Anuitex.WebLibrary.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Image")]
+	public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private string _Path;
+		
+		private EntitySet<Book> _Books;
+		
+		private EntitySet<Journal> _Journals;
+		
+		private EntitySet<Newspaper> _Newspapers;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnPathChanging(string value);
+    partial void OnPathChanged();
+    #endregion
+		
+		public Image()
+		{
+			this._Books = new EntitySet<Book>(new Action<Book>(this.attach_Books), new Action<Book>(this.detach_Books));
+			this._Journals = new EntitySet<Journal>(new Action<Journal>(this.attach_Journals), new Action<Journal>(this.detach_Journals));
+			this._Newspapers = new EntitySet<Newspaper>(new Action<Newspaper>(this.attach_Newspapers), new Action<Newspaper>(this.detach_Newspapers));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Path", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Path
+		{
+			get
+			{
+				return this._Path;
+			}
+			set
+			{
+				if ((this._Path != value))
+				{
+					this.OnPathChanging(value);
+					this.SendPropertyChanging();
+					this._Path = value;
+					this.SendPropertyChanged("Path");
+					this.OnPathChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Image_Book", Storage="_Books", ThisKey="Id", OtherKey="PhotoId")]
+		public EntitySet<Book> Books
+		{
+			get
+			{
+				return this._Books;
+			}
+			set
+			{
+				this._Books.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Image_Journal", Storage="_Journals", ThisKey="Id", OtherKey="PhotoId")]
+		public EntitySet<Journal> Journals
+		{
+			get
+			{
+				return this._Journals;
+			}
+			set
+			{
+				this._Journals.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Image_Newspaper", Storage="_Newspapers", ThisKey="Id", OtherKey="PhotoId")]
+		public EntitySet<Newspaper> Newspapers
+		{
+			get
+			{
+				return this._Newspapers;
+			}
+			set
+			{
+				this._Newspapers.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Books(Book entity)
+		{
+			this.SendPropertyChanging();
+			entity.Image = this;
+		}
+		
+		private void detach_Books(Book entity)
+		{
+			this.SendPropertyChanging();
+			entity.Image = null;
+		}
+		
+		private void attach_Journals(Journal entity)
+		{
+			this.SendPropertyChanging();
+			entity.Image = this;
+		}
+		
+		private void detach_Journals(Journal entity)
+		{
+			this.SendPropertyChanging();
+			entity.Image = null;
+		}
+		
+		private void attach_Newspapers(Newspaper entity)
+		{
+			this.SendPropertyChanging();
+			entity.Image = this;
+		}
+		
+		private void detach_Newspapers(Newspaper entity)
+		{
+			this.SendPropertyChanging();
+			entity.Image = null;
 		}
 	}
 	
@@ -491,6 +737,10 @@ namespace Anuitex.WebLibrary.Data
 		
 		private double _Price;
 		
+		private System.Nullable<int> _PhotoId;
+		
+		private EntityRef<Image> _Image;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -509,10 +759,13 @@ namespace Anuitex.WebLibrary.Data
     partial void OnAmountChanged();
     partial void OnPriceChanging(double value);
     partial void OnPriceChanged();
+    partial void OnPhotoIdChanging(System.Nullable<int> value);
+    partial void OnPhotoIdChanged();
     #endregion
 		
 		public Journal()
 		{
+			this._Image = default(EntityRef<Image>);
 			OnCreated();
 		}
 		
@@ -656,6 +909,64 @@ namespace Anuitex.WebLibrary.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhotoId", DbType="Int")]
+		public System.Nullable<int> PhotoId
+		{
+			get
+			{
+				return this._PhotoId;
+			}
+			set
+			{
+				if ((this._PhotoId != value))
+				{
+					if (this._Image.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPhotoIdChanging(value);
+					this.SendPropertyChanging();
+					this._PhotoId = value;
+					this.SendPropertyChanged("PhotoId");
+					this.OnPhotoIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Image_Journal", Storage="_Image", ThisKey="PhotoId", OtherKey="Id", IsForeignKey=true)]
+		public Image Image
+		{
+			get
+			{
+				return this._Image.Entity;
+			}
+			set
+			{
+				Image previousValue = this._Image.Entity;
+				if (((previousValue != value) 
+							|| (this._Image.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Image.Entity = null;
+						previousValue.Journals.Remove(this);
+					}
+					this._Image.Entity = value;
+					if ((value != null))
+					{
+						value.Journals.Add(this);
+						this._PhotoId = value.Id;
+					}
+					else
+					{
+						this._PhotoId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Image");
+				}
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -695,6 +1006,10 @@ namespace Anuitex.WebLibrary.Data
 		
 		private double _Price;
 		
+		private System.Nullable<int> _PhotoId;
+		
+		private EntityRef<Image> _Image;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -711,10 +1026,13 @@ namespace Anuitex.WebLibrary.Data
     partial void OnAmountChanged();
     partial void OnPriceChanging(double value);
     partial void OnPriceChanged();
+    partial void OnPhotoIdChanging(System.Nullable<int> value);
+    partial void OnPhotoIdChanged();
     #endregion
 		
 		public Newspaper()
 		{
+			this._Image = default(EntityRef<Image>);
 			OnCreated();
 		}
 		
@@ -834,6 +1152,64 @@ namespace Anuitex.WebLibrary.Data
 					this._Price = value;
 					this.SendPropertyChanged("Price");
 					this.OnPriceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PhotoId", DbType="Int")]
+		public System.Nullable<int> PhotoId
+		{
+			get
+			{
+				return this._PhotoId;
+			}
+			set
+			{
+				if ((this._PhotoId != value))
+				{
+					if (this._Image.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnPhotoIdChanging(value);
+					this.SendPropertyChanging();
+					this._PhotoId = value;
+					this.SendPropertyChanged("PhotoId");
+					this.OnPhotoIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Image_Newspaper", Storage="_Image", ThisKey="PhotoId", OtherKey="Id", IsForeignKey=true)]
+		public Image Image
+		{
+			get
+			{
+				return this._Image.Entity;
+			}
+			set
+			{
+				Image previousValue = this._Image.Entity;
+				if (((previousValue != value) 
+							|| (this._Image.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Image.Entity = null;
+						previousValue.Newspapers.Remove(this);
+					}
+					this._Image.Entity = value;
+					if ((value != null))
+					{
+						value.Newspapers.Add(this);
+						this._PhotoId = value.Id;
+					}
+					else
+					{
+						this._PhotoId = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("Image");
 				}
 			}
 		}

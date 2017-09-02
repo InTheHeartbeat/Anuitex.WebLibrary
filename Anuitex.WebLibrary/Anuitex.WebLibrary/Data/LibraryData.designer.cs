@@ -33,6 +33,9 @@ namespace Anuitex.WebLibrary.Data
     partial void InsertAccount(Account instance);
     partial void UpdateAccount(Account instance);
     partial void DeleteAccount(Account instance);
+    partial void InsertAccountAccessRecord(AccountAccessRecord instance);
+    partial void UpdateAccountAccessRecord(AccountAccessRecord instance);
+    partial void DeleteAccountAccessRecord(AccountAccessRecord instance);
     partial void InsertBook(Book instance);
     partial void UpdateBook(Book instance);
     partial void DeleteBook(Book instance);
@@ -45,6 +48,9 @@ namespace Anuitex.WebLibrary.Data
     partial void InsertNewspaper(Newspaper instance);
     partial void UpdateNewspaper(Newspaper instance);
     partial void DeleteNewspaper(Newspaper instance);
+    partial void InsertVisitor(Visitor instance);
+    partial void UpdateVisitor(Visitor instance);
+    partial void DeleteVisitor(Visitor instance);
     #endregion
 		
 		public LibraryDataDataContext() : 
@@ -85,6 +91,14 @@ namespace Anuitex.WebLibrary.Data
 			}
 		}
 		
+		public System.Data.Linq.Table<AccountAccessRecord> AccountAccessRecords
+		{
+			get
+			{
+				return this.GetTable<AccountAccessRecord>();
+			}
+		}
+		
 		public System.Data.Linq.Table<Book> Books
 		{
 			get
@@ -116,6 +130,14 @@ namespace Anuitex.WebLibrary.Data
 				return this.GetTable<Newspaper>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Visitor> Visitors
+		{
+			get
+			{
+				return this.GetTable<Visitor>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Account")]
@@ -126,11 +148,13 @@ namespace Anuitex.WebLibrary.Data
 		
 		private int _Id;
 		
-		private int _Role;
+		private bool _IsAdmin;
 		
 		private string _Login;
 		
 		private string _Hash;
+		
+		private EntitySet<AccountAccessRecord> _AccountAccessRecords;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -138,8 +162,8 @@ namespace Anuitex.WebLibrary.Data
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnRoleChanging(int value);
-    partial void OnRoleChanged();
+    partial void OnIsAdminChanging(bool value);
+    partial void OnIsAdminChanged();
     partial void OnLoginChanging(string value);
     partial void OnLoginChanged();
     partial void OnHashChanging(string value);
@@ -148,6 +172,7 @@ namespace Anuitex.WebLibrary.Data
 		
 		public Account()
 		{
+			this._AccountAccessRecords = new EntitySet<AccountAccessRecord>(new Action<AccountAccessRecord>(this.attach_AccountAccessRecords), new Action<AccountAccessRecord>(this.detach_AccountAccessRecords));
 			OnCreated();
 		}
 		
@@ -171,22 +196,22 @@ namespace Anuitex.WebLibrary.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Role", DbType="Int NOT NULL")]
-		public int Role
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IsAdmin", DbType="Bit NOT NULL")]
+		public bool IsAdmin
 		{
 			get
 			{
-				return this._Role;
+				return this._IsAdmin;
 			}
 			set
 			{
-				if ((this._Role != value))
+				if ((this._IsAdmin != value))
 				{
-					this.OnRoleChanging(value);
+					this.OnIsAdminChanging(value);
 					this.SendPropertyChanging();
-					this._Role = value;
-					this.SendPropertyChanged("Role");
-					this.OnRoleChanged();
+					this._IsAdmin = value;
+					this.SendPropertyChanged("IsAdmin");
+					this.OnIsAdminChanged();
 				}
 			}
 		}
@@ -227,6 +252,230 @@ namespace Anuitex.WebLibrary.Data
 					this._Hash = value;
 					this.SendPropertyChanged("Hash");
 					this.OnHashChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Account_AccountAccessRecord", Storage="_AccountAccessRecords", ThisKey="Id", OtherKey="AccountId")]
+		public EntitySet<AccountAccessRecord> AccountAccessRecords
+		{
+			get
+			{
+				return this._AccountAccessRecords;
+			}
+			set
+			{
+				this._AccountAccessRecords.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_AccountAccessRecords(AccountAccessRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Account = this;
+		}
+		
+		private void detach_AccountAccessRecords(AccountAccessRecord entity)
+		{
+			this.SendPropertyChanging();
+			entity.Account = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AccountAccessRecord")]
+	public partial class AccountAccessRecord : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _AccountId;
+		
+		private System.Guid _Token;
+		
+		private System.DateTime _ActiveDate;
+		
+		private string _Source;
+		
+		private EntityRef<Account> _Account;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnAccountIdChanging(int value);
+    partial void OnAccountIdChanged();
+    partial void OnTokenChanging(System.Guid value);
+    partial void OnTokenChanged();
+    partial void OnActiveDateChanging(System.DateTime value);
+    partial void OnActiveDateChanged();
+    partial void OnSourceChanging(string value);
+    partial void OnSourceChanged();
+    #endregion
+		
+		public AccountAccessRecord()
+		{
+			this._Account = default(EntityRef<Account>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AccountId", DbType="Int NOT NULL")]
+		public int AccountId
+		{
+			get
+			{
+				return this._AccountId;
+			}
+			set
+			{
+				if ((this._AccountId != value))
+				{
+					if (this._Account.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnAccountIdChanging(value);
+					this.SendPropertyChanging();
+					this._AccountId = value;
+					this.SendPropertyChanged("AccountId");
+					this.OnAccountIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Token", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Token
+		{
+			get
+			{
+				return this._Token;
+			}
+			set
+			{
+				if ((this._Token != value))
+				{
+					this.OnTokenChanging(value);
+					this.SendPropertyChanging();
+					this._Token = value;
+					this.SendPropertyChanged("Token");
+					this.OnTokenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ActiveDate", DbType="DateTime NOT NULL")]
+		public System.DateTime ActiveDate
+		{
+			get
+			{
+				return this._ActiveDate;
+			}
+			set
+			{
+				if ((this._ActiveDate != value))
+				{
+					this.OnActiveDateChanging(value);
+					this.SendPropertyChanging();
+					this._ActiveDate = value;
+					this.SendPropertyChanged("ActiveDate");
+					this.OnActiveDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Source", DbType="NVarChar(128) NOT NULL", CanBeNull=false)]
+		public string Source
+		{
+			get
+			{
+				return this._Source;
+			}
+			set
+			{
+				if ((this._Source != value))
+				{
+					this.OnSourceChanging(value);
+					this.SendPropertyChanging();
+					this._Source = value;
+					this.SendPropertyChanged("Source");
+					this.OnSourceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Account_AccountAccessRecord", Storage="_Account", ThisKey="AccountId", OtherKey="Id", IsForeignKey=true)]
+		public Account Account
+		{
+			get
+			{
+				return this._Account.Entity;
+			}
+			set
+			{
+				Account previousValue = this._Account.Entity;
+				if (((previousValue != value) 
+							|| (this._Account.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Account.Entity = null;
+						previousValue.AccountAccessRecords.Remove(this);
+					}
+					this._Account.Entity = value;
+					if ((value != null))
+					{
+						value.AccountAccessRecords.Add(this);
+						this._AccountId = value.Id;
+					}
+					else
+					{
+						this._AccountId = default(int);
+					}
+					this.SendPropertyChanged("Account");
 				}
 			}
 		}
@@ -1210,6 +1459,116 @@ namespace Anuitex.WebLibrary.Data
 						this._PhotoId = default(Nullable<int>);
 					}
 					this.SendPropertyChanged("Image");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Visitor")]
+	public partial class Visitor : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.Guid _Token;
+		
+		private System.DateTime _LastAccess;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnTokenChanging(System.Guid value);
+    partial void OnTokenChanged();
+    partial void OnLastAccessChanging(System.DateTime value);
+    partial void OnLastAccessChanged();
+    #endregion
+		
+		public Visitor()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Token", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid Token
+		{
+			get
+			{
+				return this._Token;
+			}
+			set
+			{
+				if ((this._Token != value))
+				{
+					this.OnTokenChanging(value);
+					this.SendPropertyChanging();
+					this._Token = value;
+					this.SendPropertyChanged("Token");
+					this.OnTokenChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LastAccess", DbType="DateTime NOT NULL")]
+		public System.DateTime LastAccess
+		{
+			get
+			{
+				return this._LastAccess;
+			}
+			set
+			{
+				if ((this._LastAccess != value))
+				{
+					this.OnLastAccessChanging(value);
+					this.SendPropertyChanging();
+					this._LastAccess = value;
+					this.SendPropertyChanged("LastAccess");
+					this.OnLastAccessChanged();
 				}
 			}
 		}

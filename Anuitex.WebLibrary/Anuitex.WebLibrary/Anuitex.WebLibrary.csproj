@@ -180,6 +180,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LibraryData.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

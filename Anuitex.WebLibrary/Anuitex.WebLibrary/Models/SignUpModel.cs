@@ -8,8 +8,7 @@ using System.Web.Mvc;
 namespace Anuitex.WebLibrary.Models
 {
     public class SignUpModel : BaseModel
-    {
-        [Remote("CheckLoginAvailable", "Account")]
+    {        
         [Required(ErrorMessage = "Field must be filled")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Length must be between 3 and 50 characters")]        
         public string Login { get; set; }

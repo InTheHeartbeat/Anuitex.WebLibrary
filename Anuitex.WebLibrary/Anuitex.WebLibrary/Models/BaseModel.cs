@@ -10,8 +10,7 @@ namespace Anuitex.WebLibrary.Models
 {
     public class BaseModel
     {
-        public Account CurrentUser => DataContext.Context.CurrentUser;        
-        public bool IsCurrentUserAdmin => DataContext.Context.CurrentUser?.Role == 0;        
+        public Account CurrentUser { get; set; }               
         public BreadcrumbModel BreadcrumbModel { get; set; }
         public NavSection CurrentNavSection { get; set; }
     }

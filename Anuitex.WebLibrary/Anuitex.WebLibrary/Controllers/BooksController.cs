@@ -13,34 +13,47 @@ namespace Anuitex.WebLibrary.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(new BooksModel() {Books = DataContext.Context.LibraryDataContext.Books.ToList(), BreadcrumbModel = new BreadcrumbModel(Url.Action("Index", "Books", null, Request.Url.Scheme)) });
+            return View(new BooksModel()
+            {
+                Books = DataContext.Context.LibraryDataContext.Books.ToList(),
+                BreadcrumbModel = new BreadcrumbModel(Url.Action("Index", "Books", null, Request.Url.Scheme)),
+                CurrentUser = CurrentUser
+            });
         }
 
+        [HttpGet]
         public ActionResult AddBook()
         {
-            if (CurrentUser == null || CurrentUser.Role != DataContext.RoleAdmin)
-                RedirectToActionPermanent("Index");
-            return View(new AddBookModel() { BreadcrumbModel = new BreadcrumbModel(Url.Action("AddBook", "Books", null, Request.Url.Scheme)) });
+            if (CurrentUser == null || !CurrentUser.IsAdmin)
+            { return RedirectToAction("Index", "Books");}
+                
+            return View(new AddBookModel()
+            {
+                BreadcrumbModel = new BreadcrumbModel(Url.Action("AddBook", "Books", null, Request.Url.Scheme)),
+                CurrentUser = CurrentUser
+            });
         }
 
         [HttpPost]
-        public ActionResult AddBook(AddBookModel model)
+        public ActionResult TryAddBook(AddBookModel model)
         {
-            if (CurrentUser == null || CurrentUser.Role != DataContext.RoleAdmin)
-                RedirectToActionPermanent("Index");
-
-            DataContext.Context.LibraryDataContext.Books.InsertOnSubmit(new Book()
+            if (model != null)
             {
-                Title = model.Title,
-                Author = model.Author,
-                Genre = model.Genre,
-                Amount = model.Amount,
-                Pages = model.Pages,
-                Price = model.Price,
-                PhotoId = model.PhotoId
-            });
-            DataContext.Context.LibraryDataContext.SubmitChanges();
-            return RedirectToActionPermanent("Index");
+                DataContext.Context.LibraryDataContext.Books.InsertOnSubmit(new Book()
+                {
+                    Title = model.Title,
+                    Author = model.Author,
+                    Genre = model.Genre,
+                    Amount = model.Amount,
+                    Pages = model.Pages,
+                    Price = model.Price,
+                    Year = model.Year,
+                    PhotoId = model.PhotoId
+                });
+                DataContext.Context.LibraryDataContext.SubmitChanges();
+                return RedirectToAction("Index", "Books");
+            }
+            return RedirectToAction("AddBook", "Books");
         }
     }
 }

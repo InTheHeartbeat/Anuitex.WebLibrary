@@ -27,15 +27,16 @@ namespace Anuitex.WebLibrary.Controllers.Api
             foreach (HttpContent content in provider.Contents)
             {
                 string fileName = content.Headers.ContentDisposition.FileName.Trim('\"');
+                string customFileName = Guid.NewGuid().ToString() + new FileInfo(fileName).Extension;
                 byte[] fileBytes = await content.ReadAsByteArrayAsync();
                 
-                using (FileStream fs = new FileStream(root + fileName, FileMode.Create))
+                using (FileStream fs = new FileStream(root + customFileName, FileMode.Create))
                 {
                     await fs.WriteAsync(fileBytes, 0, fileBytes.Length);
                 }
-                DataContext.Context.LibraryDataContext.Images.InsertOnSubmit(new Image() {Path = relPath+fileName});
+                DataContext.Context.LibraryDataContext.Images.InsertOnSubmit(new Image() {Path = relPath+customFileName});
                 DataContext.Context.LibraryDataContext.SubmitChanges();
-                id = DataContext.Context.LibraryDataContext.Images.FirstOrDefault(img => img.Path == relPath + fileName).Id;
+                id = DataContext.Context.LibraryDataContext.Images.FirstOrDefault(img => img.Path == relPath + customFileName).Id;
             }            
 
             return Ok(id);

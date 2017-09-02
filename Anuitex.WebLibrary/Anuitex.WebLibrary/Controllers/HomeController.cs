@@ -16,7 +16,8 @@ namespace Anuitex.WebLibrary.Controllers
             return View(new BaseModel()
             {                
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("Index", "Home", null, Request.Url.Scheme))  ,
-                CurrentNavSection              = NavSection.Books
+                CurrentNavSection              = NavSection.Books,
+                CurrentUser = CurrentUser
             });
         }
         

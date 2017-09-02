@@ -3,9 +3,20 @@
   <Table Name="dbo.Account" Member="Accounts">
     <Type Name="Account">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="Role" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsAdmin" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
       <Column Name="Login" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="Hash" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Account_AccountAccessRecord" Member="AccountAccessRecords" ThisKey="Id" OtherKey="AccountId" Type="AccountAccessRecord" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AccountAccessRecord" Member="AccountAccessRecords">
+    <Type Name="AccountAccessRecord">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AccountId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Token" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ActiveDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Source" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Association Name="Account_AccountAccessRecord" Member="Account" ThisKey="AccountId" OtherKey="Id" Type="Account" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.Book" Member="Books">
@@ -54,6 +65,13 @@
       <Column Name="Price" Type="System.Double" DbType="Float NOT NULL" CanBeNull="false" />
       <Column Name="PhotoId" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="Image_Newspaper" Member="Image" ThisKey="PhotoId" OtherKey="Id" Type="Image" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Visitor" Member="Visitors">
+    <Type Name="Visitor">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Token" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="LastAccess" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

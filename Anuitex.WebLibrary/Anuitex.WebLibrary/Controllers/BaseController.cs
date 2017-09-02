@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 using System.Web.Http.Results;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Anuitex.WebLibrary.Data;
 using Anuitex.WebLibrary.Models;
 
@@ -13,6 +15,55 @@ namespace Anuitex.WebLibrary.Controllers
 {
     public class BaseController : Controller
     {
-        public Account CurrentUser { get; set; }        
+        protected Account CurrentUser { get; private set; }
+        protected Visitor CurrentVisitor { get; private set; }
+
+        protected override void Initialize(RequestContext requestContext)
+        {
+            base.Initialize(requestContext);
+
+            InitializeCurrentUser(requestContext);
+            InitializeCurrentVisitor(requestContext);
+        }
+
+        private void InitializeCurrentUser(RequestContext requestContext)
+        {
+            string at = requestContext.HttpContext.Request.Cookies["AT"]?.Value;
+            string adr = requestContext.HttpContext.Request.UserHostAddress;
+
+            if (!string.IsNullOrWhiteSpace(at) && !string.IsNullOrWhiteSpace(adr))
+            {
+                Guid token = Guid.Parse(at);
+                CurrentUser = DataContext.Context.LibraryDataContext.AccountAccessRecords.FirstOrDefault(t => t.Token == token && t.Source == adr)?.Account;
+            }
+        }
+
+        private void InitializeCurrentVisitor(RequestContext requestContext)
+        {
+            string at = requestContext.HttpContext.Request.Cookies["AT"]?.Value;
+            if (at != null)
+            {
+                Guid guid = Guid.Parse(at);
+                CurrentVisitor = DataContext.Context.LibraryDataContext.Visitors.FirstOrDefault(v => v.Token == guid);
+            }
+
+            if (CurrentVisitor == null && CurrentUser == null)
+            {
+                Guid token = Guid.NewGuid();
+                                
+                Visitor visitor = new Visitor()
+                {
+                    Token = token,
+                    LastAccess = DateTime.Now,                    
+                };
+
+                DataContext.Context.LibraryDataContext.Visitors.InsertOnSubmit(visitor);
+                DataContext.Context.LibraryDataContext.SubmitChanges();
+
+                Response.Cookies.Set(new HttpCookie("AT", token.ToString()));
+
+                CurrentVisitor = visitor;
+            }
+        }
     }
 }

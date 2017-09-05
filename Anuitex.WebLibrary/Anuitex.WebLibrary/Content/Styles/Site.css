@@ -71,8 +71,6 @@ b {
   max-height: 30px;
   background-color: rgba(25, 28, 35, 0.28);
   line-height: 1.99em;
-  display: flex;
-  justify-content: space-between;
 }
 .windows-container .windows-grid .window-wrapper .window .window-header span.icon {
   margin-top: 0.5em;
@@ -103,6 +101,10 @@ b {
 .windows-container .windows-grid .window-wrapper .window .window-header .window-header-buttons span.icon {
   margin-left: 0.43em;
   margin-top: 0.45em;
+}
+.windows-container .windows-grid .window-wrapper .window .window-header .justify {
+  display: flex;
+  justify-content: space-between;
 }
 .windows-container .windows-grid .window-wrapper .window .window-content {
   position: absolute;

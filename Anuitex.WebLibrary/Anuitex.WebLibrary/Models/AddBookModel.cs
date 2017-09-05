@@ -29,5 +29,8 @@ namespace Anuitex.WebLibrary.Models
         public string PhotoPath => (PhotoId == 0 ? "/Upload/Images/Books/no-photo.png" : DataContext.Context.LibraryDataContext.Images
             .FirstOrDefault(img => img.Id == PhotoId)
             .Path);
+
+        public bool IsEdit { get; set; }
+        public int Id { get; set; }
     }
 }

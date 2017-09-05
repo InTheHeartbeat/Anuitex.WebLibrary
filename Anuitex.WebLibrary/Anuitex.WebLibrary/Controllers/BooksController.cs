@@ -30,7 +30,8 @@ namespace Anuitex.WebLibrary.Controllers
             return View(new AddBookModel()
             {
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("AddBook", "Books", null, Request.Url.Scheme)),
-                CurrentUser = CurrentUser
+                CurrentUser = CurrentUser,
+                IsEdit = false
             });
         }
 
@@ -75,6 +76,53 @@ namespace Anuitex.WebLibrary.Controllers
             DataContext.Context.LibraryDataContext.SubmitChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult EditBook(int id)
+        {
+            if (CurrentUser == null || !CurrentUser.IsAdmin)
+            { return RedirectToActionPermanent("Index"); }
+
+            Book book = DataContext.Context.LibraryDataContext.Books.FirstOrDefault(bk => bk.Id == id);
+
+            if (book == null)
+            { return RedirectToActionPermanent("Index"); }
+
+            return View("AddBook", new AddBookModel()
+            {
+                BreadcrumbModel = new BreadcrumbModel(Url.Action("EditBook", "Books", null, Request.Url.Scheme)),
+                CurrentUser = CurrentUser,
+                IsEdit = true,
+                Title = book.Title,
+                Author = book.Author,
+                Genre = book.Genre,
+                Pages = book.Pages,
+                Year = book.Year,
+                Amount = book.Amount,
+                Price = book.Price,
+                PhotoId = book.PhotoId.Value,
+                Id = book.Id
+            });
+        }
+
+        [HttpPost]
+        public ActionResult TryEditBook(AddBookModel model)
+        {
+            if (model != null)
+            {
+                Book book = DataContext.Context.LibraryDataContext.Books.FirstOrDefault(bk => bk.Id == model.Id);
+                book.Title = model.Title;
+                book.Author = model.Author;
+                book.Genre = model.Genre;
+                book.Pages = model.Pages;
+                book.Year = model.Year;
+                book.Price = model.Price;
+                book.Amount = model.Amount;
+                book.PhotoId = model.PhotoId;
+                DataContext.Context.LibraryDataContext.SubmitChanges();
+                return RedirectToAction("Index", "Books");
+            }
+            return RedirectToAction("EditBook", "Books");
         }
     }
 }

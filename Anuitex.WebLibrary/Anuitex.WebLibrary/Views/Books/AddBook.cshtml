@@ -11,18 +11,20 @@
                     <h4>Adding book form</h4>
                 </div>
                 <div class="window-content">
-                    @using (Html.BeginForm("TryAddBook", "Books"))
+                    @using ((Model.IsEdit ? Html.BeginForm("TryEditBook", "Books") : Html.BeginForm("TryAddBook", "Books")))
                     {
                         <div class="choose-photo" id="book-photo">
                             <h5>Click for choose photo</h5>
                         </div>
+                        @Html.HiddenFor(f=>Model.Id)
                         @Html.ValidationMessageFor(msg => msg.Title)
                         @Html.TextBoxFor(f => f.Title, new {@placeholder = "Title"})
                         @Html.ValidationMessageFor(msg => msg.Author)
                         @Html.TextBoxFor(f => f.Author, new {@placeholder = "Author"})
                         @Html.ValidationMessageFor(msg => msg.Genre)
                         @Html.TextBoxFor(f => f.Genre, new {@placeholder = "Genre"})
-                        <br/><br/>
+                        <br/>
+                        <br/>
                         <div id="add-book-down-fields">
                             @Html.ValidationMessageFor(msg => msg.Year)
                             @Html.TextBoxFor(f => f.Year, new {@placeholder = "Year"})
@@ -33,7 +35,15 @@
                             @Html.ValidationMessageFor(msg => msg.Price)
                             @Html.TextBoxFor(f => f.Price, new {@placeholder = "Price"})
                         </div>
-                        <input type="submit" class="btn" value="Add">
+                        if (Model.IsEdit)
+                        {
+                            <input type="submit" class="btn" value="Edit">
+                        }
+                        else
+                        {
+                            <input type="submit" class="btn" value="Add">
+                        }
+
                         @Html.ValidationSummary(true)
 
                         <input type="file" name="upload" id="uploadFile" style="display: none"/>

@@ -31,9 +31,7 @@
                     min-height:30px;                   
                     max-height:30px;
                     background-color:@window-header-background-color;                    
-                    line-height: 1.99em;
-                    display: flex;
-                    justify-content: space-between;
+                    line-height: 1.99em;                    
                     span.icon
                     {
                         margin-top: 0.5em;
@@ -43,8 +41,9 @@
                         background-size:cover;
                     }
                     h4{margin:0;display:inline-block;overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;}
+                        text-overflow: ellipsis;
+                        white-space: nowrap;}
+                    
                     .window-header-buttons
                     {
                         display:inline-block;
@@ -64,6 +63,11 @@
                             margin-top:0.45em;
                         }
                     }
+                }
+                .window-header .justify
+                {
+                    display: flex;
+                    justify-content: space-between;
                 }
                 .window-content
                 {

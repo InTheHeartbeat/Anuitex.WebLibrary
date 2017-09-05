@@ -13,15 +13,15 @@
         {
             <li class="window-wrapper">
                 <div class="window window-hovered-shadow">
-                    <div class="window-header">
+                    <div class="window-header justify">
                         <span class="icon ic-book"></span>
                         <h4>@book.Author - @book.Title</h4>
                         <div class="window-header-buttons">
                             @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
                             {
-                                <div class="btn btn-icon">
+                                <a href="@Url.Action("EditBook","Books",new {id = book.Id})" class="btn btn-icon">
                                     <span class="icon ic-edit"></span>
-                                </div>
+                                </a>
                                 <a  href="@Url.Action("RemoveBook","Books",new {id = book.Id})" class="btn btn-icon">
                                     <span class="icon ic-remove"></span>
                                 </a>

@@ -32,6 +32,8 @@
                     max-height:30px;
                     background-color:@window-header-background-color;                    
                     line-height: 1.99em;
+                    display: flex;
+                    justify-content: space-between;
                     span.icon
                     {
                         margin-top: 0.5em;
@@ -40,7 +42,28 @@
                         width:16px;height:16px;
                         background-size:cover;
                     }
-                    h4{margin:0;display:inline-block;}
+                    h4{margin:0;display:inline-block;overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;}
+                    .window-header-buttons
+                    {
+                        display:inline-block;
+                        float:right;
+                        height:30px;
+                        width:90px;
+                        text-align: right;
+                        .btn 
+                        {
+                            
+                            width:28px!important;
+                            height:28px!important;
+                        }
+                        span.icon
+                        {
+                            margin-left:0.43em;
+                            margin-top:0.45em;
+                        }
+                    }
                 }
                 .window-content
                 {

@@ -55,5 +55,26 @@ namespace Anuitex.WebLibrary.Controllers
             }
             return RedirectToAction("AddBook", "Books");
         }
+
+
+        
+        [Route("Books/RemoveBook/{id:int}")]
+        public ActionResult RemoveBook(int id)
+        {
+            if (CurrentUser == null || !CurrentUser.IsAdmin)
+            {return RedirectToActionPermanent("Index");}
+
+            Book book = DataContext.Context.LibraryDataContext.Books.FirstOrDefault(bk => bk.Id == id);
+
+            if (book == null)
+            {return RedirectToActionPermanent("Index");}
+
+            DataContext.Context.LibraryDataContext.Books.DeleteOnSubmit(book);
+            DataContext.Context.LibraryDataContext.Images.DeleteOnSubmit(
+                DataContext.Context.LibraryDataContext.Images.FirstOrDefault(img => img.Id == book.PhotoId));
+            DataContext.Context.LibraryDataContext.SubmitChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }

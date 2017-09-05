@@ -16,6 +16,17 @@
                     <div class="window-header">
                         <span class="icon ic-book"></span>
                         <h4>@book.Author - @book.Title</h4>
+                        <div class="window-header-buttons">
+                            @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
+                            {
+                                <div class="btn btn-icon">
+                                    <span class="icon ic-edit"></span>
+                                </div>
+                                <a  href="@Url.Action("RemoveBook","Books",new {id = book.Id})" class="btn btn-icon">
+                                    <span class="icon ic-remove"></span>
+                                </a>
+                            }
+                        </div>
                     </div>
                     <div class="window-content">
                         <div class="book-photo" style="background-image: url(@Model.GetPhotoPath(book.PhotoId.Value))"></div>
@@ -45,33 +56,3 @@
         }
     </ul>
 </div>
-
-
-
-
-@section scripts
-{
-    <script type="text/javascript">
-        $(document).ready(function () { // Ждём загрузки страницы
-
-            $(".book-photo").click(function () { // Событие клика на маленькое изображение
-                var img = $(this); // Получаем изображение, на которое кликнули
-                var src = img.css("background-image"); // Достаем из этого изображения путь до картинки
-
-                $("body").append("<div class='popup'>" + //Добавляем в тело документа разметку всплывающего окна
-                    "<div class='popup_bg popup_img'></div>" + // Блок, который будет служить фоном затемненным
-                    "</div>");
-                $("body").find(".popup_img").css("background-image", src);
-                $(".popup").fadeIn(400); // Медленно выводим изображение
-                $(".popup_bg").click(function () { // Событие клика на затемненный фон
-                    $(".popup").fadeOut(400); // Медленно убираем всплывающее окно
-                    setTimeout(function () { // Выставляем таймер
-                        $(".popup").remove(); // Удаляем разметку всплывающего окна
-                    },
-                        400);
-                });
-            });
-
-        });
-    </script>
-}

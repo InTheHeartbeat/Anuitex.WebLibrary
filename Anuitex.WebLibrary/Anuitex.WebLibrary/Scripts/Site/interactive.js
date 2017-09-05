@@ -38,6 +38,26 @@ function HideSignForm() {
 }
 
 $(document).ready(function () {
+    $(".book-photo").click(function () {
+
+        var img = $(this);
+        var src = img.css("background-image");
+
+        $("body").append("<div class='popup'>" +
+            "<div class='popup_bg popup_img'></div>" +
+            "</div>");
+        $("body").find(".popup_img").css("background-image", src);
+        $(".popup").fadeIn(400);
+        $(".popup_bg").click(function () {
+            $(".popup").fadeOut(400);
+            setTimeout(function () {
+                    $(".popup").remove();
+                },
+                400);
+        });
+    });
+
+
     $("#btn-signup-li").click(function () {
         $("#btn-signup").click();
     });

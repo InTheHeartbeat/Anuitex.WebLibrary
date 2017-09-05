@@ -102,7 +102,7 @@ b {
   margin-left: 0.43em;
   margin-top: 0.45em;
 }
-.windows-container .windows-grid .window-wrapper .window .window-header .justify {
+.windows-container .windows-grid .window-wrapper .window .justify {
   display: flex;
   justify-content: space-between;
 }

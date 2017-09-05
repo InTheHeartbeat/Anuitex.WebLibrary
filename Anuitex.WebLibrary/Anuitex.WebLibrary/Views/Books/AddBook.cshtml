@@ -64,8 +64,8 @@
 
 
         $(document).ready(function () {
-            $('#book-photo').css('background-image', 'url(@Model.PhotoPath)');
-
+            $('#book-photo').css('background-image', 'url(@Model.PhotoPath)').css('background-size', 'contain');
+    
             if ($("#Year").val() == "0"){ $("#Year").val("");}
             if ($("#Pages").val() == 0){ $("#Pages").val("");}
             if ($("#Amount").val()=="0") { $("#Amount").val("") };

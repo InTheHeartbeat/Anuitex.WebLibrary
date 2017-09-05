@@ -18,9 +18,13 @@ namespace Anuitex.WebLibrary.Controllers
         protected Account CurrentUser { get; private set; }
         protected Visitor CurrentVisitor { get; private set; }
 
+        protected LibraryDataContext DataContext { get; private set; }
+
         protected override void Initialize(RequestContext requestContext)
         {
             base.Initialize(requestContext);
+
+            DataContext = new LibraryDataContext();
 
             InitializeCurrentUser(requestContext);
             InitializeCurrentVisitor(requestContext);
@@ -28,23 +32,23 @@ namespace Anuitex.WebLibrary.Controllers
 
         private void InitializeCurrentUser(RequestContext requestContext)
         {
-            string at = requestContext.HttpContext.Request.Cookies["AT"]?.Value;
+            string at = requestContext.HttpContext.Request.Cookies["AToken"]?.Value;
             string adr = requestContext.HttpContext.Request.UserHostAddress;
 
             if (!string.IsNullOrWhiteSpace(at) && !string.IsNullOrWhiteSpace(adr))
             {
                 Guid token = Guid.Parse(at);
-                CurrentUser = DataContext.Context.LibraryDataContext.AccountAccessRecords.FirstOrDefault(t => t.Token == token && t.Source == adr)?.Account;
+                CurrentUser = DataContext.AccountAccessRecords.FirstOrDefault(t => t.Token == token && t.Source == adr)?.Account;
             }
         }
 
         private void InitializeCurrentVisitor(RequestContext requestContext)
         {
-            string at = requestContext.HttpContext.Request.Cookies["AT"]?.Value;
+            string at = requestContext.HttpContext.Request.Cookies["VToken"]?.Value;
             if (at != null)
             {
                 Guid guid = Guid.Parse(at);
-                CurrentVisitor = DataContext.Context.LibraryDataContext.Visitors.FirstOrDefault(v => v.Token == guid);
+                CurrentVisitor = DataContext.Visitors.FirstOrDefault(v => v.Token == guid);
             }
 
             if (CurrentVisitor == null && CurrentUser == null)
@@ -57,10 +61,10 @@ namespace Anuitex.WebLibrary.Controllers
                     LastAccess = DateTime.Now,                    
                 };
 
-                DataContext.Context.LibraryDataContext.Visitors.InsertOnSubmit(visitor);
-                DataContext.Context.LibraryDataContext.SubmitChanges();
+                DataContext.Visitors.InsertOnSubmit(visitor);
+                DataContext.SubmitChanges();
 
-                Response.Cookies.Set(new HttpCookie("AT", token.ToString()));
+                Response.Cookies.Set(new HttpCookie("VToken", token.ToString()));
 
                 CurrentVisitor = visitor;
             }

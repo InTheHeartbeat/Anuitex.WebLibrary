@@ -23,7 +23,7 @@ namespace Anuitex.WebLibrary.Data
 	
 	
 	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="LibraryDatabase")]
-	public partial class LibraryDataDataContext : System.Data.Linq.DataContext
+	public partial class LibraryDataContext : System.Data.Linq.DataContext
 	{
 		
 		private static System.Data.Linq.Mapping.MappingSource mappingSource = new AttributeMappingSource();
@@ -53,31 +53,31 @@ namespace Anuitex.WebLibrary.Data
     partial void DeleteVisitor(Visitor instance);
     #endregion
 		
-		public LibraryDataDataContext() : 
+		public LibraryDataContext() : 
 				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["LibraryDatabaseConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public LibraryDataDataContext(string connection) : 
+		public LibraryDataContext(string connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public LibraryDataDataContext(System.Data.IDbConnection connection) : 
+		public LibraryDataContext(System.Data.IDbConnection connection) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public LibraryDataDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public LibraryDataContext(string connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();
 		}
 		
-		public LibraryDataDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
+		public LibraryDataContext(System.Data.IDbConnection connection, System.Data.Linq.Mapping.MappingSource mappingSource) : 
 				base(connection, mappingSource)
 		{
 			OnCreated();

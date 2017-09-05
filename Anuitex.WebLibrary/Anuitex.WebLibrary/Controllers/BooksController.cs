@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Anuitex.WebLibrary.Data;
+using Anuitex.WebLibrary.Data.Models;
 using Anuitex.WebLibrary.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace Anuitex.WebLibrary.Controllers
 {
@@ -13,12 +15,14 @@ namespace Anuitex.WebLibrary.Controllers
         // GET: Books
         public ActionResult Index()
         {
-            return View(new BooksModel()
+            BooksModel model = new BooksModel()
             {
-                Books = DataContext.Context.LibraryDataContext.Books.ToList(),
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("Index", "Books", null, Request.Url.Scheme)),
-                CurrentUser = CurrentUser
-            });
+                CurrentUser = CurrentUser,
+                Books = DataContext.Books.Select(book=>new BookModel(book)).ToList()
+            };
+
+            return View(model);
         }
 
         [HttpGet]
@@ -31,30 +35,30 @@ namespace Anuitex.WebLibrary.Controllers
             {
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("AddBook", "Books", null, Request.Url.Scheme)),
                 CurrentUser = CurrentUser,
-                IsEdit = false
+                IsEdit = false,
+                PhotoPath = "/Upload/Images/Books/no-photo.png"
             });
         }
 
         [HttpPost]
         public ActionResult TryAddBook(AddBookModel model)
         {
-            if (model != null)
+            if (model == null) { return RedirectToAction("AddBook", "Books");}
+
+            DataContext.Books.InsertOnSubmit(new Book()
             {
-                DataContext.Context.LibraryDataContext.Books.InsertOnSubmit(new Book()
-                {
-                    Title = model.Title,
-                    Author = model.Author,
-                    Genre = model.Genre,
-                    Amount = model.Amount,
-                    Pages = model.Pages,
-                    Price = model.Price,
-                    Year = model.Year,
-                    PhotoId = model.PhotoId
-                });
-                DataContext.Context.LibraryDataContext.SubmitChanges();
-                return RedirectToAction("Index", "Books");
-            }
-            return RedirectToAction("AddBook", "Books");
+                Title = model.Title,
+                Author = model.Author,
+                Genre = model.Genre,
+                Amount = model.Amount,
+                Pages = model.Pages,
+                Price = model.Price,
+                Year = model.Year,
+                PhotoId = model.PhotoId
+            });
+            DataContext.SubmitChanges();
+
+            return RedirectToAction("Index", "Books");
         }
 
 
@@ -65,15 +69,14 @@ namespace Anuitex.WebLibrary.Controllers
             if (CurrentUser == null || !CurrentUser.IsAdmin)
             {return RedirectToActionPermanent("Index");}
 
-            Book book = DataContext.Context.LibraryDataContext.Books.FirstOrDefault(bk => bk.Id == id);
+            Book book = DataContext.Books.FirstOrDefault(bk => bk.Id == id);
 
             if (book == null)
             {return RedirectToActionPermanent("Index");}
 
-            DataContext.Context.LibraryDataContext.Books.DeleteOnSubmit(book);
-            DataContext.Context.LibraryDataContext.Images.DeleteOnSubmit(
-                DataContext.Context.LibraryDataContext.Images.FirstOrDefault(img => img.Id == book.PhotoId));
-            DataContext.Context.LibraryDataContext.SubmitChanges();
+            DataContext.Books.DeleteOnSubmit(book);
+            DataContext.Images.DeleteOnSubmit(book.Image);
+            DataContext.SubmitChanges();
 
             return RedirectToAction("Index");
         }
@@ -83,7 +86,7 @@ namespace Anuitex.WebLibrary.Controllers
             if (CurrentUser == null || !CurrentUser.IsAdmin)
             { return RedirectToActionPermanent("Index"); }
 
-            Book book = DataContext.Context.LibraryDataContext.Books.FirstOrDefault(bk => bk.Id == id);
+            Book book = DataContext.Books.FirstOrDefault(bk => bk.Id == id);
 
             if (book == null)
             { return RedirectToActionPermanent("Index"); }
@@ -101,7 +104,8 @@ namespace Anuitex.WebLibrary.Controllers
                 Amount = book.Amount,
                 Price = book.Price,
                 PhotoId = book.PhotoId.Value,
-                Id = book.Id
+                Id = book.Id,
+                PhotoPath = book.Image.Path
             });
         }
 
@@ -110,7 +114,7 @@ namespace Anuitex.WebLibrary.Controllers
         {
             if (model != null)
             {
-                Book book = DataContext.Context.LibraryDataContext.Books.FirstOrDefault(bk => bk.Id == model.Id);
+                Book book = DataContext.Books.FirstOrDefault(bk => bk.Id == model.Id);
                 book.Title = model.Title;
                 book.Author = model.Author;
                 book.Genre = model.Genre;
@@ -119,7 +123,8 @@ namespace Anuitex.WebLibrary.Controllers
                 book.Price = model.Price;
                 book.Amount = model.Amount;
                 book.PhotoId = model.PhotoId;
-                DataContext.Context.LibraryDataContext.SubmitChanges();
+                DataContext.SubmitChanges();
+
                 return RedirectToAction("Index", "Books");
             }
             return RedirectToAction("EditBook", "Books");

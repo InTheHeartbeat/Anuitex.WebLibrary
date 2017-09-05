@@ -52,7 +52,7 @@ namespace Anuitex.WebLibrary.Controllers
             if (CurrentUser != null) { return RedirectToAction("Index", "Home"); }
             if (!ModelState.IsValid) { return View("SignIn", model); }
 
-            Account account = DataContext.Context.LibraryDataContext.Accounts.FirstOrDefault(
+            Account account = DataContext.Accounts.FirstOrDefault(
                 ac => ac.Login == model.Login && ac.Hash == model.Password.MD5());
 
             if (account == null)
@@ -76,7 +76,7 @@ namespace Anuitex.WebLibrary.Controllers
         {
             if (!ModelState.IsValid) { return View("SignUp", model);}
 
-            if (DataContext.Context.LibraryDataContext.Accounts.Any(ac => ac.Login == model.Login))
+            if (DataContext.Accounts.Any(ac => ac.Login == model.Login))
             {
                 ModelState.AddModelError("Login", "Login already exist");
                 if (model.BreadcrumbModel == null)
@@ -89,13 +89,12 @@ namespace Anuitex.WebLibrary.Controllers
 
             Account newAccount = new Account()
             {
-
                 Login = model.Login,
                 Hash = model.Password.MD5()
             };
 
-            DataContext.Context.LibraryDataContext.Accounts.InsertOnSubmit(newAccount);
-            DataContext.Context.LibraryDataContext.SubmitChanges();
+            DataContext.Accounts.InsertOnSubmit(newAccount);
+            DataContext.SubmitChanges();
             
             ViewBag.SuccessSignUp = true;
 
@@ -110,10 +109,10 @@ namespace Anuitex.WebLibrary.Controllers
             AccountAccessRecord previousRecord = CurrentUser?.AccountAccessRecords.FirstOrDefault(r => r.Source == Request.UserHostAddress);
             if (previousRecord != null)
             {
-                DataContext.Context.LibraryDataContext.AccountAccessRecords.DeleteOnSubmit(previousRecord);
-                DataContext.Context.LibraryDataContext.SubmitChanges();
+                DataContext.AccountAccessRecords.DeleteOnSubmit(previousRecord);
+                DataContext.SubmitChanges();
 
-                HttpCookie at = new HttpCookie("AT", "");
+                HttpCookie at = new HttpCookie("AToken", "");
                 at.Expires = DateTime.Now.AddDays(-1d);
                 Response.SetCookie(at);
             }
@@ -127,15 +126,15 @@ namespace Anuitex.WebLibrary.Controllers
             AccountAccessRecord previousRecord = account.AccountAccessRecords.FirstOrDefault(r => r.Source == Request.UserHostAddress);
             if (previousRecord != null)
             {
-                DataContext.Context.LibraryDataContext.AccountAccessRecords.DeleteOnSubmit(previousRecord);
-                DataContext.Context.LibraryDataContext.SubmitChanges();
+                DataContext.AccountAccessRecords.DeleteOnSubmit(previousRecord);
+                DataContext.SubmitChanges();
             }
 
             AccountAccessRecord record = new AccountAccessRecord() { ActiveDate = DateTime.Now, Account = account, Source = Request.UserHostAddress, Token = token };
-            DataContext.Context.LibraryDataContext.AccountAccessRecords.InsertOnSubmit(record);
-            DataContext.Context.LibraryDataContext.SubmitChanges();
+            DataContext.AccountAccessRecords.InsertOnSubmit(record);
+            DataContext.SubmitChanges();
 
-            HttpCookie at = new HttpCookie("AT", token.ToString());
+            HttpCookie at = new HttpCookie("AToken", token.ToString());
             at.Expires = DateTime.Now.AddHours(12);
             Response.SetCookie(at);
         }

@@ -8,7 +8,7 @@ using Anuitex.WebLibrary.Data;
 
 namespace Anuitex.WebLibrary.Controllers.Api
 {
-    public class UploadController : ApiController
+    public class UploadController : BaseApiController
     {
         public async Task<IHttpActionResult> UploadBookPhoto()
         {
@@ -34,9 +34,9 @@ namespace Anuitex.WebLibrary.Controllers.Api
                 {
                     await fs.WriteAsync(fileBytes, 0, fileBytes.Length);
                 }
-                DataContext.Context.LibraryDataContext.Images.InsertOnSubmit(new Image() {Path = relPath+customFileName});
-                DataContext.Context.LibraryDataContext.SubmitChanges();
-                id = DataContext.Context.LibraryDataContext.Images.FirstOrDefault(img => img.Path == relPath + customFileName).Id;
+                DataContext.Images.InsertOnSubmit(new Image() {Path = relPath+customFileName});
+                DataContext.SubmitChanges();
+                id = DataContext.Images.FirstOrDefault(img => img.Path == relPath + customFileName).Id;
             }            
 
             return Ok(id);

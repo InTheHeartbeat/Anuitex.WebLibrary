@@ -1,4 +1,5 @@
 ﻿@using Anuitex.WebLibrary.Data
+@using Anuitex.WebLibrary.Data.Models
 @model Anuitex.WebLibrary.Models.BooksModel
 
 @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
@@ -9,7 +10,7 @@
 }
 <div class="windows-container">
     <ul class="windows-grid">
-        @foreach (Book book in Model.Books)
+        @foreach (BookModel book in Model.Books)
         {
             <li class="window-wrapper">
                 <div class="window window-hovered-shadow">
@@ -29,7 +30,7 @@
                         </div>
                     </div>
                     <div class="window-content">
-                        <div class="book-photo" style="background-image: url(@Model.GetPhotoPath(book.PhotoId.Value))"></div>
+                        <div class="book-photo" style="background-image: url(@book.PhotoPath)"></div>
                         <span>Title:</span>
                         <span>@book.Title</span>
                         <br/>

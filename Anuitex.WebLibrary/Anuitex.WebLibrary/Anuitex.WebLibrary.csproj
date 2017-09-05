@@ -207,22 +207,22 @@
     <Content Include="Content\Styles\AddBookViewStyles.min.css">
       <DependentUpon>AddBookViewStyles.css</DependentUpon>
     </Content>
-    <Content Include="Content\Styles\Colors.css">
+    <Content Include="Content\Styles\Theme\Colors.css">
       <DependentUpon>Colors.less</DependentUpon>
     </Content>
-    <Content Include="Content\Styles\Colors.min.css">
+    <Content Include="Content\Styles\Theme\Colors.min.css">
       <DependentUpon>Colors.css</DependentUpon>
     </Content>
-    <Content Include="Content\Styles\Controls.css">
+    <Content Include="Content\Styles\Theme\Controls.css">
       <DependentUpon>Controls.less</DependentUpon>
     </Content>
-    <Content Include="Content\Styles\Controls.min.css">
+    <Content Include="Content\Styles\Theme\Controls.min.css">
       <DependentUpon>Controls.css</DependentUpon>
     </Content>
-    <Content Include="Content\Styles\Icons.css">
+    <Content Include="Content\Styles\Theme\Icons.css">
       <DependentUpon>Icons.less</DependentUpon>
     </Content>
-    <Content Include="Content\Styles\Icons.min.css">
+    <Content Include="Content\Styles\Theme\Icons.min.css">
       <DependentUpon>Icons.css</DependentUpon>
     </Content>
     <Content Include="Content\Styles\select2.css" />
@@ -239,11 +239,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Styles\Colors.less" />
-    <Content Include="Content\Styles\Controls.less" />
-    <Content Include="Content\Styles\Icons.less" />
+    <Content Include="Content\Styles\Theme\Colors.less" />
+    <Content Include="Content\Styles\Theme\Controls.less" />
+    <Content Include="Content\Styles\Theme\Icons.less" />
     <Content Include="Content\Styles\Site.less" />
-    <Content Include="Content\Styles\Variables.less" />
+    <Content Include="Content\Styles\Theme\Variables.less" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
@@ -254,6 +254,11 @@
       <LastGenOutput>LibraryData.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Content\Styles\Theme\Windows.less" />
+    <Content Include="Content\Styles\Theme\Layout.less" />
+    <Content Include="Content\Styles\Theme\Global.less" />
+    <Content Include="Content\Styles\Theme\Components.less" />
+    <Content Include="Content\Styles\Theme\Main.less" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />

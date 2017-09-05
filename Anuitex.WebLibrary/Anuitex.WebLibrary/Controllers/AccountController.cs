@@ -58,7 +58,12 @@ namespace Anuitex.WebLibrary.Controllers
             if (account == null)
             {
                 ModelState.AddModelError("", "Invalid login or password");
-                return View("SignIn",model);
+                if (model.BreadcrumbModel == null)
+                {
+                    model.BreadcrumbModel =
+                        new BreadcrumbModel(Url.Action("SignIn", "Account", null, Request.Url.Scheme));
+                }
+                return View("SignIn", model);
             }
 
             DoLogin(account);
@@ -74,6 +79,11 @@ namespace Anuitex.WebLibrary.Controllers
             if (DataContext.Context.LibraryDataContext.Accounts.Any(ac => ac.Login == model.Login))
             {
                 ModelState.AddModelError("Login", "Login already exist");
+                if (model.BreadcrumbModel == null)
+                {
+                    model.BreadcrumbModel =
+                        new BreadcrumbModel(Url.Action("SignUp", "Account", null, Request.Url.Scheme));
+                }
                 return View("SignUp", model);
             }
 

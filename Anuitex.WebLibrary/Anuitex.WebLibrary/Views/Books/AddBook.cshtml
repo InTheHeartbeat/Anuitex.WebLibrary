@@ -3,40 +3,44 @@
 @model Anuitex.WebLibrary.Models.AddBookModel
 
 <div class="windows-container" id="add-book-container">
-    <div class="page-window">
-        <div class="page-window-header">
-            <span class="icon ic-addbook"></span>
-            <h4>Adding book form</h4>
-        </div>
-        <div class="page-window-container">
-            @using (Html.BeginForm("TryAddBook", "Books"))
-            {
-                <div class="choose-photo" id="book-photo">
-                    <h5>Click for choose photo</h5>
+    <div class="windows-grid">
+        <div class="window-wrapper add-book-window">
+            <div class="window">
+                <div class="window-header">
+                    <span class="icon ic-addbook"></span>
+                    <h4>Adding book form</h4>
                 </div>
-                @Html.ValidationMessageFor(msg => msg.Title)
-                @Html.TextBoxFor(f => f.Title, new { @placeholder = "Title" })
-                @Html.ValidationMessageFor(msg => msg.Author)
-                @Html.TextBoxFor(f => f.Author, new { @placeholder = "Author" })
-                @Html.ValidationMessageFor(msg => msg.Genre)
-                @Html.TextBoxFor(f => f.Genre, new { @placeholder = "Genre" })
-                <br /><br />
-                <div id="add-book-down-fields">
-                    @Html.ValidationMessageFor(msg => msg.Year)
-                    @Html.TextBoxFor(f => f.Year, new { @placeholder = "Year" })
-                    @Html.ValidationMessageFor(msg => msg.Pages)
-                    @Html.TextBoxFor(f => f.Pages, new { @placeholder = "Pages" })
-                    @Html.ValidationMessageFor(msg => msg.Amount)
-                    @Html.TextBoxFor(f => f.Amount, new { @placeholder = "Amount" })
-                    @Html.ValidationMessageFor(msg => msg.Price)
-                    @Html.TextBoxFor(f => f.Price, new { @placeholder = "Price" })
-                </div>
-                <input type="submit" class="btn" value="Add">
-                @Html.ValidationSummary(true)
+                <div class="window-content">
+                    @using (Html.BeginForm("TryAddBook", "Books"))
+                    {
+                        <div class="choose-photo" id="book-photo">
+                            <h5>Click for choose photo</h5>
+                        </div>
+                        @Html.ValidationMessageFor(msg => msg.Title)
+                        @Html.TextBoxFor(f => f.Title, new {@placeholder = "Title"})
+                        @Html.ValidationMessageFor(msg => msg.Author)
+                        @Html.TextBoxFor(f => f.Author, new {@placeholder = "Author"})
+                        @Html.ValidationMessageFor(msg => msg.Genre)
+                        @Html.TextBoxFor(f => f.Genre, new {@placeholder = "Genre"})
+                        <br/><br/>
+                        <div id="add-book-down-fields">
+                            @Html.ValidationMessageFor(msg => msg.Year)
+                            @Html.TextBoxFor(f => f.Year, new {@placeholder = "Year"})
+                            @Html.ValidationMessageFor(msg => msg.Pages)
+                            @Html.TextBoxFor(f => f.Pages, new {@placeholder = "Pages"})
+                            @Html.ValidationMessageFor(msg => msg.Amount)
+                            @Html.TextBoxFor(f => f.Amount, new {@placeholder = "Amount"})
+                            @Html.ValidationMessageFor(msg => msg.Price)
+                            @Html.TextBoxFor(f => f.Price, new {@placeholder = "Price"})
+                        </div>
+                        <input type="submit" class="btn" value="Add">
+                        @Html.ValidationSummary(true)
 
-                <input type="file" name="upload" id="uploadFile" style="display: none" />
-                @Html.HiddenFor(f => f.PhotoId, new { @id = "photo-id" })
-            }
+                        <input type="file" name="upload" id="uploadFile" style="display: none"/>
+                        @Html.HiddenFor(f => f.PhotoId, new {@id = "photo-id"})
+                    }
+                </div>
+            </div>
         </div>
     </div>
 </div>

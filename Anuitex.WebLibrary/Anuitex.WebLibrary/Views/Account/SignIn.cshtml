@@ -4,30 +4,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="sing-container">
-    <div class="windows-container">
-        <div class="page-window singin-window">
-            <div class="page-window-header">
-                <span class="icon ic-signin"></span>
-                <h4>Sign in</h4>
-                <div class="cssload-container" id="load-anim" style="float: right">
-                    <ul class="cssload-flex-container">
-                        <li>
-                            <span class="cssload-loading"></span>
-                        </li>
-                    </ul>
+<div class="windows-container sing-container">
+    <div class="windows-grid">
+        <div class="window-wrapper signin-window">
+            <div class="window">
+                <div class="window-header">
+                    <span class="icon ic-signin"></span>
+                    <h4>Sign in</h4>                        
                 </div>
-            </div>
-            <div class="page-window-container">
-                @using (Html.BeginForm("ComputeSignIn", "Account"))
-                {
-                    @Html.ValidationMessageFor(msg => msg.Login)
-                    @Html.TextBoxFor(l => l.Login, new {@placeholder = "Login", @type = "text"})
-                    @Html.ValidationMessageFor(msg => msg.Password)
-                    @Html.TextBoxFor(l => l.Password, new {@placeholder = "Password", @type = "password"})
-                    <input type="submit" class="btn" value="Let me in!">
-                    @Html.ValidationSummary(true)
-                }
+                <div class="window-content">
+                    @using (Html.BeginForm("ComputeSignIn", "Account"))
+                    {
+                        @Html.ValidationMessageFor(msg => msg.Login)
+                        @Html.TextBoxFor(l => l.Login, new { @placeholder = "Login", @type = "text" })
+                        @Html.ValidationMessageFor(msg => msg.Password)
+                        @Html.TextBoxFor(l => l.Password, new { @placeholder = "Password", @type = "password" })
+                        <input type="submit" class="btn" value="Let me in!">
+                        @Html.ValidationSummary(true)
+                    }
+                </div>
             </div>
         </div>
     </div>

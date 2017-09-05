@@ -1,9 +1,9 @@
 ﻿@using Anuitex.WebLibrary.ViewHelpers
 @model Anuitex.WebLibrary.Models.BreadcrumbModel
 
-<div class="nav-status">
+<div class="navigation">
     <span class="icon nav-status-icon @Model.Breadcrumbs.Last().IconCssClass"></span>
-    <h2 class="nav-status-title">@Model.Breadcrumbs.Last().Text</h2>
+    <h2 class="navigation-title">@Model.Breadcrumbs.Last().Text</h2>
     <div class="breadcrumb">
         @foreach (Breadcrumb breadcrumb in Model.Breadcrumbs)
         {

@@ -13,12 +13,7 @@ namespace Anuitex.WebLibrary.Controllers
     {
         public ActionResult Index()
         {
-            return View(new BaseModel()
-            {                
-                BreadcrumbModel = new BreadcrumbModel(Url.Action("Index", "Home", null, Request.Url.Scheme))  ,
-                CurrentNavSection              = NavSection.Books,
-                CurrentUser = CurrentUser
-            });
+            return RedirectToActionPermanent("Index", "Books");
         }
         
     }

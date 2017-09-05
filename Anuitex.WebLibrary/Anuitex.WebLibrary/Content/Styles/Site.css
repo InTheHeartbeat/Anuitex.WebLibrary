@@ -174,6 +174,9 @@ a {
 a:hover {
   color: #cccccc;
 }
+b {
+  font-weight: bold !important;
+}
 .body-content {
   position: absolute;
   top: 4em;
@@ -184,6 +187,7 @@ a:hover {
   padding-top: 0.3em;
   background-color: rgba(139, 163, 182, 0.25);
   overflow: hidden;
+  overflow-y: auto;
 }
 .header-bar {
   position: absolute;
@@ -510,6 +514,76 @@ a:hover {
   border-top: none;
   border-left: none;
   border-right: none;
+}
+#btn-add-book {
+  display: block;
+  position: absolute;
+  top: 2.5em;
+  right: 5em;
+}
+.books-container {
+  margin: 0 auto;
+  text-align: center;
+}
+.book-container:hover {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+.book-container {
+  float: left;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 390px;
+  height: 14em;
+  line-height: 1.4em;
+  display: inline-block;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  text-align: left;
+}
+.book-container .page-window-container {
+  height: 11.2em;
+  overflow-y: auto;
+}
+.book-container .book-photo {
+  width: 31%;
+  height: 94%;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-position: center;
+  cursor: zoom-in;
+  float: left;
+}
+.popup {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: none;
+  text-align: center;
+}
+.popup_bg {
+  background: rgba(53, 57, 66, 0.55);
+  position: absolute;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+}
+.popup_img {
+  max-height: 94%;
+  max-width: 94%;
+  position: relative;
+  margin: 1em auto;
+  z-index: 2;
+  max-height: 95%;
+  max-width: 95%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid #0071b7;
+  cursor: zoom-out;
 }
 .field-validation-error {
   font-size: 0.85em;

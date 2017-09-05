@@ -1,17 +1,72 @@
 ﻿@using Anuitex.WebLibrary.Data
 @model Anuitex.WebLibrary.Models.BooksModel
 
-@foreach (Book book in Model.Books)
+@if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
 {
-    <div class="windows-container book-container">
-        <div class="page-window">
+    <a class="btn btn-icon" id="btn-add-book" href="@Url.Action("AddBook")">
+        <span class="icon ic-add"></span>
+    </a>
+}
+<div class="books-container">
+<div class="windows-container">
+    @foreach (Book book in Model.Books)
+    {
+        <div class="page-window book-container">
             <div class="page-window-header">
                 <span class="icon ic-book"></span>
                 <h4>@book.Author - @book.Title</h4>
             </div>
             <div class="page-window-container">
-                
+                <div class="book-photo" style="background-image: url(@Model.GetPhotoPath(book.PhotoId.Value))"></div>
+
+                <span>Title:</span>
+                <span>@book.Title</span>
+                <br />
+                <span>Author:</span>
+                <span>@book.Author</span>
+                <br />
+                <span>Genre:</span>
+                <span>@book.Genre</span>
+                <br />
+                <span>Year:</span>
+                <span>@book.Year</span>
+                <br />
+                <span>Pages:</span>
+                <span>@book.Pages</span>
+                <br />
+                <span>Available:</span>
+                <span>@book.Amount</span>
+                <br />
+                <span>Price:</span>
+                <span><b>@book.Price</b></span>
             </div>
         </div>
-    </div>
+    }
+</div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () { // Ждём загрузки страницы
+
+            $(".book-photo").click(function () { // Событие клика на маленькое изображение
+                var img = $(this); // Получаем изображение, на которое кликнули
+                var src = img.css("background-image"); // Достаем из этого изображения путь до картинки
+
+                $("body").append("<div class='popup'>" + //Добавляем в тело документа разметку всплывающего окна
+                    "<div class='popup_bg popup_img'></div>" + // Блок, который будет служить фоном затемненным
+                    "</div>");
+                $("body").find(".popup_img").css("background-image", src);
+                $(".popup").fadeIn(400); // Медленно выводим изображение
+                $(".popup_bg").click(function () { // Событие клика на затемненный фон
+                    $(".popup").fadeOut(400); // Медленно убираем всплывающее окно
+                    setTimeout(function () { // Выставляем таймер
+                        $(".popup").remove(); // Удаляем разметку всплывающего окна
+                    },
+                        400);
+                });
+            });
+
+        });
+    </script>
 }

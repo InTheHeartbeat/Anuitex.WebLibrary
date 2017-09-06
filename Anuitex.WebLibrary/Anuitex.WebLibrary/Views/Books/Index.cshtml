@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="window-content">
-                        <div class="book-photo" style="background-image: url(@book.PhotoPath)"></div>
+                        <div class="entity-photo" style="background-image: url(@(String.IsNullOrWhiteSpace(book.PhotoPath) ? "/Upload/Images/no-photo.png" : book.PhotoPath))"></div>
                         <span>Title:</span>
                         <span>@book.Title</span>
                         <br/>

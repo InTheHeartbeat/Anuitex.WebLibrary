@@ -38,7 +38,8 @@
                         margin-left: 0.5em;
                         margin-right: 0.3em;
                         width:16px;height:16px;
-                        background-size:cover;
+                        background-size:contain;                        
+                        min-width: 16px;
                     }
                     h4{margin:0;display:inline-block;overflow: hidden;
                         text-overflow: ellipsis;
@@ -50,6 +51,7 @@
                         float:right;
                         height:30px;
                         width:90px;
+                        min-width:63px;
                         text-align: right;
                         .btn 
                         {
@@ -62,6 +64,20 @@
                             margin-left:0.43em;
                             margin-top:0.45em;
                         }
+                    }
+                    .header-load-anim
+                    {
+                        display:inline-block;
+                        float:right;
+                        margin-right:2em;
+                        margin-top:-0.2em;
+                        width:30px;
+                        height:30px;
+                        display:none;
+                        ul
+                            {
+                                margin:0;
+                            }   
                     }
                 }
                 .justify

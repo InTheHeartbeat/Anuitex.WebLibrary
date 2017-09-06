@@ -38,7 +38,7 @@ function HideSignForm() {
 }
 
 $(document).ready(function () {
-    $(".book-photo").click(function () {
+    $(".entity-photo").click(function () {
 
         var img = $(this);
         var src = img.css("background-image");

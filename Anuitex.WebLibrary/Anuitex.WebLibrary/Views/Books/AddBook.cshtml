@@ -64,8 +64,12 @@
 
 
         $(document).ready(function () {
-            $('#book-photo').css('background-image', 'url(@Model.PhotoPath)').css('background-size', 'contain');
-    
+            @{
+                string path = (String.IsNullOrWhiteSpace(Model.PhotoPath) ? "/Upload/Images/no-photo.png" : Model.PhotoPath);
+            }
+
+            $('#book-photo').css('background-image', 'url(@path)').css('background-size', 'contain');
+
             if ($("#Year").val() == "0"){ $("#Year").val("");}
             if ($("#Pages").val() == 0){ $("#Pages").val("");}
             if ($("#Amount").val()=="0") { $("#Amount").val("") };
@@ -93,7 +97,7 @@
                         $.ajax({
                             type: "POST",
                             url:
-                                '@Url.RouteUrl("DefaultApi", new {httproute = "", controller = "Upload", id = "UploadBookPhoto"})',
+                                '@Url.RouteUrl("DefaultApi", new {httproute = "", controller = "Upload", id = "UploadPhoto"})',
                             contentType: false,
                             processData: false,
                             data: data,

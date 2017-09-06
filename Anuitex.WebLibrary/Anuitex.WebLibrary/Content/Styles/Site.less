@@ -1,21 +1,6 @@
 ﻿@import "Theme/Main.less";
 
-@import "AddBookViewStyles.less";
-
-
-
 body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
-
-
-
-
-
-
-
-
-
-
-
 
 #index-container
 {
@@ -23,7 +8,7 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
 }
 
 
-#btn-add-book
+#btn-add-book, #btn-add-journal
 {
     display:block;    
     position: absolute;
@@ -55,7 +40,7 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
 }
 
 
-.book-photo 
+.entity-photo 
 { 
     width:31%;
     height:94%;     
@@ -118,7 +103,7 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
     }
 }
 
-.add-book-window {
+.add-book-window, .add-journal-window {
     position: absolute;
     left: 0;
     right: 0;
@@ -168,7 +153,7 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
         }
     }
 }
-#add-book-down-fields
+#add-book-down-fields, #add-journal-down-fields
 {
     width:80%;
     height:100%;
@@ -179,4 +164,206 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
         float:left !important;
         margin:1em;
     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cssload-container * {
+	box-sizing: border-box;
+		-o-box-sizing: border-box;
+		-ms-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+}
+
+.cssload-container ul li{
+	list-style: none;
+}
+
+.cssload-flex-container {
+	display: flex;
+		display: -o-flex;
+		display: -ms-flex;
+		display: -webkit-flex;
+		display: -moz-flex;
+	flex-direction: row;
+		-o-flex-direction: row;
+		-ms-flex-direction: row;
+		-webkit-flex-direction: row;
+		-moz-flex-direction: row;
+	flex-wrap: wrap;
+		-o-flex-wrap: wrap;
+		-ms-flex-wrap: wrap;
+		-webkit-flex-wrap: wrap;
+		-moz-flex-wrap: wrap;
+	justify-content: space-around;
+}
+.cssload-flex-container li {
+	padding: 2px;
+	height: 22px;
+	width: 22px;
+	margin: 7px 4px;
+	position: relative;
+	text-align: center;
+}
+
+.cssload-loading {
+	display: inline-block;
+	position: relative;
+	width: 19px;
+	height: 19px;
+	border-radius: 100%;
+		-o-border-radius: 100%;
+		-ms-border-radius: 100%;
+		-webkit-border-radius: 100%;
+		-moz-border-radius: 100%;
+	border: 1px solid transparent;
+	border-bottom: 1px solid rgb(0,145,234);
+	border-left: 1px solid rgb(0,145,234);
+	animation: cssload-spinR 2.3s linear infinite;
+		-o-animation: cssload-spinR 2.3s linear infinite;
+		-ms-animation: cssload-spinR 2.3s linear infinite;
+		-webkit-animation: cssload-spinR 2.3s linear infinite;
+		-moz-animation: cssload-spinR 2.3s linear infinite;
+}
+.cssload-loading:before, .cssload-loading:after {
+	content: '';
+	display: block;
+	border-radius: 100%;
+		-o-border-radius: 100%;
+		-ms-border-radius: 100%;
+		-webkit-border-radius: 100%;
+		-moz-border-radius: 100%;
+	position: absolute;
+}
+.cssload-loading:before {
+	height: 11px;
+	width: 11px;
+	border: 1px solid transparent;
+	border-top: 1px solid rgba(255,0,0,0.66);
+	border-right: 1px solid rgba(50,194,27,0.65);
+	animation: cssload-spinL 0.86s linear infinite;
+		-o-animation: cssload-spinL 0.86s linear infinite;
+		-ms-animation: cssload-spinL 0.86s linear infinite;
+		-webkit-animation: cssload-spinL 0.86s linear infinite;
+		-moz-animation: cssload-spinL 0.86s linear infinite;
+	transform-origin: center center;
+		-o-transform-origin: center center;
+		-ms-transform-origin: center center;
+		-webkit-transform-origin: center center;
+		-moz-transform-origin: center center;
+	top: 11%;
+	left: 11%;
+}
+.cssload-loading:after {
+	height: 2px;
+	width: 2px;
+	background: transparent;
+	border: 0px solid rgb(255,245,56);
+	top: 35.5%;
+	left: 35.5%;
+}
+
+
+
+
+@keyframes cssload-spinR {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@-o-keyframes cssload-spinR {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(360deg);
+	}
+}
+
+@-ms-keyframes cssload-spinR {
+	from {
+		-ms-transform: rotate(0deg);
+	}
+	to {
+		-ms-transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes cssload-spinR {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@-moz-keyframes cssload-spinR {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(360deg);
+	}
+}
+
+@keyframes cssload-spinL {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(-360deg);
+	}
+}
+
+@-o-keyframes cssload-spinL {
+	from {
+		-o-transform: rotate(0deg);
+	}
+	to {
+		-o-transform: rotate(-360deg);
+	}
+}
+
+@-ms-keyframes cssload-spinL {
+	from {
+		-ms-transform: rotate(0deg);
+	}
+	to {
+		-ms-transform: rotate(-360deg);
+	}
+}
+
+@-webkit-keyframes cssload-spinL {
+	from {
+		-webkit-transform: rotate(0deg);
+	}
+	to {
+		-webkit-transform: rotate(-360deg);
+	}
+}
+
+@-moz-keyframes cssload-spinL {
+	from {
+		-moz-transform: rotate(0deg);
+	}
+	to {
+		-moz-transform: rotate(-360deg);
+	}
+
 }

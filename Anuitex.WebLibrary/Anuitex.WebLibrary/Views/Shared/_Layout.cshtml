@@ -48,10 +48,10 @@
             </li>
             <li @if (Model.CurrentNavSection == NavSection.Journals) { @: class="active"
                 }>
-                <span>Journals</span>
+                <a href="@Url.Action("Index","Journals")">Journals</a>
             </li>
             <li @if (Model.CurrentNavSection == NavSection.Newspapers) { @: class="active"
-                }><span>Newspapers</span>
+                }><a href="@Url.Action("Index","Journals")">Newspapers</a>
             </li>
         </ul>
 

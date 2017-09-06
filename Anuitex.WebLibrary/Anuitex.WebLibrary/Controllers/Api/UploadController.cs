@@ -10,7 +10,7 @@ namespace Anuitex.WebLibrary.Controllers.Api
 {
     public class UploadController : BaseApiController
     {
-        public async Task<IHttpActionResult> UploadBookPhoto()
+        public async Task<IHttpActionResult> UploadPhoto()
         {
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -19,7 +19,7 @@ namespace Anuitex.WebLibrary.Controllers.Api
 
             MultipartMemoryStreamProvider provider = new MultipartMemoryStreamProvider();
 
-            string relPath = "/Upload/Images/Books/";
+            string relPath = "/Upload/Images/";
             string root = System.Web.HttpContext.Current.Server.MapPath("~/"+relPath);
             int id = -1;
 

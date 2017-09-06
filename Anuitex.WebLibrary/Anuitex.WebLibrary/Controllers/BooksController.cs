@@ -14,15 +14,13 @@ namespace Anuitex.WebLibrary.Controllers
     {
         // GET: Books
         public ActionResult Index()
-        {
-            BooksModel model = new BooksModel()
+        {            
+            return View(new BooksModel()
             {
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("Index", "Books", null, Request.Url.Scheme)),
                 CurrentUser = CurrentUser,
-                Books = DataContext.Books.Select(book=>new BookModel(book)).ToList()
-            };
-
-            return View(model);
+                Books = DataContext.Books.Select(book => new BookModel(book)).ToList()
+            });
         }
 
         [HttpGet]
@@ -35,8 +33,7 @@ namespace Anuitex.WebLibrary.Controllers
             {
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("AddBook", "Books", null, Request.Url.Scheme)),
                 CurrentUser = CurrentUser,
-                IsEdit = false,
-                PhotoPath = "/Upload/Images/Books/no-photo.png"
+                IsEdit = false                
             });
         }
 
@@ -44,6 +41,8 @@ namespace Anuitex.WebLibrary.Controllers
         public ActionResult TryAddBook(AddBookModel model)
         {
             if (model == null) { return RedirectToAction("AddBook", "Books");}
+            if (CurrentUser == null || !CurrentUser.IsAdmin)
+            { return RedirectToAction("Index", "Books"); }
 
             DataContext.Books.InsertOnSubmit(new Book()
             {
@@ -60,8 +59,6 @@ namespace Anuitex.WebLibrary.Controllers
 
             return RedirectToAction("Index", "Books");
         }
-
-
         
         [Route("Books/RemoveBook/{id:int}")]
         public ActionResult RemoveBook(int id)
@@ -75,7 +72,8 @@ namespace Anuitex.WebLibrary.Controllers
             {return RedirectToActionPermanent("Index");}
 
             DataContext.Books.DeleteOnSubmit(book);
-            DataContext.Images.DeleteOnSubmit(book.Image);
+            if(book.Image != null && book.Image.Id > 0)
+            { DataContext.Images.DeleteOnSubmit(book.Image);}
             DataContext.SubmitChanges();
 
             return RedirectToAction("Index");
@@ -103,7 +101,7 @@ namespace Anuitex.WebLibrary.Controllers
                 Year = book.Year,
                 Amount = book.Amount,
                 Price = book.Price,
-                PhotoId = book.PhotoId.Value,
+                PhotoId = book.PhotoId,
                 Id = book.Id,
                 PhotoPath = book.Image.Path
             });

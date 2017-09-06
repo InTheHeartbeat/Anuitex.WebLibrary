@@ -175,20 +175,24 @@
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\UploadController.cs" />
+    <Compile Include="Controllers\JournalsController.cs" />
     <Compile Include="Data\LibraryData.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LibraryData.dbml</DependentUpon>
     </Compile>
     <Compile Include="Data\Models\BookModel.cs" />
+    <Compile Include="Data\Models\JournalModel.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddBookModel.cs" />
+    <Compile Include="Models\AddJournalModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BooksModel.cs" />
     <Compile Include="Models\BreadcrumbModel.cs" />
+    <Compile Include="Models\JournalsModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -200,14 +204,7 @@
     <Content Include="App_Data\LibraryDatabase_log.ldf">
       <DependentUpon>LibraryDatabase.mdf</DependentUpon>
     </Content>
-    <Content Include="Upload\Images\Books\no-photo.png" />
     <Content Include="Content\Images\Backgrounds\MainBackground.jpg" />
-    <Content Include="Content\Styles\AddBookViewStyles.css">
-      <DependentUpon>AddBookViewStyles.less</DependentUpon>
-    </Content>
-    <Content Include="Content\Styles\AddBookViewStyles.min.css">
-      <DependentUpon>AddBookViewStyles.css</DependentUpon>
-    </Content>
     <Content Include="Content\Styles\Theme\Colors.css">
       <DependentUpon>Colors.less</DependentUpon>
     </Content>
@@ -249,7 +246,6 @@
     <None Include="compilerconfig.json.defaults">
       <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
-    <Content Include="Content\Styles\AddBookViewStyles.less" />
     <Content Include="Data\LibraryData.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>LibraryData.designer.cs</LastGenOutput>
@@ -281,6 +277,7 @@
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\Site\interactive.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Upload\Images\no-photo.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -300,7 +297,8 @@
     <Content Include="Views\Shared\Breadcrumb.cshtml" />
     <Content Include="Views\Books\Index.cshtml" />
     <Content Include="Views\Books\AddBook.cshtml" />
-    <Content Include="Views\Books\EditBook.cshtml" />
+    <Content Include="Views\Journals\Index.cshtml" />
+    <Content Include="Views\Journals\AddJournal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

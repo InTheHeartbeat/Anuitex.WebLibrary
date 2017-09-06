@@ -1,0 +1,64 @@
+﻿@using Anuitex.WebLibrary.Data.Models
+@model Anuitex.WebLibrary.Models.JournalsModel
+
+@if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
+{
+    <a class="btn btn-icon" id="btn-add-journal" href="@Url.Action("AddJournal")">
+        <span class="icon ic-add"></span>
+    </a>
+}
+<div class="windows-container">
+    <ul class="windows-grid">
+        @foreach (JournalModel journal in Model.Journals)
+        {
+            <li class="window-wrapper">
+                <div class="window window-hovered-shadow">
+                    <div class="window-header justify">
+                        <span class="icon ic-journal"></span>
+                        <h4>@journal.Title - @journal.Date</h4>
+                        <div class="window-header-buttons">
+                            @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
+                            {
+                                <a href="@Url.Action("EditJournal","Journals",new {id = journal.Id})" class="btn btn-icon">
+                                    <span class="icon ic-edit"></span>
+                                </a>
+                                <a href="@Url.Action("RemoveJournal","Journals",new {id = journal.Id})" class="btn btn-icon">
+                                    <span class="icon ic-remove"></span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="window-content">
+                        @{
+                            if (String.IsNullOrWhiteSpace(journal.PhotoPath))
+                            {
+                                <div class="entity-photo" style="background-image: url('/Upload/Images/no-photo.png'); background-size: 70%"></div>
+                            }
+                            else
+                            {
+                                <div class="entity-photo" style="background-image: url(@journal.PhotoPath); background-size: contain"></div>
+                            }
+                        }                        
+                        <span>Title:</span>
+                        <span>@journal.Title</span>
+                        <br/>
+                        <span>Date:</span>
+                        <span>@journal.Date</span>
+                        <br/>
+                        <span>Periodicity:</span>
+                        <span>@journal.Periodicity</span>
+                        <br/>
+                        <span>Subjects:</span>
+                        <span>@journal.Subjects</span>
+                        <br/>
+                        <span>Available:</span>
+                        <span>@journal.Amount</span>
+                        <br/>
+                        <span>Price:</span>
+                        <span><b>@journal.Price</b></span>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

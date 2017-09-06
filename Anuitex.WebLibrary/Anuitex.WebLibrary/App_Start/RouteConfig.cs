@@ -18,6 +18,24 @@ namespace Anuitex.WebLibrary
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                "EditJournal",
+                "Journals/EditJournal/{id}",
+                new
+                {
+                    controller = "Journals",
+                    action = "EditJournal",
+                    id = UrlParameter.Optional
+                });
+            routes.MapRoute(
+                "EditJournalErr",
+                "Journals/EditJournal",
+                new
+                {
+                    controller = "Journals",
+                    action = "Index",                    
+                });
         }
     }
 }

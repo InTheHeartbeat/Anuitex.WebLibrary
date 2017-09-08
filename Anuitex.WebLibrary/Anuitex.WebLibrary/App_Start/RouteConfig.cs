@@ -16,7 +16,7 @@ namespace Anuitex.WebLibrary
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new {controller = "Home", action = "Index", id = UrlParameter.Optional}
             );
 
             routes.MapRoute(
@@ -34,7 +34,25 @@ namespace Anuitex.WebLibrary
                 new
                 {
                     controller = "Journals",
-                    action = "Index",                    
+                    action = "Index",
+                });
+
+            routes.MapRoute(
+                "EditBook",
+                "Books/EditBook/{id}",
+                new
+                {
+                    controller = "Books",
+                    action = "EditBook",
+                    id = UrlParameter.Optional
+                });
+            routes.MapRoute(
+                "EditBookErr",
+                "Books/EditBook",
+                new
+                {
+                    controller = "Books",
+                    action = "Index",
                 });
         }
     }

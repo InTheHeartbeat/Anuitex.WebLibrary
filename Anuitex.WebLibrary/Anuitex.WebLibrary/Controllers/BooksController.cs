@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Anuitex.WebLibrary.Data;
 using Anuitex.WebLibrary.Data.Models;
 using Anuitex.WebLibrary.Models;
+using Anuitex.WebLibrary.ViewHelpers;
 using Microsoft.Ajax.Utilities;
 
 namespace Anuitex.WebLibrary.Controllers
@@ -19,7 +20,8 @@ namespace Anuitex.WebLibrary.Controllers
             {
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("Index", "Books", null, Request.Url.Scheme)),
                 CurrentUser = CurrentUser,
-                Books = DataContext.Books.Select(book => new BookModel(book)).ToList()
+                Books = DataContext.Books.Select(book => new BookModel(book)).ToList(),
+                CurrentNavSection = NavSection.Books
             });
         }
 
@@ -28,12 +30,13 @@ namespace Anuitex.WebLibrary.Controllers
         {
             if (CurrentUser == null || !CurrentUser.IsAdmin)
             { return RedirectToAction("Index", "Books");}
-                
+
             return View(new AddBookModel()
             {
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("AddBook", "Books", null, Request.Url.Scheme)),
                 CurrentUser = CurrentUser,
-                IsEdit = false                
+                IsEdit = false,
+                CurrentNavSection = NavSection.Books
             });
         }
 
@@ -79,7 +82,7 @@ namespace Anuitex.WebLibrary.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult EditBook(int id)
+        public ActionResult EditBook(int? id)
         {
             if (CurrentUser == null || !CurrentUser.IsAdmin)
             { return RedirectToActionPermanent("Index"); }

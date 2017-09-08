@@ -2,9 +2,14 @@
 @using Anuitex.WebLibrary.Data
 @model Anuitex.WebLibrary.Models.AddBookModel
 
+
+@{
+    ViewBag.Title = Model.IsEdit ? "Editing journal" : "Adding journal";
+}
+
 <div class="windows-container" id="add-book-container">
     <div class="windows-grid">
-        <div class="window-wrapper add-book-window">
+        <div class="window-wrapper add-entity-window">
             <div class="window">
                 <div class="window-header">
                     <span class="icon ic-addbook"></span>
@@ -25,7 +30,7 @@
                         @Html.TextBoxFor(f => f.Genre, new {@placeholder = "Genre"})
                         <br/>
                         <br/>
-                        <div id="add-book-down-fields">
+                        <div id="add-entity-down-fields">
                             @Html.ValidationMessageFor(msg => msg.Year)
                             @Html.TextBoxFor(f => f.Year, new {@placeholder = "Year"})
                             @Html.ValidationMessageFor(msg => msg.Pages)

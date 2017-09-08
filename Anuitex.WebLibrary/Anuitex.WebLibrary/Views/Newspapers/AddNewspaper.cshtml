@@ -1,0 +1,132 @@
+﻿@using System.Linq
+@using Anuitex.WebLibrary.Data
+@model Anuitex.WebLibrary.Models.AddNewspaperModel
+
+@{
+    ViewBag.Title = Model.IsEdit ? "Editing newspaper" : "Adding newspaper";
+}
+
+<div class="windows-container" id="add-newspaper-container">
+    <div class="windows-grid">
+        <div class="window-wrapper add-entity-window">
+            <div class="window">
+                <div class="window-header">
+                    <span class="icon ic-addnewspaper"></span>
+                    <h4>Adding newspaper form</h4>
+                    <div class="cssload-container header-load-anim">
+                        <ul class="cssload-flex-container">
+                            <li>
+                                <span class="cssload-loading"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="window-content">
+                    @using ((Model.IsEdit ? Html.BeginForm("TryEditNewspaper", "Newspapers") : Html.BeginForm("TryAddNewspaper", "Newspapers")))
+                    {
+                        <div class="choose-photo" id="newspaper-photo">
+                            <h5>Click for choose photo</h5>
+                        </div>
+                        @Html.HiddenFor(f => Model.Id)
+                        @Html.ValidationMessageFor(msg => msg.Title)
+                        @Html.TextBoxFor(f => f.Title, new { @placeholder = "Title" })
+                        @Html.ValidationMessageFor(msg => msg.Date)
+                        @Html.TextBoxFor(f => f.Date, new { @placeholder = "Date" })                        
+                        <br />
+                        <br />
+                        <div id="add-entity-down-fields">
+                            @Html.ValidationMessageFor(msg => msg.Periodicity)
+                            @Html.TextBoxFor(f => f.Periodicity, new { @placeholder = "Periodicity" })                           
+                            @Html.ValidationMessageFor(msg => msg.Amount)
+                            @Html.TextBoxFor(f => f.Amount, new { @placeholder = "Amount" })
+                            @Html.ValidationMessageFor(msg => msg.Price)
+                            @Html.TextBoxFor(f => f.Price, new { @placeholder = "Price" })
+                        </div>
+                        if (Model.IsEdit)
+                        {
+                            <input type="submit" class="btn" value="Edit">
+                        }
+                        else
+                        {
+                            <input type="submit" class="btn" value="Add">
+                        }
+
+                        @Html.ValidationSummary(true)
+
+                        <input type="file" name="upload" id="uploadFile" style="display: none" />
+                        @Html.HiddenFor(f => f.PhotoId, new { @id = "photo-id" })
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+        $("#newspaper-photo").click(
+            function () {
+                $("#uploadFile").trigger('click');
+            });
+
+
+        $(document).ready(function () {
+            @{
+                if (String.IsNullOrWhiteSpace(Model.PhotoPath))
+                {
+                    @:$('#newspaper-photo').css('background-image', 'url("/Upload/Images/no-photo.png")').css('background-size', '70%');
+                }
+                else
+                {
+                    @:$('#newspaper-photo').css('background-image', 'url(@Model.PhotoPath)').css('background-size', 'contain');
+                }                
+            }
+
+            if ($("#Periodicity").val() == 0) { $("#Periodicity").val(""); }
+            if ($("#Amount").val() == "0") { $("#Amount").val("") };
+            if ($("#Price").val() == "0") { $("#Price").val(""); }
+
+            $("#uploadFile").change(function (e) {
+                e.preventDefault();
+                $(':input[type="submit"]').prop('disabled', true);
+                $(".header-load-anim").show();
+                var files = document.getElementById('uploadFile').files;
+                if (files.length > 0) {
+                    if (window.FormData !== undefined) {
+                        var data = new FormData();
+                        for (var x = 0; x < files.length; x++) {
+                            data.append("file" + x, files[x]);
+                        }
+
+                        var reader = new FileReader();
+                        reader.onloadend = function () {
+                            $('#newspaper-photo').css('background-image', 'url(' + reader.result + ')')
+                                .css('background-size', 'contain');
+                        }
+                        if (files[0]) {
+                            reader.readAsDataURL(files[0]);
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            url:
+                                '@Url.RouteUrl("DefaultApi", new {httproute = "", controller = "Upload", id = "UploadPhoto"})',
+                            contentType: false,
+                            processData: false,
+                            data: data,
+                            success: function (dat) {
+                                $("#photo-id").val(dat);
+                                $(':input[type="submit"]').prop('disabled', false);
+                                $(".header-load-anim").hide();
+                            },
+                            error: function (xhr, status, p3) {
+                                alert(xhr.responseText);
+                            }
+                        });
+                    } else {
+                        alert("Браузер не поддерживает загрузку файлов HTML5!");
+                    }
+                }
+            });
+        });
+    </script>}

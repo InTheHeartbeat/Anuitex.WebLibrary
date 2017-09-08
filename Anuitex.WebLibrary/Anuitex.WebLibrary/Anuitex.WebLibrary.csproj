@@ -176,6 +176,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\UploadController.cs" />
     <Compile Include="Controllers\JournalsController.cs" />
+    <Compile Include="Controllers\NewspapersController.cs" />
     <Compile Include="Data\LibraryData.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -183,16 +184,19 @@
     </Compile>
     <Compile Include="Data\Models\BookModel.cs" />
     <Compile Include="Data\Models\JournalModel.cs" />
+    <Compile Include="Data\Models\NewspaperModel.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddBookModel.cs" />
     <Compile Include="Models\AddJournalModel.cs" />
+    <Compile Include="Models\AddNewspaperModel.cs" />
     <Compile Include="Models\BaseModel.cs" />
     <Compile Include="Models\BooksModel.cs" />
     <Compile Include="Models\BreadcrumbModel.cs" />
     <Compile Include="Models\JournalsModel.cs" />
+    <Compile Include="Models\NewspapersModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Models\SignUpModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -289,8 +293,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\SignIn.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
@@ -299,6 +301,8 @@
     <Content Include="Views\Books\AddBook.cshtml" />
     <Content Include="Views\Journals\Index.cshtml" />
     <Content Include="Views\Journals\AddJournal.cshtml" />
+    <Content Include="Views\Newspapers\Index.cshtml" />
+    <Content Include="Views\Newspapers\AddNewspaper.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

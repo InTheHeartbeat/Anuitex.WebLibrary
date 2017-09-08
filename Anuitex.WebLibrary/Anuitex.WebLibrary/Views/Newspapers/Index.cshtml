@@ -1,0 +1,65 @@
+﻿@using Anuitex.WebLibrary.Data.Models
+@model Anuitex.WebLibrary.Models.NewspapersModel
+
+@{
+    ViewBag.Title = Model.CurrentNavSection.ToString();
+}
+
+@if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
+{
+    <a class="btn btn-icon btn-add" href="@Url.Action("AddNewspaper")">
+        <span class="icon ic-add"></span>
+    </a>
+}
+<div class="windows-container">
+    <ul class="windows-grid">
+        @foreach (NewspaperModel newspaper in Model.Newspapers)
+        {
+            <li class="window-wrapper">
+                <div class="window window-hovered-shadow">
+                    <div class="window-header justify">
+                        <span class="icon ic-newspaper"></span>
+                        <h4>@newspaper.Title - @newspaper.Date</h4>
+                        <div class="window-header-buttons">
+                            @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
+                            {
+                                <a href="@Url.Action("EditNewspaper", "Newspapers", new {id = newspaper.Id})" class="btn btn-icon">
+                                    <span class="icon ic-edit"></span>
+                                </a>
+                                <a href="@Url.Action("RemoveNewspaper", "Newspapers", new {id = newspaper.Id})" class="btn btn-icon">
+                                    <span class="icon ic-remove"></span>
+                                </a>
+                            }
+                        </div>
+                    </div>
+                    <div class="window-content">
+                        @{
+                            if (String.IsNullOrWhiteSpace(newspaper.PhotoPath))
+                            {
+                                <div class="entity-photo" style="background-image: url('/Upload/Images/no-photo.png'); background-size: 70%"></div>
+                            }
+                            else
+                            {
+                                <div class="entity-photo" style="background-image: url(@newspaper.PhotoPath); background-size: contain"></div>
+                            }
+                        }
+                        <span>Title:</span>
+                        <span>@newspaper.Title</span>
+                        <br/>
+                        <span>Date:</span>
+                        <span>@newspaper.Date</span>
+                        <br/>
+                        <span>Periodicity:</span>
+                        <span>@newspaper.Periodicity</span>
+                        <br/>
+                        <span>Available:</span>
+                        <span>@newspaper.Amount</span>
+                        <br/>
+                        <span>Price:</span>
+                        <span><b>@newspaper.Price</b></span>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

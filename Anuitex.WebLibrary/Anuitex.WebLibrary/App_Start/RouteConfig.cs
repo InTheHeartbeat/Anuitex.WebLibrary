@@ -54,6 +54,24 @@ namespace Anuitex.WebLibrary
                     controller = "Books",
                     action = "Index",
                 });
+
+            routes.MapRoute(
+                "EditNewspaper",
+                "Newspapers/EditNewspaper/{id}",
+                new
+                {
+                    controller = "Newspapers",
+                    action = "EditNewspaper",
+                    id = UrlParameter.Optional
+                });
+            routes.MapRoute(
+                "EditNewspaperErr",
+                "Newspapers/EditNewspaper",
+                new
+                {
+                    controller = "Newspapers",
+                    action = "Index",
+                });
         }
     }
 }

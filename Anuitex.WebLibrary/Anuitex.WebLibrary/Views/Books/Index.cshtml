@@ -2,12 +2,18 @@
 @using Anuitex.WebLibrary.Data.Models
 @model Anuitex.WebLibrary.Models.BooksModel
 
-@if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
-{
-    <a class="btn btn-icon btn-add" href="@Url.Action("AddBook")">
-        <span class="icon ic-add"></span>
-    </a>
+@{
+    ViewBag.Title = Model.CurrentNavSection.ToString();
 }
+
+<div class="nav-sector-controls">
+    @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
+    {
+        <a class="btn btn-icon btn-add" href="@Url.Action("AddBook")">
+            <span class="icon ic-add"></span>
+        </a>
+    }
+</div>
 <div class="windows-container">
     <ul class="windows-grid">
         @foreach (BookModel book in Model.Books)
@@ -51,6 +57,9 @@
                         <br/>
                         <span>Price:</span>
                         <span><b>@book.Price</b></span>
+                        <a class="btn btn-icon btn-buy" href="@Url.Action("SellProduct", "Sell", new {code = book.Id, type = typeof(Book).Name, count=1})">
+                            <span class="icon ic-buy"></span>
+                        </a>
                     </div>
                 </div>
             </li>

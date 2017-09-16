@@ -137,6 +137,10 @@ namespace Anuitex.WebLibrary.Controllers
             HttpCookie at = new HttpCookie("AToken", token.ToString());
             at.Expires = DateTime.Now.AddHours(12);
             Response.SetCookie(at);
+
+            HttpCookie vt = new HttpCookie("VToken", "");
+            vt.Expires = DateTime.Now.AddDays(-1d);
+            Response.SetCookie(vt);
         }
     }
 }

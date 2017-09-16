@@ -14,8 +14,7 @@ namespace Anuitex.WebLibrary.Data.Models
         public int Amount { get; set; }
         public double Price { get; set; }
         public int? PhotoId { get; set; }
-        public string PhotoPath { get; set; }
-
+        public string PhotoPath { get; set; }        
         public NewspaperModel(Newspaper baseNewspaper)
         {
             Id = baseNewspaper.Id;
@@ -25,7 +24,7 @@ namespace Anuitex.WebLibrary.Data.Models
             Amount = baseNewspaper.Amount;
             Price = baseNewspaper.Price;
             PhotoId = baseNewspaper.PhotoId;
-            PhotoPath = baseNewspaper.Image?.Path;
+            PhotoPath = baseNewspaper.Image?.Path;            
         }
     }
 }

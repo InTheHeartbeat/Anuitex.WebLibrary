@@ -15,7 +15,7 @@ namespace Anuitex.WebLibrary.Data.Models
         public int Amount { get; set; }
         public double Price { get; set; }
         public int? PhotoId { get; set; }
-        public string PhotoPath { get; set; }
+        public string PhotoPath { get; set; }        
 
         public JournalModel(Journal baseJournal)
         {
@@ -27,7 +27,7 @@ namespace Anuitex.WebLibrary.Data.Models
             Amount = baseJournal.Amount;
             Price = baseJournal.Price;
             PhotoId = baseJournal.PhotoId;
-            PhotoPath = baseJournal.Image?.Path;
+            PhotoPath = baseJournal.Image?.Path;            
         }
     }
 }

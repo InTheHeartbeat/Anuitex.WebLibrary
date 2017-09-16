@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    
+    @Scripts.Render("~/bundles/modernizr")    
     <link href="https://fonts.googleapis.com/css?family=Anton|Raleway" rel="stylesheet"> 
 </head>
 <body>
@@ -33,53 +32,63 @@
     </div>
 </header>
     
-<div class="sidebar">
-    <div class="sidebar-header">
-        <span class="company">Anuitex</span>
-        <div class="sub-header">
-            <span class="title">Library</span>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <span class="company">Anuitex</span>
+            <div class="sub-header">
+                <span class="title">Library</span>
+            </div>
+        </div>
+        <div class="sidebar-items-container">
+            <h4 class="label">Main</h4>
+            <ul class="section-selector">
+                <li @if (Model.CurrentNavSection == NavSection.Books) { @: class="active"
+                                    }>
+                    <a href="@Url.Action("Index","Books")">Books</a>
+                </li>
+                <li @if (Model.CurrentNavSection == NavSection.Journals) { @: class="active"
+                                    }>
+                    <a href="@Url.Action("Index","Journals")">Journals</a>
+                </li>
+                <li @if (Model.CurrentNavSection == NavSection.Newspapers) { @: class="active"
+                                    }>
+                    <a href="@Url.Action("Index","Newspapers")">Newspapers</a>
+                </li>
+            </ul>
+
+            <h4 class="label">Account</h4>
+            <ul class="section-selector">
+                @if (Model.CurrentUser != null)
+            {
+                    <li @if (Model.CurrentNavSection == NavSection.SignOut) { @: class="active"
+                                            }>
+                        @Html.ActionLink("Sign out", "SignOut", "Account")
+                    </li>
+                }
+                else
+                {
+                    <li @if (Model.CurrentNavSection == NavSection.SignIn) { @: class="active"
+                                            }>
+                        @Html.ActionLink("Sign in", "SignIn", "Account")
+                    </li>
+                    <li @if (Model.CurrentNavSection == NavSection.SignOut) { @: class="active"
+                                            } id="btn-signup-li">
+                        @Html.ActionLink("Sign up", "SignUp", "Account")
+                    </li>
+                }
+            </ul>
+
+            <h4 class="label">Sell</h4>
+            <ul class="section-selector">
+                <li @if (Model.CurrentNavSection == NavSection.Basket) { @: class="active"
+                                    }>
+                    @Html.ActionLink("My Basket", "Basket", "Sell")
+                </li>
+            </ul>
+
+            <h5>All rights reserved. <br>Tyner©@DateTime.Now.Year</h5>
         </div>
     </div>
-    <div class="sidebar-items-container">
-        <h4 class="label">Main</h4>
-        <ul class="section-selector">
-            <li @if (Model.CurrentNavSection == NavSection.Books) { @: class="active"
-                }><a href="@Url.Action("Index","Books")">Books</a>
-            </li>
-            <li @if (Model.CurrentNavSection == NavSection.Journals) { @: class="active"
-                }>
-                <a href="@Url.Action("Index","Journals")">Journals</a>
-            </li>
-            <li @if (Model.CurrentNavSection == NavSection.Newspapers) { @: class="active"
-                }><a href="@Url.Action("Index","Newspapers")">Newspapers</a>
-            </li>
-        </ul>
-
-        <h4 class="label">Account</h4>
-        <ul class="section-selector">
-            @if (Model.CurrentUser != null)
-            {
-                <li @if (Model.CurrentNavSection == NavSection.SignOut) { @: class="active"
-                    }>
-                    @Html.ActionLink("Sign out", "SignOut", "Account")
-                </li>
-            }
-            else
-            {
-                <li @if (Model.CurrentNavSection == NavSection.SignIn) { @: class="active"
-                    }>
-                    @Html.ActionLink("Sign in", "SignIn", "Account")
-                </li>
-                <li @if (Model.CurrentNavSection == NavSection.SignOut) { @: class="active"
-                    } id="btn-signup-li">
-                    @Html.ActionLink("Sign up", "SignUp", "Account")
-                </li>
-            }
-        </ul>
-
-        <h5>All rights reserved. <br>Tyner©@DateTime.Now.Year</h5>
-    </div>
-</div>
 
 <div class="container body-content">
     @{ Html.RenderPartial("Breadcrumb", Model.BreadcrumbModel, new ViewDataDictionary());}

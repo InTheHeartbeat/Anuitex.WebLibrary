@@ -7,6 +7,7 @@
         Newspapers,
         SignIn,
         SignUp,
-        SignOut
+        SignOut,
+        Basket
     }
 }

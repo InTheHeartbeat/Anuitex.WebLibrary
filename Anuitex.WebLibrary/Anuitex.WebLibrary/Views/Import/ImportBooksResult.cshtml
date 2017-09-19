@@ -1,0 +1,63 @@
+﻿@model Anuitex.WebLibrary.Models.IO.Import.Books.ImportBooksResultModel
+    
+@{
+    ViewBag.Title = Model.CurrentNavSection.ToString();
+}
+
+@using (Html.BeginForm("TryImportBooks", "Import"))
+{
+    <div class="nav-sector-controls">
+        <input type="submit" class="btn btn-icon icon ic-accept btn-submit" value="">        
+    </div>
+    <div class="windows-container">
+        <ul class="windows-grid">
+            @for (int i = 0; i < Model.Books.Count; i++)
+            {
+                @Html.HiddenFor(m => m.Books[i].Amount)
+                @Html.HiddenFor(m => m.Books[i].Author)
+                @Html.HiddenFor(m => m.Books[i].Genre)
+                @Html.HiddenFor(m => m.Books[i].Pages)
+                @Html.HiddenFor(m => m.Books[i].PhotoId)
+                @Html.HiddenFor(m => m.Books[i].PhotoPath)
+                @Html.HiddenFor(m => m.Books[i].Price)
+                @Html.HiddenFor(m => m.Books[i].Title)
+                @Html.HiddenFor(m => m.Books[i].Year)                
+                <li class="window-wrapper">
+                    <div class="window window-hovered-shadow">
+                        <div class="window-header justify">
+                            <span class="icon ic-book"></span>
+                            <h4>@Model.Books[i].Author - @Model.Books[i].Title</h4>
+                            <div class="window-header-buttons">
+                                @Html.CheckBoxFor(model => model.Books[i].Selected, new { @class = "checkbox-default", @id = "cb-sellected-" + Model.Books[i].Id })
+                                <label for="cb-sellected-@Model.Books[i].Id" class="checkbox-default-label"></label>
+                            </div>
+                        </div>
+                        <div class="window-content">
+                            <div class="entity-photo" style="background-image: url(@(String.IsNullOrWhiteSpace(Model.Books[i].PhotoPath) ? "/Upload/Images/no-photo.png" : Model.Books[i].PhotoPath))"></div>
+                            <span>Title:</span>
+                            <span>@Model.Books[i].Title</span>
+                            <br />
+                            <span>Author:</span>
+                            <span>@Model.Books[i].Author</span>
+                            <br />
+                            <span>Genre:</span>
+                            <span>@Model.Books[i].Genre </span>
+                            <br />
+                            <span>Year:</span>
+                            <span>@Model.Books[i].Year</span>
+                            <br />
+                            <span>Pages:</span>
+                            <span>@Model.Books[i].Pages</span>
+                            <br />
+                            <span>Available:</span>
+                            <span>@Model.Books[i].Amount</span>
+                            <br />
+                            <span>Price:</span>
+                            <span><b>@Model.Books[i].Price</b></span>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}

@@ -19,24 +19,7 @@ using Anuitex.WebLibrary.ViewHelpers;
 namespace Anuitex.WebLibrary.Controllers
 {
     public class ExportController : BaseController
-    {
-        public ActionResult Index(string productType)
-        {
-            if (productType == typeof(Book).Name)
-            {
-                return RedirectToAction("Books");
-            }
-            if (productType == typeof(Journal).Name)
-            {
-                return RedirectToAction("Journals");
-            }
-            if (productType == typeof(Newspaper).Name)
-            {
-                return RedirectToAction("Newspapers");
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
+    {        
         public ActionResult Books()
         {
             return View("ExportBooks", new ExportBooksModel()

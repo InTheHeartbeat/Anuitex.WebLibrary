@@ -9,7 +9,14 @@
 <div class="nav-sector-controls">
     @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
     {
-        <a class="btn btn-icon" href="@Url.Action("Books","Export")">
+        using (Html.BeginForm("Books", "Import", FormMethod.Post, new {id= "import-books-submit", enctype = "multipart/form-data"}))
+        {
+            <div class="btn btn-icon" id="btn-import-books">
+                <span class="icon ic-import"></span>
+            </div>
+            <input id="btn-import-books-file" type="file" name="upload" style="display: none">            
+        }
+        <a class="btn btn-icon" href="@Url.Action("Books", "Export")">
             <span class="icon ic-export"></span>
         </a>
         <a class="btn btn-icon" href="@Url.Action("AddBook")">
@@ -32,7 +39,7 @@
                                 <a href="@Url.Action("EditBook","Books",new {id = book.Id})" class="btn btn-icon">
                                     <span class="icon ic-edit"></span>
                                 </a>
-                                <a  href="@Url.Action("RemoveBook","Books",new {id = book.Id})" class="btn btn-icon">
+                                <a href="@Url.Action("RemoveBook","Books",new {id = book.Id})" class="btn btn-icon">
                                     <span class="icon ic-remove"></span>
                                 </a>
                             }
@@ -42,22 +49,22 @@
                         <div class="entity-photo" style="background-image: url(@(String.IsNullOrWhiteSpace(book.PhotoPath) ? "/Upload/Images/no-photo.png" : book.PhotoPath))"></div>
                         <span>Title:</span>
                         <span>@book.Title</span>
-                        <br/>
+                        <br />
                         <span>Author:</span>
                         <span>@book.Author</span>
-                        <br/>
+                        <br />
                         <span>Genre:</span>
                         <span>@book.Genre </span>
-                        <br/>
+                        <br />
                         <span>Year:</span>
                         <span>@book.Year</span>
-                        <br/>
+                        <br />
                         <span>Pages:</span>
                         <span>@book.Pages</span>
-                        <br/>
+                        <br />
                         <span>Available:</span>
                         <span>@book.Amount</span>
-                        <br/>
+                        <br />
                         <span>Price:</span>
                         <span><b>@book.Price</b></span>
                         <a class="btn btn-icon btn-buy" href="@Url.Action("SellProduct", "Sell", new {code = book.Id, type = typeof(Book).Name, count=1})">
@@ -69,3 +76,22 @@
         }
     </ul>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#btn-import-books").click(
+                function() {
+                    $("#btn-import-books-file").trigger('click');
+                });
+
+            $("#btn-import-books-file").change(function (e) {                               
+                var files = document.getElementById('btn-import-books-file').files;
+                if (files.length > 0) {                    
+                    $("#import-books-submit").submit();
+                }
+            });
+        });
+    </script>
+}

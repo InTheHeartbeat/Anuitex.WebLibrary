@@ -70,9 +70,7 @@ namespace Anuitex.WebLibrary.Controllers
             if (newspaper == null)
             { return RedirectToActionPermanent("Index"); }
 
-            DataContext.Newspapers.DeleteOnSubmit(newspaper);
-            if (newspaper.Image != null)
-            { DataContext.Images.DeleteOnSubmit(newspaper.Image); }
+            DataContext.Newspapers.DeleteOnSubmit(newspaper);            
             DataContext.SubmitChanges();
 
             return RedirectToAction("Index");

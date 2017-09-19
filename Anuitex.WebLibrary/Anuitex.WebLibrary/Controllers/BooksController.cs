@@ -74,9 +74,7 @@ namespace Anuitex.WebLibrary.Controllers
             if (book == null)
             {return RedirectToActionPermanent("Index");}
 
-            DataContext.Books.DeleteOnSubmit(book);
-            if(book.Image != null && book.Image.Id > 0)
-            { DataContext.Images.DeleteOnSubmit(book.Image);}
+            DataContext.Books.DeleteOnSubmit(book);            
             DataContext.SubmitChanges();
 
             return RedirectToAction("Index");

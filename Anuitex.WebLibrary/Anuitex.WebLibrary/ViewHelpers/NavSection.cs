@@ -9,6 +9,7 @@
         SignUp,
         SignOut,
         Basket,
-        Export
+        Export,
+        Import
     }
 }

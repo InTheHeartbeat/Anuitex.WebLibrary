@@ -71,9 +71,7 @@ namespace Anuitex.WebLibrary.Controllers
             if (journal == null)
             { return RedirectToActionPermanent("Index"); }
 
-            DataContext.Journals.DeleteOnSubmit(journal);
-            if(journal.Image != null)
-            { DataContext.Images.DeleteOnSubmit(journal.Image);}
+            DataContext.Journals.DeleteOnSubmit(journal);            
             DataContext.SubmitChanges();
 
             return RedirectToAction("Index");

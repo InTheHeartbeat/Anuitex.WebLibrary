@@ -176,6 +176,7 @@
     <Compile Include="Controllers\ExportController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\UploadController.cs" />
+    <Compile Include="Controllers\ImportController.cs" />
     <Compile Include="Controllers\JournalsController.cs" />
     <Compile Include="Controllers\NewspapersController.cs" />
     <Compile Include="Controllers\SellController.cs" />
@@ -192,6 +193,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ExportHelper.cs" />
+    <Compile Include="Helpers\ImportHelper.cs" />
     <Compile Include="Models\AddBookModel.cs" />
     <Compile Include="Models\AddJournalModel.cs" />
     <Compile Include="Models\AddNewspaperModel.cs" />
@@ -205,6 +207,7 @@
     <Compile Include="Models\IO\Export\Journals\ExportJournalsModel.cs" />
     <Compile Include="Models\IO\Export\Newspapers\ExportableNewspaperModel.cs" />
     <Compile Include="Models\IO\Export\Newspapers\ExportNewspapersModel.cs" />
+    <Compile Include="Models\IO\Import\Books\ImportBooksResultModel.cs" />
     <Compile Include="Models\JournalsModel.cs" />
     <Compile Include="Models\NewspapersModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
@@ -317,6 +320,7 @@
     <Content Include="Views\Export\ExportBooks.cshtml" />
     <Content Include="Views\Export\ExportJournals.cshtml" />
     <Content Include="Views\Export\ExportNewspapers.cshtml" />
+    <Content Include="Views\Import\ImportBooksResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />

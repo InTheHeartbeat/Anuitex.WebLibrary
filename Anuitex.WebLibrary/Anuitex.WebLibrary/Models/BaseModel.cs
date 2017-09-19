@@ -13,5 +13,10 @@ namespace Anuitex.WebLibrary.Models
         public Account CurrentUser { get; set; }               
         public BreadcrumbModel BreadcrumbModel { get; set; }
         public NavSection CurrentNavSection { get; set; }
+
+        public BaseModel()
+        {
+            
+        }
     }
 }

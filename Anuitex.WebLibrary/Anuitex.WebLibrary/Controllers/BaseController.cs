@@ -40,6 +40,7 @@ namespace Anuitex.WebLibrary.Controllers
                 Guid token = Guid.Parse(at);
                 CurrentUser = DataContext.AccountAccessRecords.FirstOrDefault(t => t.Token == token && t.Source == adr)?.Account;
             }
+            
         }
 
         private void InitializeCurrentVisitor(RequestContext requestContext)

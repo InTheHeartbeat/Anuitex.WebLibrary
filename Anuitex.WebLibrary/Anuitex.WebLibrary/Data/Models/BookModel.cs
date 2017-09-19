@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Xml.Serialization;
+using Anuitex.WebLibrary.Models.IO.Export.Books;
 
 namespace Anuitex.WebLibrary.Data.Models
 {
+    [Serializable, XmlInclude(typeof(ExportableBookModel)), XmlInclude(typeof(BookModel))]
     public class BookModel
     {
         public int Id { get; set; }
@@ -29,6 +32,11 @@ namespace Anuitex.WebLibrary.Data.Models
             Price = baseBook.Price;            
             PhotoPath = baseBook.Image.Path;
             PhotoId = baseBook.PhotoId;
+        }
+
+        public BookModel()
+        {
+            
         }
     }
 }

@@ -8,6 +8,7 @@
         SignIn,
         SignUp,
         SignOut,
-        Basket
+        Basket,
+        Export
     }
 }

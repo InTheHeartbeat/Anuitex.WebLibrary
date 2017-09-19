@@ -191,6 +191,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExportHelper.cs" />
     <Compile Include="Models\AddBookModel.cs" />
     <Compile Include="Models\AddJournalModel.cs" />
     <Compile Include="Models\AddNewspaperModel.cs" />
@@ -200,8 +201,10 @@
     <Compile Include="Models\BasketModel.cs" />
     <Compile Include="Models\IO\Export\Books\ExportableBookModel.cs" />
     <Compile Include="Models\IO\Export\Books\ExportBooksModel.cs" />
-    <Compile Include="Models\IO\Export\ExportJournalsModel.cs" />
-    <Compile Include="Models\IO\Export\ExportNewspapersModel.cs" />
+    <Compile Include="Models\IO\Export\Journals\ExportableJournalModel.cs" />
+    <Compile Include="Models\IO\Export\Journals\ExportJournalsModel.cs" />
+    <Compile Include="Models\IO\Export\Newspapers\ExportableNewspaperModel.cs" />
+    <Compile Include="Models\IO\Export\Newspapers\ExportNewspapersModel.cs" />
     <Compile Include="Models\JournalsModel.cs" />
     <Compile Include="Models\NewspapersModel.cs" />
     <Compile Include="Models\SignInModel.cs" />

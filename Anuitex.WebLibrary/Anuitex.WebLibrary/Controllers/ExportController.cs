@@ -8,9 +8,12 @@ using System.Web.Mvc;
 using System.Xml.Serialization;
 using Anuitex.WebLibrary.Data;
 using Anuitex.WebLibrary.Data.Models;
+using Anuitex.WebLibrary.Helpers;
 using Anuitex.WebLibrary.Models;
 using Anuitex.WebLibrary.Models.IO.Export;
 using Anuitex.WebLibrary.Models.IO.Export.Books;
+using Anuitex.WebLibrary.Models.IO.Export.Journals;
+using Anuitex.WebLibrary.Models.IO.Export.Newspapers;
 using Anuitex.WebLibrary.ViewHelpers;
 
 namespace Anuitex.WebLibrary.Controllers
@@ -52,7 +55,7 @@ namespace Anuitex.WebLibrary.Controllers
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("Journals", "Export", null, Request.Url.Scheme)),
                 CurrentNavSection = NavSection.Export,
                 CurrentUser = CurrentUser,
-                Journals = DataContext.Journals.Select(journal => new JournalModel(journal)).ToList()
+                Journals = DataContext.Journals.Select(journal => new ExportableJournalModel(journal)).ToList()
             });
         }
 
@@ -63,48 +66,52 @@ namespace Anuitex.WebLibrary.Controllers
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("Newspapers", "Export", null, Request.Url.Scheme)),
                 CurrentNavSection = NavSection.Export,
                 CurrentUser = CurrentUser,
-                Newspapers = DataContext.Newspapers.Select(newspaper => new NewspaperModel(newspaper)).ToList()
+                Newspapers = DataContext.Newspapers.Select(newspaper => new ExportableNewspaperModel(newspaper)).ToList()
             });
         }
 
         [HttpPost]
         public FileResult TryExportBooks(ExportBooksModel model)
+        {                                                
+            if (model.IsXml)
+            {                
+                return File(ExportHelper.ExportBooks(model,DataContext), System.Net.Mime.MediaTypeNames.Application.Octet,
+                    "exp-" + DateTime.Now + "-books.xml");
+            }
+            else
+            {               
+                return File(ExportHelper.ExportBooks(model,DataContext), System.Net.Mime.MediaTypeNames.Application.Octet,
+                    "exp-" + DateTime.Now + "-books.txt");
+            }
+        }
+
+        [HttpPost]
+        public FileResult TryExportJournals(ExportJournalsModel model)
         {
             if (model.IsXml)
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<BookModel>));
-                MemoryStream stream = new MemoryStream();
-                serializer.Serialize(stream, model.Books.Where(bk => bk.Selected)
-                    .Select(bk => new BookModel(DataContext.Books.First(book=>book.Id == bk.Id)))
-                    .ToList());
-                return File(stream.ToArray(), System.Net.Mime.MediaTypeNames.Application.Octet,
-                    "exp-" + DateTime.Now.ToShortDateString() + "-books.xml");
+                return File(ExportHelper.ExportJournals(model, DataContext), System.Net.Mime.MediaTypeNames.Application.Octet,
+                    "exp-" + DateTime.Now + "-journals.xml");
             }
             else
             {
-                MemoryStream stream = new MemoryStream();
-                StreamWriter writer = new StreamWriter(stream, Encoding.Default);
+                return File(ExportHelper.ExportJournals(model, DataContext), System.Net.Mime.MediaTypeNames.Application.Octet,
+                    "exp-" + DateTime.Now + "-journals.txt");
+            }
+        }
 
-                writer.WriteLine("Books");
-
-                foreach (BookModel book in model.Books.Where(bk=>bk.Selected).Select(sbk=> new BookModel(DataContext.Books.First(book => book.Id == sbk.Id)))
-                    .ToList())
-                {
-                    writer.WriteLine(book.Id);
-                    writer.WriteLine(book.Title);
-                    writer.WriteLine(book.Year);
-                    writer.WriteLine(book.Pages);
-                    writer.WriteLine(book.Author);
-                    writer.WriteLine(book.Genre);
-                    writer.WriteLine(book.Amount);
-                    writer.WriteLine(book.Price);
-                    writer.WriteLine(book.PhotoId);
-                    writer.WriteLine(book.PhotoPath);
-                }
-                writer.Flush();
-                stream.Seek(0, SeekOrigin.Begin);
-                return File(stream.ToArray(), System.Net.Mime.MediaTypeNames.Application.Octet,
-                    "exp-" + DateTime.Now.ToShortDateString() + "-books.txt");
+        [HttpPost]
+        public FileResult TryExportNewspapers(ExportNewspapersModel model)
+        {
+            if (model.IsXml)
+            {
+                return File(ExportHelper.ExportNewspapers(model, DataContext), System.Net.Mime.MediaTypeNames.Application.Octet,
+                    "exp-" + DateTime.Now + "-newspapers.xml");
+            }
+            else
+            {
+                return File(ExportHelper.ExportNewspapers(model, DataContext), System.Net.Mime.MediaTypeNames.Application.Octet,
+                    "exp-" + DateTime.Now + "-newspapers.txt");
             }
         }
     }

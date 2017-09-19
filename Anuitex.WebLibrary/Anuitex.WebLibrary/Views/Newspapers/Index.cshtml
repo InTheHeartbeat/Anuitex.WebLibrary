@@ -6,12 +6,17 @@
     ViewBag.Title = Model.CurrentNavSection.ToString();
 }
 
-@if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
-{
-    <a class="btn btn-icon btn-add" href="@Url.Action("AddNewspaper")">
-        <span class="icon ic-add"></span>
-    </a>
-}
+<div class="nav-sector-controls">
+    @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
+    {
+        <a class="btn btn-icon" href="@Url.Action("Newspapers","Export")">
+            <span class="icon ic-export"></span>
+        </a>
+        <a class="btn btn-icon btn-add" href="@Url.Action("AddNewspaper")">
+            <span class="icon ic-add"></span>
+        </a>
+    }
+</div>
 <div class="windows-container">
     <ul class="windows-grid">
         @foreach (NewspaperModel newspaper in Model.Newspapers)
@@ -34,16 +39,7 @@
                         </div>
                     </div>
                     <div class="window-content">
-                        @{
-                            if (String.IsNullOrWhiteSpace(newspaper.PhotoPath))
-                            {
-                                <div class="entity-photo" style="background-image: url('/Upload/Images/no-photo.png'); background-size: 70%"></div>
-                            }
-                            else
-                            {
-                                <div class="entity-photo" style="background-image: url(@newspaper.PhotoPath); background-size: contain"></div>
-                            }
-                        }
+                        <div class="entity-photo" style="background-image: url(@(String.IsNullOrWhiteSpace(newspaper.PhotoPath) ? "/Upload/Images/no-photo.png" : newspaper.PhotoPath))"></div>                  
                         <span>Title:</span>
                         <span>@newspaper.Title</span>
                         <br/>

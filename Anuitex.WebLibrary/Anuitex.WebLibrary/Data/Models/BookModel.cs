@@ -7,7 +7,7 @@ using Anuitex.WebLibrary.Models.IO.Export.Books;
 
 namespace Anuitex.WebLibrary.Data.Models
 {
-    [Serializable, XmlInclude(typeof(ExportableBookModel)), XmlInclude(typeof(BookModel))]
+    [Serializable]
     public class BookModel
     {
         public int Id { get; set; }

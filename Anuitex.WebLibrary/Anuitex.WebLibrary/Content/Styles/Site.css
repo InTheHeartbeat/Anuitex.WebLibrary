@@ -787,7 +787,6 @@ body {
   height: 26px;
   float: right;
   margin-left: 6em;
-  margin-top: -1em;
 }
 .btn-buy {
   width: 35px;
@@ -812,6 +811,10 @@ body {
 .nav-sector-controls .btn-submit {
   float: right;
   margin-left: 3em;
+}
+.nav-sector-controls .order-details h4 {
+  margin-right: 3em;
+  display: inline-block;
 }
 .field-validation-error {
   font-size: 0.85em;

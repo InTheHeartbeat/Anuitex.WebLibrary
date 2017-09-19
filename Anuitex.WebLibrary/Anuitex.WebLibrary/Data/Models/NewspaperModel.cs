@@ -5,6 +5,7 @@ using System.Web;
 
 namespace Anuitex.WebLibrary.Data.Models
 {
+    [Serializable]
     public class NewspaperModel
     {
         public int Id { get; set; }
@@ -25,6 +26,10 @@ namespace Anuitex.WebLibrary.Data.Models
             Price = baseNewspaper.Price;
             PhotoId = baseNewspaper.PhotoId;
             PhotoPath = baseNewspaper.Image?.Path;            
+        }
+
+        protected NewspaperModel()
+        {            
         }
     }
 }

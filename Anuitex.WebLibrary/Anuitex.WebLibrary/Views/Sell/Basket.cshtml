@@ -7,9 +7,11 @@
 }
 
 <div class="nav-sector-controls">
-    <h4>@Model.TotalProductsCount products of ₴@Model.SumPrice</h4>
-    <br />
-    <h4>Order №@Model.OrderId</h4>
+    <div class="order-details">
+        <h4>@Model.TotalProductsCount products of ₴@Model.SumPrice</h4>
+        <br />
+        <h4>Order №@Model.OrderId</h4>
+    </div>
     <a href="@Url.Action("AcceptSellOrder", "Sell", new {orderId = Model.OrderId})" class="btn btn-icon btn-accept-order">
         <span class="icon ic-accept"></span>
     </a>
@@ -24,39 +26,39 @@
                     <div class="window-header justify">
                         <span class="icon ic-book"></span>
                         <h4>@book.Author - @book.Title</h4>
-                        <div class="window-header-buttons">                    
+                        <div class="window-header-buttons">
                             <a href="@Url.Action("RemoveProductFromBasket", "Sell", new {productId = book.Id, productType = typeof(Book).Name})" class="btn btn-icon">
                                 <span class="icon ic-remove"></span>
-                            </a>                   
+                            </a>
                         </div>
                     </div>
                     <div class="window-content">
                         <div class="entity-photo" style="background-image: url(@(String.IsNullOrWhiteSpace(book.PhotoPath) ? "/Upload/Images/no-photo.png" : book.PhotoPath))"></div>
                         <span>Title:</span>
                         <span>@book.Title</span>
-                        <br/>
+                        <br />
                         <span>Author:</span>
                         <span>@book.Author</span>
-                        <br/>
+                        <br />
                         <span>Genre:</span>
                         <span>@book.Genre </span>
-                        <br/>
+                        <br />
                         <span>Year:</span>
                         <span>@book.Year</span>
-                        <br/>
+                        <br />
                         <span>Pages:</span>
                         <span>@book.Pages</span>
-                        <br/>
+                        <br />
                         <span>Available:</span>
                         <span>@book.Amount</span>
-                        <br/>
+                        <br />
                         <span>Price:</span>
-                        <span><b>@book.Price</b></span>                
+                        <span><b>@book.Price</b></span>
                     </div>
                 </div>
             </li>
         }
-        
+
         @foreach (JournalModel journal in Model.JournalProducts)
         {
             <li class="window-wrapper">
@@ -64,10 +66,10 @@
                     <div class="window-header justify">
                         <span class="icon ic-journal"></span>
                         <h4>@journal.Title - @journal.Date</h4>
-                        <div class="window-header-buttons">                            
+                        <div class="window-header-buttons">
                             <a href="@Url.Action("RemoveProductFromBasket", "Sell", new {productId = journal.Id, productType = typeof(Journal).Name})" class="btn btn-icon">
                                 <span class="icon ic-remove"></span>
-                            </a>                            
+                            </a>
                         </div>
                     </div>
                     <div class="window-content">
@@ -101,8 +103,8 @@
                     </div>
                 </div>
             </li>
-        }
-        
+                            }
+
         @foreach (NewspaperModel newspaper in Model.NewspaperProducts)
         {
             <li class="window-wrapper">
@@ -110,10 +112,10 @@
                     <div class="window-header justify">
                         <span class="icon ic-newspaper"></span>
                         <h4>@newspaper.Title - @newspaper.Date</h4>
-                        <div class="window-header-buttons">                                                            
+                        <div class="window-header-buttons">
                             <a href="@Url.Action("RemoveProductFromBasket", "Sell", new {productId = newspaper.Id, productType = typeof(Newspaper).Name})" class="btn btn-icon">
                                 <span class="icon ic-remove"></span>
-                            </a>                            
+                            </a>
                         </div>
                     </div>
                     <div class="window-content">
@@ -129,21 +131,21 @@
                         }
                         <span>Title:</span>
                         <span>@newspaper.Title</span>
-                        <br/>
+                        <br />
                         <span>Date:</span>
                         <span>@newspaper.Date</span>
-                        <br/>
+                        <br />
                         <span>Periodicity:</span>
                         <span>@newspaper.Periodicity</span>
-                        <br/>
+                        <br />
                         <span>Available:</span>
                         <span>@newspaper.Amount</span>
-                        <br/>
+                        <br />
                         <span>Price:</span>
                         <span><b>@newspaper.Price</b></span>
                     </div>
                 </div>
             </li>
-        }
+                            }
     </ul>
 </div>

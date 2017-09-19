@@ -1,0 +1,59 @@
+﻿@model Anuitex.WebLibrary.Models.IO.Import.Journals.ImportJournalsResultModel
+
+@{
+    ViewBag.Title = Model.CurrentNavSection.ToString();
+}
+
+@using (Html.BeginForm("TryImportJournals", "Import"))
+{
+    <div class="nav-sector-controls">
+        <input type="submit" class="btn btn-icon icon ic-accept btn-submit" value="">        
+    </div>
+    <div class="windows-container">
+        <ul class="windows-grid">
+            @for (int i = 0; i < Model.Journals.Count; i++)
+            {
+                @Html.HiddenFor(m => m.Journals[i].Amount)
+                @Html.HiddenFor(m => m.Journals[i].Periodicity)
+                @Html.HiddenFor(m => m.Journals[i].Subjects)
+                @Html.HiddenFor(m => m.Journals[i].Date)
+                @Html.HiddenFor(m => m.Journals[i].PhotoId)
+                @Html.HiddenFor(m => m.Journals[i].PhotoPath)
+                @Html.HiddenFor(m => m.Journals[i].Price)
+                @Html.HiddenFor(m => m.Journals[i].Title)                
+                <li class="window-wrapper">
+                    <div class="window window-hovered-shadow">
+                        <div class="window-header justify">
+                            <span class="icon ic-journal"></span>
+                            <h4>@Model.Journals[i].Title - @Model.Journals[i].Date</h4>
+                            <div class="window-header-buttons">
+                                @Html.CheckBoxFor(model => model.Journals[i].Selected, new { @class = "checkbox-default", @id = "cb-sellected-" + Model.Journals[i].Id })
+                                <label for="cb-sellected-@Model.Journals[i].Id" class="checkbox-default-label"></label>
+                            </div>
+                        </div>
+                        <div class="window-content">
+                            <div class="entity-photo" style="background-image: url(@(String.IsNullOrWhiteSpace(Model.Journals[i].PhotoPath) ? "/Upload/Images/no-photo.png" : Model.Journals[i].PhotoPath))"></div>
+                            <span>Title:</span>
+                            <span>@Model.Journals[i].Title</span>
+                            <br />
+                            <span>Date:</span>
+                            <span>@Model.Journals[i].Date</span>
+                            <br />
+                            <span>Periodicity:</span>
+                            <span>@Model.Journals[i].Periodicity</span>
+                            <br />
+                            <span>Subjects:</span>
+                            <span>@Model.Journals[i].Subjects</span>
+                            <br />
+                            <span>Available:</span>
+                            <span>@Model.Journals[i].Amount</span>
+                            <br />
+                            <span>Price:</span>
+                            <span><b>@Model.Journals[i].Price</b></span>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}

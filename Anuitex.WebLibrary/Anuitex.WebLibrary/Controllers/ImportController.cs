@@ -9,7 +9,9 @@ using Anuitex.WebLibrary.Data.Models;
 using Anuitex.WebLibrary.Helpers;
 using Anuitex.WebLibrary.Models;
 using Anuitex.WebLibrary.Models.IO.Export.Books;
+using Anuitex.WebLibrary.Models.IO.Export.Journals;
 using Anuitex.WebLibrary.Models.IO.Import.Books;
+using Anuitex.WebLibrary.Models.IO.Import.Journals;
 using Anuitex.WebLibrary.ViewHelpers;
 
 namespace Anuitex.WebLibrary.Controllers
@@ -74,6 +76,64 @@ namespace Anuitex.WebLibrary.Controllers
             }));
             DataContext.SubmitChanges();
             return RedirectToAction("Index", "Books");
+        }
+
+        [HttpPost]
+        public ActionResult Journals(HttpPostedFileBase upload)
+        {
+            try
+            {
+                FileInfo info = new FileInfo(upload.FileName);
+                List<JournalModel> imported = ImportHelper.ImportJournals(upload.InputStream, info.Extension == ".xml");
+                if (imported != null)
+                {
+                    return View("ImportJournalsResult", new ImportJournalsResultModel()
+                    {
+                        BreadcrumbModel = new BreadcrumbModel(Url.Action("Journals", "Import", null, Request.Url.Scheme)),
+                        CurrentNavSection = NavSection.Import,
+                        CurrentUser = CurrentUser,
+                        Journals = imported.Select(b => new ExportableJournalModel()
+                            {
+                                Id = b.Id,
+                                Amount = b.Amount,
+                                PhotoId = b.PhotoId,
+                                Subjects = b.Subjects,
+                                Periodicity = b.Periodicity,                                
+                                Title = b.Title,
+                                Date = b.Date,
+                                Price = b.Price,
+                                Selected = true,
+                                PhotoPath = b.PhotoPath
+                            })
+                            .ToList()
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                return View("Error", new BaseModel()
+                {
+                    CurrentUser = CurrentUser
+                });
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult TryImportJournals(ImportJournalsResultModel model)
+        {
+            DataContext.Journals.InsertAllOnSubmit(model.Journals.Where(jour => jour.Selected).Select(journal => new Journal()
+            {
+                Amount = journal.Amount,
+                Periodicity = journal.Periodicity,
+                Subjects = journal.Subjects,
+                Date = journal.Date,
+                PhotoId = journal.PhotoId,
+                Price = journal.Price,
+                Title = journal.Title                
+            }));
+            DataContext.SubmitChanges();
+            return RedirectToAction("Index", "Journals");
         }
     }
 }

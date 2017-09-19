@@ -45,5 +45,39 @@ namespace Anuitex.WebLibrary.Helpers
                 return result;
             }
         }
+
+        public static List<JournalModel> ImportJournals(Stream stream, bool isXml)
+        {
+            if (isXml)
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<JournalModel>));
+                return (List<JournalModel>)serializer.Deserialize(stream);
+            }
+            else
+            {
+                List<JournalModel> result = new List<JournalModel>();
+                using (StreamReader streamReader = new StreamReader(stream, Encoding.Default))
+                {
+                    string[] data = streamReader.ReadToEnd().Replace("\r", "").Split('\n');
+                    if (data[0] != "Journals") throw new Exception("Incorrect file");
+                    for (var i = 0; i + 8 < data.Length; i += 9)
+                    {
+                        result.Add(new JournalModel()
+                        {
+                            Id = int.Parse(data[i + 1]),
+                            Title = data[i + 2],
+                            Subjects = data[i + 3],
+                            Periodicity = data[i + 4],
+                            Date = data[i + 5],                            
+                            Amount = int.Parse(data[i + 6]),
+                            Price = double.Parse(data[i + 7]),
+                            PhotoId = int.Parse(data[i + 8]),
+                            PhotoPath = data[i + 9]
+                        });
+                    }
+                }
+                return result;
+            }
+        }
     }
 }

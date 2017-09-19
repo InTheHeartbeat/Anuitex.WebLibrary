@@ -31,7 +31,7 @@ namespace Anuitex.WebLibrary.Data.Models
             PhotoPath = baseJournal.Image?.Path;            
         }
 
-        protected JournalModel()
+        public JournalModel()
         {            
         }
     }

@@ -28,7 +28,7 @@ namespace Anuitex.WebLibrary.Data.Models
             PhotoPath = baseNewspaper.Image?.Path;            
         }
 
-        protected NewspaperModel()
+        public NewspaperModel()
         {            
         }
     }

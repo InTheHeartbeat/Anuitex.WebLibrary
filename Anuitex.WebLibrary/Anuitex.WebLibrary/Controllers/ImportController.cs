@@ -10,8 +10,10 @@ using Anuitex.WebLibrary.Helpers;
 using Anuitex.WebLibrary.Models;
 using Anuitex.WebLibrary.Models.IO.Export.Books;
 using Anuitex.WebLibrary.Models.IO.Export.Journals;
+using Anuitex.WebLibrary.Models.IO.Export.Newspapers;
 using Anuitex.WebLibrary.Models.IO.Import.Books;
 using Anuitex.WebLibrary.Models.IO.Import.Journals;
+using Anuitex.WebLibrary.Models.IO.Import.Newspapers;
 using Anuitex.WebLibrary.ViewHelpers;
 
 namespace Anuitex.WebLibrary.Controllers
@@ -134,6 +136,62 @@ namespace Anuitex.WebLibrary.Controllers
             }));
             DataContext.SubmitChanges();
             return RedirectToAction("Index", "Journals");
+        }
+
+        [HttpPost]
+        public ActionResult Newspapers(HttpPostedFileBase upload)
+        {
+            try
+            {
+                FileInfo info = new FileInfo(upload.FileName);
+                List<NewspaperModel> imported = ImportHelper.ImportNewspapers(upload.InputStream, info.Extension == ".xml");
+                if (imported != null)
+                {
+                    return View("ImportNewspapersResult", new ImportNewspapersResultModel()
+                    {
+                        BreadcrumbModel = new BreadcrumbModel(Url.Action("Newspapers", "Import", null, Request.Url.Scheme)),
+                        CurrentNavSection = NavSection.Import,
+                        CurrentUser = CurrentUser,
+                        Newspapers = imported.Select(b => new ExportableNewspaperModel()
+                            {
+                                Id = b.Id,
+                                Amount = b.Amount,
+                                PhotoId = b.PhotoId,                                
+                                Periodicity = b.Periodicity,
+                                Title = b.Title,
+                                Date = b.Date,
+                                Price = b.Price,
+                                Selected = true,
+                                PhotoPath = b.PhotoPath
+                            })
+                            .ToList()
+                    });
+                }
+            }
+            catch (Exception e)
+            {
+                return View("Error", new BaseModel()
+                {
+                    CurrentUser = CurrentUser
+                });
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult TryImportNewspapers(ImportNewspapersResultModel model)
+        {
+            DataContext.Newspapers.InsertAllOnSubmit(model.Newspapers.Where(np => np.Selected).Select(newspaper => new Newspaper()
+            {
+                Amount = newspaper.Amount,
+                Periodicity = newspaper.Periodicity,                
+                Date = newspaper.Date,
+                PhotoId = newspaper.PhotoId,
+                Price = newspaper.Price,
+                Title = newspaper.Title
+            }));
+            DataContext.SubmitChanges();
+            return RedirectToAction("Index", "Newspapers");
         }
     }
 }

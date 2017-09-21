@@ -1,0 +1,58 @@
+﻿@model Anuitex.WebLibrary.Models.IO.Import.Newspapers.ImportNewspapersResultModel
+
+@using Anuitex.WebLibrary.Data
+@using Anuitex.WebLibrary.Data.Models
+
+@{
+    ViewBag.Title = Model.CurrentNavSection.ToString();
+}
+
+@using (Html.BeginForm("TryImportNewspapers", "Import"))
+{
+    <div class="nav-sector-controls">
+        <input type="submit" class="btn btn-icon icon ic-accept btn-submit" value="">        
+    </div>
+    <div class="windows-container">
+        <ul class="windows-grid">
+            @for (int i = 0; i < Model.Newspapers.Count; i++)
+            {
+                @Html.HiddenFor(m => m.Newspapers[i].Amount)
+                @Html.HiddenFor(m => m.Newspapers[i].Periodicity)                
+                @Html.HiddenFor(m => m.Newspapers[i].Date)
+                @Html.HiddenFor(m => m.Newspapers[i].PhotoId)
+                @Html.HiddenFor(m => m.Newspapers[i].PhotoPath)
+                @Html.HiddenFor(m => m.Newspapers[i].Price)
+                @Html.HiddenFor(m => m.Newspapers[i].Title)
+                <li class="window-wrapper">
+                    <div class="window window-hovered-shadow">
+                        <div class="window-header justify">
+                            <span class="icon ic-newspaper"></span>
+                            <h4>@Model.Newspapers[i].Title - @Model.Newspapers[i].Date</h4>
+                            <div class="window-header-buttons">
+                                @Html.CheckBoxFor(model => model.Newspapers[i].Selected, new { @class = "checkbox-default", @id = "cb-sellected-" + Model.Newspapers[i].Id })
+                                <label for="cb-sellected-@Model.Newspapers[i].Id" class="checkbox-default-label"></label>
+                            </div>
+                        </div>
+                        <div class="window-content">
+                            <div class="entity-photo" style="background-image: url(@(String.IsNullOrWhiteSpace(Model.Newspapers[i].PhotoPath) ? "/Upload/Images/no-photo.png" : Model.Newspapers[i].PhotoPath))"></div>
+                            <span>Title:</span>
+                            <span>@Model.Newspapers[i].Title</span>
+                            <br />
+                            <span>Date:</span>
+                            <span>@Model.Newspapers[i].Date</span>
+                            <br />
+                            <span>Periodicity:</span>
+                            <span>@Model.Newspapers[i].Periodicity</span>
+                            <br />
+                            <span>Available:</span>
+                            <span>@Model.Newspapers[i].Amount</span>
+                            <br />
+                            <span>Price:</span>
+                            <span><b>@Model.Newspapers[i].Price</b></span>
+                        </div>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+}

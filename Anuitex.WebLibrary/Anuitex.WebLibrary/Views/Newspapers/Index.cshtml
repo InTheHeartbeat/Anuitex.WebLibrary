@@ -9,6 +9,13 @@
 <div class="nav-sector-controls">
     @if (Model.CurrentUser != null && Model.CurrentUser.IsAdmin)
     {
+        using (Html.BeginForm("Newspapers", "Import", FormMethod.Post, new { id = "import-newspapers-submit", enctype = "multipart/form-data" }))
+        {
+            <div class="btn btn-icon" id="btn-import-newspapers">
+                <span class="icon ic-import"></span>
+            </div>
+            <input id="btn-import-newspapers-file" type="file" name="upload" style="display: none">
+        }
         <a class="btn btn-icon" href="@Url.Action("Newspapers","Export")">
             <span class="icon ic-export"></span>
         </a>
@@ -63,3 +70,22 @@
         }
     </ul>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#btn-import-newspapers").click(
+                function() {
+                    $("#btn-import-newspapers-file").trigger('click');
+                });
+
+            $("#btn-import-newspapers-file").change(function (e) {
+                var files = document.getElementById('btn-import-newspapers-file').files;
+                if (files.length > 0) {
+                    $("#import-newspapers-submit").submit();
+                }
+            });
+        });
+    </script>
+}

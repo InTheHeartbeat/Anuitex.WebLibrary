@@ -79,5 +79,38 @@ namespace Anuitex.WebLibrary.Helpers
                 return result;
             }
         }
+
+        public static List<NewspaperModel> ImportNewspapers(Stream stream, bool isXml)
+        {
+            if (isXml)
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(List<NewspaperModel>));
+                return (List<NewspaperModel>)serializer.Deserialize(stream);
+            }
+            else
+            {
+                List<NewspaperModel> result = new List<NewspaperModel>();
+                using (StreamReader streamReader = new StreamReader(stream, Encoding.Default))
+                {
+                    string[] data = streamReader.ReadToEnd().Replace("\r", "").Split('\n');
+                    if (data[0] != "Newspapers") throw new Exception("Incorrect file");
+                    for (var i = 0; i + 8 < data.Length; i += 8)
+                    {
+                        result.Add(new NewspaperModel()
+                        {
+                            Id = int.Parse(data[i + 1]),
+                            Title = data[i + 2],                            
+                            Periodicity = data[i + 3],
+                            Date = data[i + 4],
+                            Amount = int.Parse(data[i + 5]),
+                            Price = double.Parse(data[i + 6]),
+                            PhotoId = int.Parse(data[i + 7]),
+                            PhotoPath = data[i + 8]
+                        });
+                    }
+                }
+                return result;
+            }
+        }
     }
 }

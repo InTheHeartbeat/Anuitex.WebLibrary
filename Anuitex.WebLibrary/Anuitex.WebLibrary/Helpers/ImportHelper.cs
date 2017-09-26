@@ -24,7 +24,9 @@ namespace Anuitex.WebLibrary.Helpers
                 using (StreamReader streamReader = new StreamReader(stream, Encoding.Default))
                 {
                     string[] data = streamReader.ReadToEnd().Replace("\r", "").Split('\n');
-                    if (data[0] != "Books") throw new Exception("Incorrect file");
+
+                    if (data[0] != "Books") { throw new Exception("Incorrect file");}
+
                     for (var i = 0; i + 8 < data.Length; i += 10)
                     {
                         result.Add(new BookModel()
@@ -59,7 +61,9 @@ namespace Anuitex.WebLibrary.Helpers
                 using (StreamReader streamReader = new StreamReader(stream, Encoding.Default))
                 {
                     string[] data = streamReader.ReadToEnd().Replace("\r", "").Split('\n');
-                    if (data[0] != "Journals") throw new Exception("Incorrect file");
+
+                    if (data[0] != "Journals") { throw new Exception("Incorrect file");}
+
                     for (var i = 0; i + 8 < data.Length; i += 9)
                     {
                         result.Add(new JournalModel()
@@ -93,7 +97,9 @@ namespace Anuitex.WebLibrary.Helpers
                 using (StreamReader streamReader = new StreamReader(stream, Encoding.Default))
                 {
                     string[] data = streamReader.ReadToEnd().Replace("\r", "").Split('\n');
-                    if (data[0] != "Newspapers") throw new Exception("Incorrect file");
+
+                    if (data[0] != "Newspapers") { throw new Exception("Incorrect file");}
+
                     for (var i = 0; i + 8 < data.Length; i += 8)
                     {
                         result.Add(new NewspaperModel()

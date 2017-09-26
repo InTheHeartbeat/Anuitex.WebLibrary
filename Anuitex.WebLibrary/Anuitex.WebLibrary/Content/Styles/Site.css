@@ -820,7 +820,7 @@ body {
   font-size: 0.85em;
   color: red;
   text-align: center;
-  display: block;
+  display: inline-block !important;
 }
 .validation-summary-errors {
   color: red;
@@ -883,7 +883,14 @@ body {
   margin: 0 auto;
   display: block;
 }
-.add-entity-window {
+#add-journal-window .window .window-content input[type=submit],
+#add-newspaper-window .window .window-content input[type=submit] {
+  display: inline-block;
+  margin-top: 0.5em;
+  float: left;
+}
+.add-entity-window,
+#add-book-window {
   position: absolute;
   left: 0;
   right: 0;
@@ -893,19 +900,39 @@ body {
   padding-top: 1em!important;
   padding-left: 0 !important;
 }
-.add-entity-window .window {
-  height: 400px !important;
+.add-entity-window .window,
+#add-book-window .window {
+  height: 450px !important;
 }
-.add-entity-window .window .window-content {
+.add-entity-window .window .window-content,
+#add-book-window .window .window-content {
   padding-left: 0!important;
+  overflow-y: auto;
 }
-.add-entity-window .window .window-content form {
+.add-entity-window .window .window-content form,
+#add-book-window .window .window-content form {
   text-align: center;
+  margin-top: 1em;
 }
-.add-entity-window .window .window-content form .field-validation-error {
-  margin-bottom: -1em;
+.add-entity-window .window .window-content form #add-entity-down-fields,
+#add-book-window .window .window-content form #add-entity-down-fields {
+  width: 80%;
+  height: 100%;
+  display: inline-block;
+  margin-top: 0.5em;
 }
-.add-entity-window .window .window-content .choose-photo {
+.add-entity-window .window .window-content form #add-entity-down-fields input[type=text],
+#add-book-window .window .window-content form #add-entity-down-fields input[type=text] {
+  width: 40% !important;
+  float: left !important;
+  margin: 1em;
+}
+.add-entity-window .window .window-content form #Title,
+#add-book-window .window .window-content form #Title {
+  margin-top: 1em;
+}
+.add-entity-window .window .window-content .choose-photo,
+#add-book-window .window .window-content .choose-photo {
   width: 150px;
   height: 150px;
   margin: 1em;
@@ -914,23 +941,15 @@ body {
   display: inline-block;
   background-size: 80% 80%;
 }
-.add-entity-window .window .window-content input[type=text] {
+.add-entity-window .window .window-content input[type=text],
+#add-book-window .window .window-content input[type=text] {
   width: 50%;
 }
-.add-entity-window .window .window-content input[type=submit] {
-  display: block;
-  border-left: none;
-  margin-top: 0.5em;
-}
-.add-entity-down-fields {
-  width: 80%;
-  height: 100%;
+.add-entity-window .window .window-content input[type=submit],
+#add-book-window .window .window-content input[type=submit] {
   display: inline-block;
-}
-.add-entity-down-fields input[type=text] {
-  width: 40% !important;
-  float: left !important;
-  margin: 1em;
+  margin-top: 0.5em;
+  float: left;
 }
 .raw-xml-switch {
   float: left;

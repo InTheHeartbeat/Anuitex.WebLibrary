@@ -11,8 +11,6 @@ namespace Anuitex.WebLibrary.Models.IO.Import.Journals
         public List<ExportableJournalModel> Journals { get; set; }
 
         public ImportJournalsResultModel()
-        {
-            
-        }
+        {}
     }
 }

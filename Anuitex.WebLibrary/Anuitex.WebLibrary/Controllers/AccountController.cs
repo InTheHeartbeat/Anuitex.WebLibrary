@@ -41,7 +41,7 @@ namespace Anuitex.WebLibrary.Controllers
             return View("SignUp", new SignUpModel()
             {
                 BreadcrumbModel = new BreadcrumbModel(Url.Action("SignUp", "Account", null, Request.Url.Scheme)),
-                CurrentNavSection = NavSection.SignOut,
+                CurrentNavSection = NavSection.SignUp,
                 CurrentUser = CurrentUser
             });
         }

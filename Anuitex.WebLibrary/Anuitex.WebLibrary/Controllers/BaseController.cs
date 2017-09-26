@@ -39,16 +39,15 @@ namespace Anuitex.WebLibrary.Controllers
             {
                 Guid token = Guid.Parse(at);
                 CurrentUser = DataContext.AccountAccessRecords.FirstOrDefault(t => t.Token == token && t.Source == adr)?.Account;
-            }
-            
+            }            
         }
 
         private void InitializeCurrentVisitor(RequestContext requestContext)
         {
-            string at = requestContext.HttpContext.Request.Cookies["VToken"]?.Value;
-            if (at != null)
+            string vt = requestContext.HttpContext.Request.Cookies["VToken"]?.Value;
+            if (vt != null)
             {
-                Guid guid = Guid.Parse(at);
+                Guid guid = Guid.Parse(vt);
                 CurrentVisitor = DataContext.Visitors.FirstOrDefault(v => v.Token == guid);
             }
 

@@ -77,7 +77,7 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
     font-size:0.85em;
     color:red;
     text-align:center;
-    display:block;                    
+    display:inline-block !important;                    
 }
 .validation-summary-errors
 {
@@ -157,7 +157,22 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
     }
 }
 
-.add-entity-window
+#add-journal-window, #add-newspaper-window
+{
+    .window 
+    {
+        .window-content
+        {
+            input[type=submit] 
+            {
+                display: inline-block;                
+                margin-top: 0.5em;
+                float:left;
+            }
+        }
+    }
+}
+.add-entity-window,#add-book-window
 {
     position: absolute;
     left: 0;
@@ -169,19 +184,41 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
     padding-left:0 !important;  
     .window 
     {
-        height: 400px !important;
+        height: 450px !important;        
         .window-content
         {
             padding-left:0!important;
+            overflow-y:auto;
             form 
             {            
                 text-align: center;
-
+                margin-top:1em;
                 .field-validation-error 
                 {
-                    margin-bottom: -1em;
+                    
+                }
+
+                #add-entity-down-fields     
+                {
+                    width:80%;
+                    height:100%;
+                    display:inline-block;
+                    margin-top:0.5em;
+                    input[type=text]
+                    {
+                        width:40% !important;
+                        float:left !important;
+                        margin:1em;
+                    }
+                }
+
+                #Title
+                {
+                    margin-top:1em;
                 }
             }
+
+            
 
             .choose-photo 
             {
@@ -201,25 +238,14 @@ body{background-image:url(../Images/Backgrounds/MainBackground.jpg);}
 
             input[type=submit] 
             {
-                display: block;
-                border-left: none;
+                display: inline-block;                
                 margin-top: 0.5em;
+                float:left;
             }
         }
     }
 }
-.add-entity-down-fields
-{
-    width:80%;
-    height:100%;
-    display:inline-block;
-    input[type=text]
-    {
-        width:40% !important;
-        float:left !important;
-        margin:1em;
-    }
-}
+
 
 .raw-xml-switch
 {

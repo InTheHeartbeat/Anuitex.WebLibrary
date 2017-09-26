@@ -14,12 +14,9 @@ namespace Anuitex.WebLibrary.Models.IO.Export.Books
         public bool Selected { get; set; }
 
         public ExportableBookModel(Book baseBook) : base(baseBook)
-        {
-        }
+        {}
 
         public ExportableBookModel()
-        {
-            
-        }
+        {}
     }
 }

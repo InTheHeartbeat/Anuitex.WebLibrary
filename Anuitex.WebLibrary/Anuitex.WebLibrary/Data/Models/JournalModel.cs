@@ -32,7 +32,6 @@ namespace Anuitex.WebLibrary.Data.Models
         }
 
         public JournalModel()
-        {            
-        }
+        {}
     }
 }

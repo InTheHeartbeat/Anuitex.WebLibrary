@@ -8,8 +8,6 @@ namespace Anuitex.WebLibrary.Models.IO.Export.Books
         public List<ExportableBookModel> Books { get; set; }
         public bool IsXml { get; set; }
         public ExportBooksModel()
-        {
-            
-        }     
+        {}     
     }
 }

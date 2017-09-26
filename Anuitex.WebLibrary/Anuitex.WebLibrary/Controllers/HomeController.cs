@@ -14,7 +14,6 @@ namespace Anuitex.WebLibrary.Controllers
         public ActionResult Index()
         {
             return RedirectToActionPermanent("Index", "Books");
-        }
-        
+        }        
     }
 }

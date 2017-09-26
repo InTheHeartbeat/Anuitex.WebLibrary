@@ -23,6 +23,8 @@ namespace Anuitex.WebLibrary.Controllers
         [HttpPost]
         public ActionResult Books(HttpPostedFileBase upload)
         {
+            if (upload == null) {return RedirectToAction("Index","Books");}
+
             try
             {
                 FileInfo info = new FileInfo(upload.FileName);
@@ -65,24 +67,30 @@ namespace Anuitex.WebLibrary.Controllers
         [HttpPost]
         public ActionResult TryImportBooks(ImportBooksResultModel model)
         {
-            DataContext.Books.InsertAllOnSubmit(model.Books.Where(bs=>bs.Selected).Select(book=>new Book()
+            if (model != null)
             {
-                Amount = book.Amount,
-                Author = book.Author,
-                Genre = book.Genre,
-                Pages = book.Pages,
-                PhotoId = book.PhotoId,
-                Price = book.Price,
-                Title = book.Title,
-                Year = book.Year
-            }));
-            DataContext.SubmitChanges();
+                DataContext.Books.InsertAllOnSubmit(model.Books.Where(bs => bs.Selected)
+                    .Select(book => new Book()
+                    {
+                        Amount = book.Amount,
+                        Author = book.Author,
+                        Genre = book.Genre,
+                        Pages = book.Pages,
+                        PhotoId = book.PhotoId,
+                        Price = book.Price,
+                        Title = book.Title,
+                        Year = book.Year
+                    }));
+                DataContext.SubmitChanges();
+            }
             return RedirectToAction("Index", "Books");
         }
 
         [HttpPost]
         public ActionResult Journals(HttpPostedFileBase upload)
         {
+            if (upload == null) { return RedirectToAction("Index", "Journals"); }
+
             try
             {
                 FileInfo info = new FileInfo(upload.FileName);
@@ -124,23 +132,29 @@ namespace Anuitex.WebLibrary.Controllers
         [HttpPost]
         public ActionResult TryImportJournals(ImportJournalsResultModel model)
         {
-            DataContext.Journals.InsertAllOnSubmit(model.Journals.Where(jour => jour.Selected).Select(journal => new Journal()
+            if (model != null)
             {
-                Amount = journal.Amount,
-                Periodicity = journal.Periodicity,
-                Subjects = journal.Subjects,
-                Date = journal.Date,
-                PhotoId = journal.PhotoId,
-                Price = journal.Price,
-                Title = journal.Title                
-            }));
-            DataContext.SubmitChanges();
+                DataContext.Journals.InsertAllOnSubmit(model.Journals.Where(jour => jour.Selected)
+                    .Select(journal => new Journal()
+                    {
+                        Amount = journal.Amount,
+                        Periodicity = journal.Periodicity,
+                        Subjects = journal.Subjects,
+                        Date = journal.Date,
+                        PhotoId = journal.PhotoId,
+                        Price = journal.Price,
+                        Title = journal.Title
+                    }));
+                DataContext.SubmitChanges();
+            }
             return RedirectToAction("Index", "Journals");
         }
 
         [HttpPost]
         public ActionResult Newspapers(HttpPostedFileBase upload)
         {
+            if (upload == null) { return RedirectToAction("Index", "Newspapers"); }
+
             try
             {
                 FileInfo info = new FileInfo(upload.FileName);
@@ -181,16 +195,20 @@ namespace Anuitex.WebLibrary.Controllers
         [HttpPost]
         public ActionResult TryImportNewspapers(ImportNewspapersResultModel model)
         {
-            DataContext.Newspapers.InsertAllOnSubmit(model.Newspapers.Where(np => np.Selected).Select(newspaper => new Newspaper()
+            if (model != null)
             {
-                Amount = newspaper.Amount,
-                Periodicity = newspaper.Periodicity,                
-                Date = newspaper.Date,
-                PhotoId = newspaper.PhotoId,
-                Price = newspaper.Price,
-                Title = newspaper.Title
-            }));
-            DataContext.SubmitChanges();
+                DataContext.Newspapers.InsertAllOnSubmit(model.Newspapers.Where(np => np.Selected)
+                    .Select(newspaper => new Newspaper()
+                    {
+                        Amount = newspaper.Amount,
+                        Periodicity = newspaper.Periodicity,
+                        Date = newspaper.Date,
+                        PhotoId = newspaper.PhotoId,
+                        Price = newspaper.Price,
+                        Title = newspaper.Title
+                    }));
+                DataContext.SubmitChanges();
+            }
             return RedirectToAction("Index", "Newspapers");
         }
     }

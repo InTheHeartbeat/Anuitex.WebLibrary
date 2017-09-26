@@ -30,7 +30,7 @@ namespace Anuitex.WebLibrary.Controllers.Api
 
         private void InitializeCurrentUser(HttpRequestMessage requestContext)
         {
-            string ut = requestContext.Headers.GetCookies("AToken")?.FirstOrDefault()?["AToken"]?.Value;
+            string at = requestContext.Headers.GetCookies("AToken")?.FirstOrDefault()?["AToken"]?.Value;
 
             string adr = "";
             if (requestContext.Properties.ContainsKey("MS_HttpContext"))
@@ -39,9 +39,9 @@ namespace Anuitex.WebLibrary.Controllers.Api
             }
 
 
-            if (!string.IsNullOrWhiteSpace(ut) && !string.IsNullOrWhiteSpace(adr))
+            if (!string.IsNullOrWhiteSpace(at) && !string.IsNullOrWhiteSpace(adr))
             {
-                Guid token = Guid.Parse(ut);
+                Guid token = Guid.Parse(at);
                 CurrentUser = DataContext.AccountAccessRecords.FirstOrDefault(t => t.Token == token && t.Source == adr)?.Account;
             }
         }

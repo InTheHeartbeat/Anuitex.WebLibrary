@@ -30,13 +30,11 @@ namespace Anuitex.WebLibrary.Data.Models
             Genre = baseBook.Genre;
             Amount = baseBook.Amount;
             Price = baseBook.Price;            
-            PhotoPath = baseBook.Image.Path;
+            PhotoPath = baseBook.Image?.Path;
             PhotoId = baseBook.PhotoId;
         }
 
         public BookModel()
-        {
-            
-        }
+        {}
     }
 }

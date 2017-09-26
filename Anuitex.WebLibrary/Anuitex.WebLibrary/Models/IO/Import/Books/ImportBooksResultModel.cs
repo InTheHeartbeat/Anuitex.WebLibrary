@@ -11,8 +11,6 @@ namespace Anuitex.WebLibrary.Models.IO.Import.Books
     {
         public List<ExportableBookModel> Books { get; set; }
         public ImportBooksResultModel()
-        {
-            
-        }
+        {}
     }
 }

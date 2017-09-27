@@ -53,7 +53,7 @@ namespace Anuitex.WebLibrary.Controllers
                 Amount = model.Amount,
                 Date = model.Date,
                 Price = model.Price,                
-                PhotoId = model.PhotoId
+                PhotoId = model?.PhotoId
             });
             DataContext.SubmitChanges();
 
@@ -99,9 +99,9 @@ namespace Anuitex.WebLibrary.Controllers
                 Date = journal.Date,
                 Amount = journal.Amount,
                 Price = journal.Price,
-                PhotoId = journal.PhotoId,
+                PhotoId = journal?.PhotoId,
                 Id = journal.Id,
-                PhotoPath = journal.Image?.Path,
+                PhotoPath = journal?.Image?.Path,
                 CurrentNavSection = NavSection.Journals
             });
         }
@@ -118,7 +118,7 @@ namespace Anuitex.WebLibrary.Controllers
                 journal.Date = model.Date;                
                 journal.Price = model.Price;
                 journal.Amount = model.Amount;
-                journal.PhotoId = model.PhotoId;
+                journal.PhotoId = model?.PhotoId;
                 DataContext.SubmitChanges();
 
                 return RedirectToAction("Index", "Journals");

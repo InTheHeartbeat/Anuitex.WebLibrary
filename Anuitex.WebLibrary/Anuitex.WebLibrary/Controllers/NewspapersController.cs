@@ -53,7 +53,7 @@ namespace Anuitex.WebLibrary.Controllers
                 Amount = model.Amount,
                 Date = model.Date,
                 Price = model.Price,
-                PhotoId = model.PhotoId
+                PhotoId = model?.PhotoId
             });
             DataContext.SubmitChanges();
 
@@ -96,9 +96,9 @@ namespace Anuitex.WebLibrary.Controllers
                 Date = newspaper.Date,
                 Amount = newspaper.Amount,
                 Price = newspaper.Price,
-                PhotoId = newspaper.PhotoId,
+                PhotoId = newspaper?.PhotoId,
                 Id = newspaper.Id,
-                PhotoPath = newspaper.Image?.Path,
+                PhotoPath = newspaper?.Image?.Path,
                 CurrentNavSection = NavSection.Newspapers
             });
         }
@@ -114,7 +114,7 @@ namespace Anuitex.WebLibrary.Controllers
                 newspaper.Date = model.Date;
                 newspaper.Price = model.Price;
                 newspaper.Amount = model.Amount;
-                newspaper.PhotoId = model.PhotoId;
+                newspaper.PhotoId = model?.PhotoId;
                 DataContext.SubmitChanges();
 
                 return RedirectToAction("Index", "Newspapers");

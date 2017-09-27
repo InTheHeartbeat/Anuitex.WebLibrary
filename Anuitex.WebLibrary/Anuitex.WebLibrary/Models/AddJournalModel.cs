@@ -23,8 +23,7 @@ namespace Anuitex.WebLibrary.Models
         [Required(ErrorMessage = "Field must be filled")]
         [Range(1, Int32.MaxValue, ErrorMessage = "Price must be greater zero")]
         public int Amount { get; set; }
-        [Required(ErrorMessage = "Field must be filled")]
-        [Range(0.10d, 99999999.9d, ErrorMessage = "Price must be greater zero")]
+        [Required(ErrorMessage = "Field must be filled")]        
         public double Price { get; set; }        
         public bool IsEdit { get; set; }
     }

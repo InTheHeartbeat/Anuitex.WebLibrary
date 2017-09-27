@@ -56,7 +56,7 @@ namespace Anuitex.WebLibrary.Controllers
                 Pages = model.Pages,
                 Price = model.Price,
                 Year = model.Year,
-                PhotoId = model.PhotoId
+                PhotoId = model?.PhotoId
             });
             DataContext.SubmitChanges();
 
@@ -102,9 +102,9 @@ namespace Anuitex.WebLibrary.Controllers
                 Year = book.Year,
                 Amount = book.Amount,
                 Price = book.Price,
-                PhotoId = book.PhotoId,
+                PhotoId = book?.PhotoId,
                 Id = book.Id,
-                PhotoPath = book.Image.Path
+                PhotoPath = book?.Image?.Path
             });
         }
 
@@ -121,7 +121,7 @@ namespace Anuitex.WebLibrary.Controllers
                 book.Year = model.Year;
                 book.Price = model.Price;
                 book.Amount = model.Amount;
-                book.PhotoId = model.PhotoId;
+                book.PhotoId = model?.PhotoId;
                 DataContext.SubmitChanges();
 
                 return RedirectToAction("Index", "Books");

@@ -73,6 +73,8 @@
 
 
         $(document).ready(function () {
+            $("#Price").rules("remove", "number");
+
             @{
                 if (String.IsNullOrWhiteSpace(Model.PhotoPath))
                 {

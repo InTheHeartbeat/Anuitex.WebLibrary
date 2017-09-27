@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using Anuitex.WebLibrary.Data;
+using Microsoft.Ajax.Utilities;
 
 namespace Anuitex.WebLibrary.Models
 {
@@ -23,7 +24,7 @@ namespace Anuitex.WebLibrary.Models
         [Range(1, Int32.MaxValue, ErrorMessage = "Price must be greater zero")]
         public int Amount { get; set; }
         [Required(ErrorMessage = "Field must be filled")]
-        [Range(typeof(double), "0,10", "999999999,99", ErrorMessage = "Price must be greater zero")]
+        [Range(0.10d, 99999999.9d, ErrorMessage = "Price must be greater zero")]
         public double Price { get; set; }
         public int? PhotoId { get; set; }
 
